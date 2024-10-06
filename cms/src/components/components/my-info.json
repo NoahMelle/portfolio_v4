@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_components_my_infos",
+  "info": {
+    "displayName": "My Info",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "dateOfBirth": {
+      "type": "date"
+    },
+    "startedProgramming": {
+      "type": "date"
+    },
+    "socialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "utils.icon-link"
+    }
+  }
+}

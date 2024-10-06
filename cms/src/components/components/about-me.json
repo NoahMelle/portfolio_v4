@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_components_about_mes",
+  "info": {
+    "displayName": "About Me",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "aboutMeTexts": {
+      "displayName": "About Me Text",
+      "type": "component",
+      "repeatable": true,
+      "component": "components.about-me-text"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "iconLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "utils.icon-link"
+    }
+  }
+}

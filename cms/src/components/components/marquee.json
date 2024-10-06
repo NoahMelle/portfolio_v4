@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_components_marquees",
+  "info": {
+    "displayName": "Marquee"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "component",
+      "repeatable": true,
+      "component": "utils.string"
+    }
+  }
+}
