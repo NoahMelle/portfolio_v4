@@ -35,3 +35,23 @@ export interface SocialLink {
     isExternal?: boolean;
     icon: { url: string };
 }
+
+export interface SkillsSectionType {
+    skillText: string;
+    techStack: TechStackType;
+}
+
+export interface SkillType {
+    title: string;
+    level: number;
+}
+
+export interface TechStackType {
+    heading: string;
+    techStackSkills: TechStackSkillType[];
+}
+
+export interface TechStackSkillType {
+    name: string;
+    icon: { url: string };
+}

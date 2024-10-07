@@ -12,10 +12,11 @@ const apiConfig = {
 };
 
 export async function getHomepageData(locale: string) {
-    const res = (await axios({
-        ...apiConfig,
-        data: {
-            query: `
+    const res = (
+        await axios({
+            ...apiConfig,
+            data: {
+                query: `
                 query($locale: I18NLocaleCode!) {
                     homepage(locale: $locale) {
                         jumpToList {
@@ -43,15 +44,27 @@ export async function getHomepageData(locale: string) {
                                 }
                             }
                         }
+                        skills {
+                          skillText
+                          techStack {
+                            heading
+                            techStackSkills {
+                              icon {
+                                url
+                              }
+                              name
+                            }
+                          }
+                        }
                     }
                 }
             `,
-            variables: {
-                locale,
+                variables: {
+                    locale,
+                },
             },
-        },
-        
-    })).data.data.homepage
+        })
+    ).data.data.homepage;
 
     const myInfo = await getMyInfo();
 
@@ -62,10 +75,11 @@ export async function getHomepageData(locale: string) {
         myInfo.dateOfBirth,
         myInfo.startedProgramming,
         res.aboutMe,
-        myInfo.socialLinks
-    )
+        myInfo.socialLinks,
+        res.skills
+    );
 
-    return data
+    return data;
 }
 
 export async function getMyInfo() {

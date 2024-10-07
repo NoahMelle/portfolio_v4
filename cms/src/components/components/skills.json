@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_components_skills",
+  "info": {
+    "displayName": "Skills",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "skillText": {
+      "type": "richtext",
+      "required": true
+    },
+    "techStack": {
+      "type": "component",
+      "repeatable": false,
+      "component": "components.tech-stack"
+    }
+  }
+}

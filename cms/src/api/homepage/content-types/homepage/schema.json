@@ -56,6 +56,17 @@
         }
       },
       "component": "components.about-me"
+    },
+    "skills": {
+      "displayName": "Skills",
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "components.skills"
     }
   }
 }

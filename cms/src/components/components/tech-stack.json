@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_components_tech_stacks",
+  "info": {
+    "displayName": "techStack",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "techStackSkills": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::skill.skill"
+    }
+  }
+}

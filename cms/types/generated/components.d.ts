@@ -36,6 +36,30 @@ export interface UtilsIconLink extends Struct.ComponentSchema {
   };
 }
 
+export interface ComponentsTechStack extends Struct.ComponentSchema {
+  collectionName: 'components_components_tech_stacks';
+  info: {
+    displayName: 'techStack';
+    description: '';
+  };
+  attributes: {
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    techStackSkills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
+  };
+}
+
+export interface ComponentsSkills extends Struct.ComponentSchema {
+  collectionName: 'components_components_skills';
+  info: {
+    displayName: 'Skills';
+    description: '';
+  };
+  attributes: {
+    skillText: Schema.Attribute.RichText & Schema.Attribute.Required;
+    techStack: Schema.Attribute.Component<'components.tech-stack', false>;
+  };
+}
+
 export interface ComponentsMyInfo extends Struct.ComponentSchema {
   collectionName: 'components_components_my_infos';
   info: {
@@ -115,6 +139,8 @@ declare module '@strapi/strapi' {
       'utils.string': UtilsString;
       'utils.link': UtilsLink;
       'utils.icon-link': UtilsIconLink;
+      'components.tech-stack': ComponentsTechStack;
+      'components.skills': ComponentsSkills;
       'components.my-info': ComponentsMyInfo;
       'components.marquee': ComponentsMarquee;
       'components.link-array': ComponentsLinkArray;

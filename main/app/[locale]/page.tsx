@@ -6,6 +6,7 @@ import Section from "@/Components/custom/Section";
 import AboutMe from "@/Components/custom/AboutMe";
 import SlideFromLeft from "@/Components/reusable/SlideFromLeft";
 import TextReveal from "@/Components/reusable/gsap/TextReveal";
+import Skills from "@/Components/custom/Skills";
 
 export enum TextRevealType {
     "h1",
@@ -19,6 +20,18 @@ export default async function Home() {
     const locale = await getLocale();
 
     const homepageData = await getHomepageData(locale);
+
+    const sections = homepageData.jumpToList.links.map((link, index) => (
+        <Section key={link.url} index={index + 1} link={link}>
+            {link.title === "About" ? (
+                <AboutMe aboutMe={homepageData.aboutMe} />
+            ) : link.title === "Skills" ? (
+                <Skills skills={homepageData.skills}/>
+            ) : (
+                <div>Content for {link.title}</div>
+            )}
+        </Section>
+    ));
 
     return (
         <div className={styles.sectionContainer}>
@@ -66,15 +79,7 @@ export default async function Home() {
                 </div>
             </header>
             <div className={styles.invisibleDiv}></div>
-            {homepageData.jumpToList.links.map((link, index) => (
-                <Section key={link.url} index={index + 1} link={link}>
-                    {link.title === "About" ? (
-                        <AboutMe aboutMe={homepageData.aboutMe} />
-                    ) : (
-                        <div>Content for {link.title}</div>
-                    )}
-                </Section>
-            ))}
+            {sections}
         </div>
     );
 }

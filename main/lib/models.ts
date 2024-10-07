@@ -1,4 +1,4 @@
-import { JumpToListType, HeroType, MarqueeType, AboutMeType, SocialLink } from "./types";
+import { JumpToListType, HeroType, MarqueeType, AboutMeType, SocialLink, SkillsSectionType } from "./types";
 import { getAgeFromBday } from "./utils";
 import { getYearsDiff } from "./utils";
 
@@ -9,6 +9,7 @@ export class HomepageProps {
     startedProgramming: string;
     marquee: MarqueeType;
     aboutMe: AboutMeType;
+    skills: SkillsSectionType;
 
     constructor(
         jumpToList: JumpToListType,
@@ -17,7 +18,8 @@ export class HomepageProps {
         dateOfBirth: string,
         startedProgramming: string,
         aboutMe: AboutMeType,
-        socialLinks: SocialLink[]
+        socialLinks: SocialLink[],
+        skills: SkillsSectionType,
     ) {
         const birthDate = new Date(dateOfBirth); // Parse once
         const age = getAgeFromBday(birthDate);
@@ -62,6 +64,19 @@ export class HomepageProps {
                 },
             }))
         };
+        this.skills = {
+            ...skills,
+            techStack: {
+                ...skills.techStack,
+                techStackSkills: skills.techStack.techStackSkills.map((skill) => ({
+                    ...skill,
+                    icon: {
+                        ...skill.icon,
+                        url: (process.env.BASEURL_API ?? "") + skill.icon.url,
+                    },
+                })),
+            }
+        }
     }
 
     getAge() {
