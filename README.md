@@ -92,6 +92,7 @@ npm run dev:all
 cp main/.env.example main/.env
 ```
 7. Open the newly copied .env file and paste the Strapi API token:
+```
 STRAPI_TOKEN=<your_generated_api_token>
 ```
 
