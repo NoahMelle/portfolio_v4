@@ -2,6 +2,19 @@
 
 A portfolio project that uses Strapi as a CMS and a frontend powered by Node.js.
 
+## Table of Contents
+- [Portfolio v4](#portfolio-v4)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [1. Clone the Repository](#1-clone-the-repository)
+    - [2. Install Dependencies](#2-install-dependencies)
+    - [3. Set Up the Strapi CMS](#3-set-up-the-strapi-cms)
+    - [3.1. Import Data and Generate API Tokens](#31-import-data-and-generate-api-tokens)
+    - [4. Start the applications](#4-start-the-applications)
+    - [5. Visit the site](#5-visit-the-site)
+
 ## Getting Started
 
 Follow the steps below to set up and run the project locally.
@@ -11,66 +24,77 @@ Follow the steps below to set up and run the project locally.
 Ensure you have the following installed before proceeding:
 
 - **Node.js** (tested on version 20.x.x)
-- **npm** or another package manager (this guide uses [npm](https://www.npmjs.com/))
+- **npm** (or another package manager, this guide uses [npm](https://www.npmjs.com/))
 - **PostgreSQL** (for database management)
-- **Decryption Token** (for data import, contact me if you need it)
+- **Decryption Token** (required for data import, contact the project owner if needed)
+
+---
+
+## Installation
 
 ### 1. Clone the Repository
 
-To clone the repository, use the following command:
+Clone the repository using the following command:
 
 ```bash
 git clone https://github.com/NoahMelle/portfolio_v4.git
 ```
 
-### 2. Set Up the Strapi CMS
-1. Navigate to the Strapi directory:
-```bash
-cd cms
-```
-2. Install the required dependencies:
+### 2. Install Dependencies
+
+Navigate to the root directory of the project and install the required dependencies:
+
 ```bash
 npm install
 ```
-3. Copy the example environment file and rename it:
+
+### 3. Set Up the Strapi CMS
+1. Set up a new PostgreSQL database.
+2. Copy the example environment file and rename it:
 ```bash
-cp .env.example .env
+cp cms/.env.example cms/.env
 ```
-4. Set up a new PostgreSQL database.
-5. Update the `.env` file:
+3. Update the `.env` file:
     - Replace secrets with your own secure values.
     - Input your PostgreSQL credentials in the `.env` file.
-### 2.1. Import Data and Generate API Tokens
-1. Import the data by running:
+### 3.1. Import Data and Generate API Tokens
+1. Copy the relative path of the latest data export, located in `cms/database/backup`. You can do this by right-clicking the latest export file in your code editor and selecting **Copy Relative Path**.
+2. Import the data using the following command, replacing `<export-file>` with the path you copied (⚠️ **without** the cms/ prefix):
 ```bash
-npm run strapi import -- --f ./data/latest_data_export
+npx -w cms strapi import -f database/backup/<export-file>
 ```
-- Input the decryption token.
-2. Start the Strapi application:
+Example:
 ```bash
-npm run develop
+npx -w cms strapi import -f database/backup/export_20241008212340.tar.gz.enc
 ```
-3. Open http://localhost:1337/ in your browser and log in.
-4. Navigate to **Settings > API Tokens** and generate a new API token. **Copy the token** for the next steps.
 
-### 3. Run the Main Project
-1. Move to the main project directory:
+3. When prompted, input the decryption token.
+
+### 4. Start the applications
+
+In the project root directory, run the following command to start both the CMS and the frontend application:
+
 ```bash
-cd ../main
+npm run dev:all
 ```
-2. Install the required dependencies:
+
+1. Open http://localhost:1337/admin to access the Strapi admin panel.
+2. Create an account.
+3. Navigate to **Settings** -> **API Tokens**
+4. Generate an API token with these settings:
+    - **Name**: e.g., 'Read Only'
+    - **Description**: Optional
+    - **Token duration**: Recommend 'Unlimited'
+    - **Token type**: 'Read-only'
+5. ⚠️ Copy the token displayed next to the key icon. It will not be shown again.
+6. Copy the environment example file for the main project:
 ```bash
-npm install
+cp main/.env.example main/.env
 ```
-3. Copy the environment example file:
-```bash
-cp .env.example .env
-```
-4. Paste the generated Strapi API token in the `.env` file:
-```bash
+7. Open the newly copied .env file and paste the Strapi API token:
 STRAPI_TOKEN=<your_generated_api_token>
 ```
-5. Start the application:
-```bash
-npm run dev
-```
+
+### 5. Visit the site
+
+Once everything is set up, visit the portfolio site by navigating to http://localhost:3000 in your browser.
