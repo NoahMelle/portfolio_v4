@@ -45,16 +45,16 @@ export async function getHomepageData(locale: string) {
                             }
                         }
                         skills {
-                          skillText
-                          techStack {
-                            heading
-                            techStackSkills {
-                              icon {
-                                url
-                              }
-                              name
+                            skillText
+                            techStack {
+                                heading
+                                techStackSkills {
+                                    icon {
+                                        url
+                                    }
+                                    name
+                                }
                             }
-                          }
                         }
                     }
                 }
@@ -67,6 +67,7 @@ export async function getHomepageData(locale: string) {
     ).data.data.homepage;
 
     const myInfo = await getMyInfo();
+    const skills = await getAllSkills();
 
     const data = new HomepageProps(
         res.jumpToList,
@@ -76,7 +77,10 @@ export async function getHomepageData(locale: string) {
         myInfo.startedProgramming,
         res.aboutMe,
         myInfo.socialLinks,
-        res.skills
+        {
+            ...res.skills,
+            allSkills: skills,
+        }
     );
 
     return data;
@@ -108,4 +112,22 @@ export async function getMyInfo() {
     });
 
     return res.data.data.global.myInfo;
+}
+
+export async function getAllSkills() {
+    const res = await axios({
+        ...apiConfig,
+        data: {
+            query: `
+                query Skills($locale: I18NLocaleCode) {
+                    skills(locale: $locale, pagination: { limit: 100 }, sort: "pride:desc") {
+                        name,
+                        confidenceLevel
+                    }
+                }
+            `,
+        },
+    });
+
+    return res.data.data.skills;
 }

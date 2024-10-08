@@ -32,6 +32,7 @@
     align-items: center;
     justify-content: space-between;
     padding: clamp(1rem, 5vw, 5rem);
+    overflow: hidden;
     @media (max-width: 768px) {
         flex-direction: column;
         justify-content: center;

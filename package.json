@@ -1,0 +1,16 @@
+{
+    "name": "portfolio-v4",
+    "version": "1.0.0",
+    "private": true,
+    "workspaces": [
+        "cms",
+        "main"
+    ],
+    "scripts": {
+        "start:all": "concurrently \"npm run start -w cms\" \"npm run start -w main\"",
+        "dev:all": "concurrently \"npm run develop -w cms\" \"npm run dev -w main\""
+    },
+    "dependencies": {
+        "concurrently": "^9.0.1"
+    }
+}

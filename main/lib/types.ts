@@ -39,11 +39,12 @@ export interface SocialLink {
 export interface SkillsSectionType {
     skillText: string;
     techStack: TechStackType;
+    allSkills: SkillType[];
 }
 
 export interface SkillType {
-    title: string;
-    level: number;
+    name: string;
+    confidenceLevel: number;
 }
 
 export interface TechStackType {
