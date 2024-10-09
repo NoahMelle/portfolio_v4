@@ -13,8 +13,26 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
     const totalPages = React.useRef(
         Math.ceil(skills.allSkills.length / skillsPerPage)
     );
-
+    const skillContainerRef = React.useRef<HTMLDivElement>(null);
+    const [touchstartX, setTouchstartX] = React.useState(0);
+    const [touchendX, setTouchendX] = React.useState(0);
     const [showingSkills, setShowingSkills] = React.useState<SkillType[]>([]);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchstartX(e.touches[0].clientX);
+    };
+
+    const handleTouchEnd = (e: React.TouchEvent) => {
+        setTouchendX(e.changedTouches[0].clientX);
+    };
+
+    React.useEffect(() => {
+        if (touchendX < touchstartX) {
+            handlePrevNext(1);
+        } else if (touchendX > touchstartX) {
+            handlePrevNext(-1);
+        }
+    }, [touchendX]);
 
     React.useEffect(() => {
         const newSkills = skills.allSkills.filter(
@@ -71,6 +89,8 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                         style={{
                             gridTemplateRows: `repeat(${skillsPerPage}, 1fr)`,
                         }}
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}
                     >
                         {showingSkills.map((skill, i) => (
                             <div key={i} className={styles.skill}>
