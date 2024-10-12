@@ -26,7 +26,7 @@ export default async function Home() {
             {link.title === "About" ? (
                 <AboutMe aboutMe={homepageData.aboutMe} />
             ) : link.title === "Skills" ? (
-                <Skills skills={homepageData.skills}/>
+                <Skills skills={homepageData.skills} />
             ) : (
                 <div>Content for {link.title}</div>
             )}
@@ -34,14 +34,12 @@ export default async function Home() {
     ));
 
     return (
-        <div className={styles.sectionContainer}>
-            <header className={styles.hero}>
+        <div className={`${styles.sectionContainer}`} id="section-container">
+            <header className={`${styles.hero}`}>
                 <div className={styles.heroContent}>
                     <div className="flex flex-col gap-3">
                         <h2 className={styles.heroHeader}>
-                        <TextReveal
-                                text={homepageData.hero.title}
-                            />
+                            <TextReveal text={homepageData.hero.title} />
                         </h2>
                         <SlideFromLeft delay={0.3}>
                             <p>{homepageData.hero.subheading}</p>
