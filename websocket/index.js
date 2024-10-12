@@ -8,35 +8,33 @@ const server = http.createServer((req, res) => {
 
 function generateRandomUsername() {
     const adjectives = [
-        "happy",
-        "sad",
-        "angry",
-        "sleepy",
-        "hungry",
-        "thirsty",
-        "bored",
-        "excited",
-        "tired",
-        "silly",
+        "Happy",
+        "Sad",
+        "Angry",
+        "Excited",
+        "Silly",
+        "Grumpy",
+        "Sleepy",
+        "Hungry",
+        "Tired",
     ];
     const nouns = [
-        "dog",
-        "cat",
-        "rabbit",
-        "bird",
-        "fish",
-        "turtle",
-        "hamster",
-        "snake",
-        "lizard",
-        "frog",
+        "Panda",
+        "Cat",
+        "Dog",
+        "Elephant",
+        "Tiger",
+        "Lion",
+        "Bear",
+        "Wolf",
+        "Fox",
+        "Rabbit",
+
     ];
     const randomAdjective =
         adjectives[Math.floor(Math.random() * adjectives.length)];
     const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
-    return `${randomAdjective}${randomNoun[0].toUpperCase()}${randomNoun.slice(
-        1
-    )}`;
+    return `${randomAdjective}${randomNoun}`;
 }
 
 const pastelColors = ["#BFB2F3", "#96CAF7", "#9CDCAA", "#E5E1AB", "#F3C6A5"];

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     const [ws, setWs] = React.useState<WebSocket | null>(null);
@@ -48,6 +49,10 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                                 newCursors.delete(data.username);
                                 return newCursors;
                             });
+                            toast.error(`${data.username} disconnected.`, {
+                                description: "Their cursor is no longer visible.",
+                                closeButton: true,
+                            });
                             break;
                     }
                 }
@@ -57,10 +62,6 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         }
 
         window.addEventListener("mousemove", (event) => {
-            // const bodyHeight = Math.max(document.body.clientHeight, document.getElementById("section-container")?.scrollHeight || 0);
-            // const bodyWidth = document.body.clientWidth;
-            // const scrollY = Math.max(window.scrollY, document.getElementById("section-container")?.scrollTop || 0);
-            // const scrollX = window.scrollX;
             const bodyHeight = window.innerHeight;
             const bodyWidth = window.innerWidth;
             const x = (event.clientX / bodyWidth) * 100;
@@ -127,16 +128,22 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                         x="0px"
                         y="0px"
                         viewBox="0 0 800 800"
-                        xmlSpace="preserve"
-                        height={20}
                         width={20}
+                        height={20}
+                        xmlSpace="preserve"
                     >
                         <path
-                            d="M5,61.3l273.6,704.3c0,0,41.2,79.4,78.8-2.9c32.3-70.8,125.7-278.5,125.7-278.5l291.4-132.8c0,0,69.3-49.3-18.8-79.9
-S75.5,13.1,75.5,13.1S-16.1-26.8,5,61.3z"
-                            fill={props.color}
+                            d="M63.8,111.9l233,599.8c0,0,35.1,67.6,67.1-2.5C391.4,648.9,470.9,472,470.9,472l248.2-113.1c0,0,59-42-16-68
+	S123.8,70.8,123.8,70.8S45.8,36.8,63.8,111.9z"
+                            fill={`rgba(${hexToRgb(props.color)?.r}, ${hexToRgb(
+                                props.color
+                            )?.g}, ${hexToRgb(props.color)?.b}, 0.8)`}
+                            stroke={props.color}
+                            strokeWidth="2"
+                            vectorEffect={"non-scaling-stroke"}
                         />
                     </svg>
+
                     <h3
                         className="px-2 rounded-full ml-[15px] mt-[-5px]"
                         style={{

@@ -4,6 +4,7 @@ import { getMessages } from "next-intl/server";
 import "../globals.css"
 import localFont from 'next/font/local'
 import CursorTracker from "@/Components/custom/CursorTracker";
+import { Toaster } from "@/Components/ui/sonner";
 
 const authorFont = localFont({src: "../fonts/Author-Variable.ttf"})
 
@@ -34,6 +35,7 @@ export default async function LocaleLayout({
                     {children}
                 </NextIntlClientProvider>
                 <CursorTracker wsUrl={`${wsProtocol}://${wsHost}:${wsPort}`} />
+                <Toaster />
             </body>
         </html>
     );

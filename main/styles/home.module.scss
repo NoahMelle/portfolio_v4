@@ -142,6 +142,13 @@
     gap: 3rem;
 }
 
+.sectionContainer {
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    scrollbar-width: none;
+}
+
 @media (min-width: $tabletBreakpoint) {
     .sectionContainer {
         height: 100dvh;
