@@ -13,6 +13,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         new Map<string, { x: number; y: number; color: string }>()
     );
     const isAllowed = React.useRef(true);
+    const sectionContainerRef = React.useRef<HTMLElement | null>(null);
 
     function hexToRgb(hex: string) {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -26,6 +27,8 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     }
 
     React.useEffect(() => {
+        sectionContainerRef.current =
+            document.getElementById("section-container");
         if (!wsRef.current) {
             const ws = new WebSocket(wsUrl);
             ws.onmessage = (event) => {
@@ -50,7 +53,8 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                                 return newCursors;
                             });
                             toast.error(`${data.username} disconnected.`, {
-                                description: "Their cursor is no longer visible.",
+                                description:
+                                    "Their cursor is no longer visible.",
                                 closeButton: true,
                             });
                             break;
@@ -62,10 +66,18 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         }
 
         window.addEventListener("mousemove", (event) => {
-            const bodyHeight = window.innerHeight;
+            const bodyHeight = Math.max(
+                sectionContainerRef.current?.scrollHeight || 0,
+                window.innerHeight
+            );
             const bodyWidth = window.innerWidth;
+
+            const scrollY = sectionContainerRef.current?.scrollTop || 0;
+
+            console.log("scrollY", scrollY, bodyHeight);
+
             const x = (event.clientX / bodyWidth) * 100;
-            const y = (event.clientY / bodyHeight) * 100;
+            const y = ((event.clientY + scrollY) / bodyHeight) * 100;
             setCursor({ x, y });
         });
 
@@ -100,25 +112,13 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     return (
         <>
             {Array.from(otherCursors).map(([username, props]) => (
-                // <Image
-                //     key={username}
-                //     style={{
-                //         position: "fixed",
-                //         top: `${position.y}%`,
-                //         left: `${position.x}%`,
-                //     }}
-                //     src="/icons/cursor.svg"
-                //     alt="cursor"
-                //     width={20}
-                //     height={20}
-                // />
                 <div
                     key={username}
                     style={{
-                        position: "fixed",
                         top: `${props.y}%`,
                         left: `${props.x}%`,
                     }}
+                    className="absolute"
                 >
                     <svg
                         version="1.1"
@@ -135,9 +135,9 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                         <path
                             d="M63.8,111.9l233,599.8c0,0,35.1,67.6,67.1-2.5C391.4,648.9,470.9,472,470.9,472l248.2-113.1c0,0,59-42-16-68
 	S123.8,70.8,123.8,70.8S45.8,36.8,63.8,111.9z"
-                            fill={`rgba(${hexToRgb(props.color)?.r}, ${hexToRgb(
-                                props.color
-                            )?.g}, ${hexToRgb(props.color)?.b}, 0.8)`}
+                            fill={`rgba(${hexToRgb(props.color)?.r}, ${
+                                hexToRgb(props.color)?.g
+                            }, ${hexToRgb(props.color)?.b}, 0.8)`}
                             stroke={props.color}
                             strokeWidth="2"
                             vectorEffect={"non-scaling-stroke"}

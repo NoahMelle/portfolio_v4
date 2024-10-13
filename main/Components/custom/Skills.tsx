@@ -99,7 +99,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                                 </div>
                                 <div className="h-7 border-black border-[1px]">
                                     <div
-                                        className="h-full bg-black transition-all duration-[500ms]"
+                                        className="h-full bg-black transition-all duration-500"
                                         style={{
                                             width: `${skill.confidenceLevel}%`,
                                         }}
@@ -127,7 +127,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                                 length: totalPages.current,
                             }).map((e, i) => (
                                 <button
-                                    className={`block h-[6px] basis-[6px] bg-black transition-all duration-[500ms] ${
+                                    className={`block h-[6px] basis-[6px] bg-black transition-all ${
                                         currentSkillPage === i ? "grow" : ""
                                     }`}
                                     onClick={() => setCurrentSkillPage(i)}
