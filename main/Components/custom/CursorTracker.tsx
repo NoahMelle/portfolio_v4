@@ -58,6 +58,12 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                                 closeButton: true,
                             });
                             break;
+                        case "connect":
+                            toast.success(`${data.username} connected.`, {
+                                description: "Their cursor is now visible.",
+                                closeButton: true,
+                            });
+                            break;
                     }
                 }
             };
@@ -98,7 +104,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
             isAllowed.current = false;
             setTimeout(() => {
                 isAllowed.current = true;
-            }, 10);
+            }, 50);
         }
 
         return () => {
@@ -118,7 +124,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                         top: `${props.y}%`,
                         left: `${props.x}%`,
                     }}
-                    className="absolute"
+                    className="absolute transition-all duration-50"
                 >
                     <svg
                         version="1.1"
@@ -145,13 +151,13 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                     </svg>
 
                     <h3
-                        className="px-2 rounded-full ml-[15px] mt-[-5px]"
+                        className="px-2 rounded-full ml-[15px] mt-[-5px] backdrop-blur-sm select-none"
                         style={{
                             backgroundColor: `rgba(${
                                 hexToRgb(props.color)?.r
                             }, ${hexToRgb(props.color)?.g}, ${
                                 hexToRgb(props.color)?.b
-                            }, 0.8)`,
+                            }, 0.7)`,
                             border: `2px solid ${props.color}`,
                         }}
                     >

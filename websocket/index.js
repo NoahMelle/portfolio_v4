@@ -74,11 +74,12 @@ wss.on("connection", (ws) => {
         }
     });
 
-    ws.send(
-        JSON.stringify({
-            type: "hello",
-            message: "Hello from the server!",
-        })
+    broadcastMessage(
+        {
+            type: "connect",
+            username: metadata.username,
+        },
+        ws
     );
 
     ws.on("close", () => {
