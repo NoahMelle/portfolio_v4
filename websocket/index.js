@@ -29,7 +29,6 @@ function generateRandomUsername() {
         "Wolf",
         "Fox",
         "Rabbit",
-
     ];
     const randomAdjective =
         adjectives[Math.floor(Math.random() * adjectives.length)];
@@ -43,11 +42,22 @@ const wss = new WebSocket.Server({ server });
 
 const clients = new Map();
 
+let inactivityTimeout;
+let inactivityCheckInterval = 15000;
+const IDLE_TRESHOLD = 30000;
+
 wss.on("connection", (ws) => {
     const metadata = {
         username: generateRandomUsername(),
-        color: `${pastelColors[Math.floor(Math.random() * pastelColors.length)]}`,
+        color: `${
+            pastelColors[Math.floor(Math.random() * pastelColors.length)]
+        }`,
+        lastMove: new Date().getTime(),
     };
+
+    if (!inactivityTimeout) {
+        startInactivityCheck();
+    }
 
     console.log("Client connected");
     clients.set(ws, metadata);
@@ -61,6 +71,11 @@ wss.on("connection", (ws) => {
 
         switch (message.type) {
             case "cursor":
+                // Update the last move time
+                clients.set(ws, {
+                    ...metadata,
+                    lastMove: new Date().getTime(),
+                });
                 broadcastMessage(
                     {
                         type: "cursor",
@@ -83,6 +98,10 @@ wss.on("connection", (ws) => {
     );
 
     ws.on("close", () => {
+        if (clients.size === 0) {
+            stopInactivityCheck();
+        }
+
         console.log("Client disconnected");
         clients.delete(ws);
         broadcastMessage(
@@ -95,9 +114,42 @@ wss.on("connection", (ws) => {
     });
 });
 
+function startInactivityCheck() {
+    if (inactivityTimeout) {
+        return;
+    }
+
+    inactivityTimeout = setInterval(
+        checkInactiveClients,
+        inactivityCheckInterval
+    );
+}
+
+function stopInactivityCheck() {
+    console.log("Stopping inactivity check");
+    clearInterval(inactivityTimeout);
+    inactivityTimeout = null;
+}
+
+function checkInactiveClients() {
+    console.log("Checking inactive clients");
+    const now = new Date();
+    for (const [client, metadata] of clients.entries()) {
+        if (now - metadata.lastMove > IDLE_TRESHOLD) {
+            client.send(
+                JSON.stringify({
+                    type: "idle",
+                })
+            );
+            client.terminate();
+            clients.delete(client);
+        }
+    }
+}
+
 function broadcastMessage(message, sender) {
     [...clients.keys()].forEach((client) => {
-        if (client !== sender) {
+        if (client !== sender && client.readyState === WebSocket.OPEN) {
             client.send(JSON.stringify(message));
         }
     });

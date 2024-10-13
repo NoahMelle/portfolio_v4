@@ -29,67 +29,25 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     React.useEffect(() => {
         sectionContainerRef.current =
             document.getElementById("section-container");
+
         if (!wsRef.current) {
-            const ws = new WebSocket(wsUrl);
-            ws.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                if (data.type) {
-                    switch (data.type) {
-                        case "cursor":
-                            setOtherCursors((prev) => {
-                                const newCursors = new Map(prev);
-                                newCursors.set(data.username, {
-                                    ...data.position,
-                                    color: data.color,
-                                });
-                                // console.log(data, newCursors);
-                                return newCursors;
-                            });
-                            break;
-                        case "disconnect":
-                            setOtherCursors((prev) => {
-                                const newCursors = new Map(prev);
-                                newCursors.delete(data.username);
-                                return newCursors;
-                            });
-                            toast.error(`${data.username} disconnected.`, {
-                                description:
-                                    "Their cursor is no longer visible.",
-                                closeButton: true,
-                            });
-                            break;
-                        case "connect":
-                            toast.success(`${data.username} connected.`, {
-                                description: "Their cursor is now visible.",
-                                closeButton: true,
-                            });
-                            break;
-                    }
-                }
-            };
-            setWs(ws);
-            wsRef.current = ws;
+            connect();
         }
 
         window.addEventListener("mousemove", (event) => {
-            const bodyHeight = Math.max(
-                sectionContainerRef.current?.scrollHeight || 0,
-                window.innerHeight
-            );
-            const bodyWidth = window.innerWidth;
+            handleMouseMove(event);
+        });
 
-            const scrollY = sectionContainerRef.current?.scrollTop || 0;
-
-            console.log("scrollY", scrollY, bodyHeight);
-
-            const x = (event.clientX / bodyWidth) * 100;
-            const y = ((event.clientY + scrollY) / bodyHeight) * 100;
-            setCursor({ x, y });
+        window.addEventListener("wheel", (event) => {
+            handleMouseMove(event);
+            console.log("wheel");
+            console.log(event.clientY);
         });
 
         return () => {
             ws?.close();
             window.removeEventListener("mousemove", () => {});
+            window.removeEventListener("wheel", () => {});
         };
     }, []);
 
@@ -105,6 +63,8 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
             setTimeout(() => {
                 isAllowed.current = true;
             }, 50);
+        } else if (ws?.readyState === WebSocket.CLOSED) {
+            connect();
         }
 
         return () => {
@@ -115,6 +75,70 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         };
     }, [cursor]);
 
+    function connect() {
+        const ws = new WebSocket(wsUrl);
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.type) {
+                switch (data.type) {
+                    case "cursor":
+                        setOtherCursors((prev) => {
+                            const newCursors = new Map(prev);
+                            newCursors.set(data.username, {
+                                ...data.position,
+                                color: data.color,
+                            });
+                            // console.log(data, newCursors);
+                            return newCursors;
+                        });
+                        break;
+                    case "disconnect":
+                        setOtherCursors((prev) => {
+                            const newCursors = new Map(prev);
+                            newCursors.delete(data.username);
+                            return newCursors;
+                        });
+                        toast.error(`${data.username} disconnected.`, {
+                            description: "Their cursor is no longer visible.",
+                            closeButton: true,
+                        });
+                        break;
+                    case "connect":
+                        toast.success(`${data.username} connected.`, {
+                            description: "Their cursor is now visible.",
+                            closeButton: true,
+                        });
+                        break;
+                    case "idle":
+                        toast.error("You have been disconnected.", {
+                            description:
+                                "You were idle for too long. Please refresh the page to reconnect.",
+                            closeButton: true,
+                        });
+                        ws.close();
+                        setOtherCursors(new Map());
+                        break;
+                }
+            }
+        };
+        setWs(ws);
+        wsRef.current = ws;
+    }
+
+    function handleMouseMove(event: MouseEvent | WheelEvent) {
+        const bodyHeight = Math.max(
+            sectionContainerRef.current?.scrollHeight || 0,
+            window.innerHeight
+        );
+        const bodyWidth = window.innerWidth;
+
+        const scrollY = sectionContainerRef.current?.scrollTop || 0;
+
+        const x = (event.clientX / bodyWidth) * 100;
+        const y = ((event.clientY + scrollY) / bodyHeight) * 100;
+        setCursor({ x, y });
+    }
+
     return (
         <>
             {Array.from(otherCursors).map(([username, props]) => (
@@ -124,7 +148,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                         top: `${props.y}%`,
                         left: `${props.x}%`,
                     }}
-                    className="absolute transition-all duration-50"
+                    className="absolute transition-all duration-50 -translate-y-[100vh] md:translate-y-0"
                 >
                     <svg
                         version="1.1"
