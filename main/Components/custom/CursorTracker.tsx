@@ -14,6 +14,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     );
     const isAllowed = React.useRef(true);
     const sectionContainerRef = React.useRef<HTMLElement | null>(null);
+    const invisibleDivRef = React.useRef<HTMLElement | null>(null);
 
     function hexToRgb(hex: string) {
         var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -29,6 +30,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     React.useEffect(() => {
         sectionContainerRef.current =
             document.getElementById("section-container");
+        invisibleDivRef.current = document.getElementById("invisible-div");
 
         if (!wsRef.current) {
             connect();
@@ -40,8 +42,6 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
 
         window.addEventListener("wheel", (event) => {
             handleMouseMove(event);
-            console.log("wheel");
-            console.log(event.clientY);
         });
 
         return () => {
@@ -121,21 +121,36 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                 }
             }
         };
+        ws.onopen = () => {
+            toast.success("Connected to server.", {
+                description: "You can now see other users' cursors.",
+                closeButton: true,
+            });
+        };
         setWs(ws);
         wsRef.current = ws;
     }
 
     function handleMouseMove(event: MouseEvent | WheelEvent) {
         const bodyHeight = Math.max(
-            sectionContainerRef.current?.scrollHeight || 0,
-            window.innerHeight
+            sectionContainerRef.current?.scrollHeight || 0
+            // (invisibleDivRef.current?.offsetHeight || 0),
+            // window.innerHeight
         );
+
+        console.log(bodyHeight);
+
         const bodyWidth = window.innerWidth;
 
-        const scrollY = sectionContainerRef.current?.scrollTop || 0;
+        const scrollY = Math.max(
+            sectionContainerRef.current?.scrollTop || 0,
+            document.documentElement.scrollTop,
+            window.scrollY
+        );
 
         const x = (event.clientX / bodyWidth) * 100;
         const y = ((event.clientY + scrollY) / bodyHeight) * 100;
+
         setCursor({ x, y });
     }
 
@@ -148,7 +163,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                         top: `${props.y}%`,
                         left: `${props.x}%`,
                     }}
-                    className="absolute transition-all duration-50 -translate-y-[100vh] md:translate-y-0"
+                    className="absolute transition-all duration-50"
                 >
                     <svg
                         version="1.1"

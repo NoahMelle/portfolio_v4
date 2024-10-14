@@ -8,6 +8,8 @@ import SlideFromLeft from "@/Components/reusable/SlideFromLeft";
 import TextReveal from "@/Components/reusable/gsap/TextReveal";
 import Skills from "@/Components/custom/Skills";
 import CursorTracker from "@/Components/custom/CursorTracker";
+import bgImage from "@/public/img/backgrounds/patterngrid.png";
+import Image from "next/image";
 
 export enum TextRevealType {
     "h1",
@@ -42,6 +44,13 @@ export default async function Home() {
         <div className={`${styles.sectionContainer}`} id="section-container">
             <div className={styles.sectionWrapper}>
                 <header className={`${styles.hero}`}>
+                    <div className="h-full w-full overflow-hidden absolute left-0 top-0 -z-10">
+                        <Image
+                            src={bgImage}
+                            alt="background"
+                            className={`absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] h-full w-[1400px] max-w-none object-contain ${styles.backgroundImage}`}
+                        />
+                    </div>
                     <div className={styles.heroContent}>
                         <div className="flex flex-col gap-3">
                             <h2 className={styles.heroHeader}>
@@ -84,7 +93,7 @@ export default async function Home() {
                         </Marquee>
                     </div>
                 </header>
-                <div className={styles.invisibleDiv}></div>
+                <div className={styles.invisibleDiv} id="invisible-div"></div>
                 {sections}
                 <CursorTracker wsUrl={`${wsProtocol}://${wsHost}:${wsPort}`} />
             </div>

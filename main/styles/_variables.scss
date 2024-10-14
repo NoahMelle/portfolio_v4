@@ -4,3 +4,17 @@ $bigHeaderSize: clamp(3rem, 5vw, 5rem);
 $h3Heading: clamp(1.5rem, 2.5vw, 2.5rem);
 
 $tabletBreakpoint: 768px;
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: .7;
+    }
+}
+
+@mixin colorShadow($color, $opacity: 1) {
+    background-color: rgba($color, $opacity);
+    box-shadow: 0 0 75px 75px rgba($color, $opacity);
+}

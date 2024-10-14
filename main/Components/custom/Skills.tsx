@@ -54,13 +54,13 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
     };
 
     return (
-        <div className="flex flex-col md:flex-row gap-8 md:gap-16">
+        <div className={`flex flex-col md:flex-row gap-8 md:gap-16`}>
             <div className="basis-full">
                 <div className="max-w-[600px] flex flex-col gap-8 md:gap-16">
                     <div className="text-lg">
                         <Markdown>{skills.skillText}</Markdown>
                     </div>
-                    <div className="flex flex-col gap-4">
+                    <div className={`flex flex-col gap-4`}>
                         <h3 className="text-xl font-semibold">
                             {skills.techStack.heading}
                         </h3>
@@ -82,8 +82,8 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                     </div>
                 </div>
             </div>
-            <div className="basis-full flex items-center justify-end">
-                <div className=" max-w-[600px] w-full">
+            <div className={`basis-full flex items-center justify-end`}>
+                <div className={`max-w-[600px] w-full  ${styles.skillsContainer}`}>
                     <div
                         className="grid gap-10 grid-cols-[1fr]"
                         style={{

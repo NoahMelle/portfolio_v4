@@ -23,7 +23,11 @@
     height: 100dvh;
     position: sticky;
     top: 0;
+    background-position: center;
     z-index: 0;
+    .backgroundImage {
+        animation: fadeIn 1s forwards;
+    }
 }
 
 .heroContent {
@@ -43,6 +47,7 @@
     width: 100%;
     max-width: 500px;
     font-size: $lgFont;
+    @include colorShadow(#ffffff, 0.5);
     .jumpToHeader {
         text-transform: uppercase;
         text-align: right;
@@ -77,6 +82,7 @@
     padding: clamp(1rem, 5vw, 5rem);
     padding-bottom: 3rem;
     scroll-snap-align: start;
+    background-position: center;
     .sectionTop {
         display: flex;
         align-items: center;
@@ -112,6 +118,9 @@
         }
     }
     &:not(:nth-child(even)) {
+        .backgroundImage {
+            opacity: .3;
+        }
         ::selection {
             background-color: white;
             color: black;
@@ -156,12 +165,18 @@
         overflow-y: scroll;
     }
     .invisibleDiv {
-        height: 100dvh;
-        width: 100%;
-        position: relative;
-        z-index: -1;
+        margin-top: 0;
         scroll-snap-align: start;
     }
+}
+
+.invisibleDiv {
+    height: 100dvh;
+    width: 100%;
+    position: relative;
+    z-index: -1;
+    margin-top: -100vh;
+
 }
 
 .h3Heading {
@@ -171,4 +186,8 @@
 
 .sectionWrapper {
     position: relative;
+}
+
+.skillsContainer {
+    @include colorShadow(#ffffff, 0.8);
 }
