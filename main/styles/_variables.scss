@@ -2,6 +2,7 @@ $xlFont: clamp(1.5rem, 2.5vw, 2.5rem);
 $lgFont: clamp(1rem, 2vw, 1.5rem);
 $bigHeaderSize: clamp(3rem, 5vw, 5rem);
 $h3Heading: clamp(1.5rem, 2.5vw, 2.5rem);
+$h2Heading: clamp(2.5rem, 3vw, 4rem);
 
 $tabletBreakpoint: 768px;
 
@@ -31,4 +32,30 @@ $tabletBreakpoint: 768px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax($min, $max));
     gap: 2rem;
+}
+
+@mixin overlayShine($color) {
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, $color, transparent);
+        background-size: 200%;
+        z-index: 2;
+        animation: shine 4s infinite linear;
+        transform: rotate(-135deg);
+    }
+}
+
+@keyframes shine {
+    0% {
+        background-position: -200%;
+    }
+    100% {
+        background-position: 200%;
+    }
 }

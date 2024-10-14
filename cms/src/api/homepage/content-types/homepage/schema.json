@@ -67,6 +67,16 @@
         }
       },
       "component": "components.skills"
+    },
+    "testimonials": {
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "components.testimonials"
     }
   }
 }

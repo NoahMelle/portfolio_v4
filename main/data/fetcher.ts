@@ -56,6 +56,9 @@ export async function getHomepageData(locale: string) {
                                 }
                             }
                         }
+                        testimonials {
+                            testimonialHeading
+                        }
                     }
                 }
             `,
@@ -82,7 +85,10 @@ export async function getHomepageData(locale: string) {
             ...res.skills,
             allSkills: skills,
         },
-        testimonials,
+        {
+            ...res.testimonials,
+            testimonials,
+        }
     );
 
     return data;

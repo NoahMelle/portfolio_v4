@@ -40,14 +40,14 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
             handleMouseMove(event);
         });
 
-        window.addEventListener("wheel", (event) => {
+        window.addEventListener("scroll", (event) => {
             handleMouseMove(event);
         });
 
         return () => {
             ws?.close();
             window.removeEventListener("mousemove", () => {});
-            window.removeEventListener("wheel", () => {});
+            window.removeEventListener("scroll", () => {});
         };
     }, []);
 
@@ -112,12 +112,17 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                     case "idle":
                         toast.error("You have been disconnected.", {
                             description:
-                                "You were idle for too long. Please refresh the page to reconnect.",
+                                "You were idle for too long. Please move your cursor to reconnect.",
                             closeButton: true,
                         });
                         ws.close();
                         setOtherCursors(new Map());
                         break;
+                    case "pong":
+                        toast.success("Pong!", {
+                            description: "You are still connected to the server.",
+                            closeButton: true,
+                        });
                 }
             }
         };
@@ -131,25 +136,38 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         wsRef.current = ws;
     }
 
-    function handleMouseMove(event: MouseEvent | WheelEvent) {
-        const bodyHeight = Math.max(
-            sectionContainerRef.current?.scrollHeight || 0
-            // (invisibleDivRef.current?.offsetHeight || 0),
-            // window.innerHeight
-        );
+    function handleMouseMove(event: Event) {
+        if (event instanceof MouseEvent) {
+            const bodyHeight = Math.max(
+                sectionContainerRef.current?.scrollHeight || 0
+                // (invisibleDivRef.current?.offsetHeight || 0),
+                // window.innerHeight
+            );
 
-        const bodyWidth = window.innerWidth;
+            const bodyWidth = window.innerWidth;
 
-        const scrollY = Math.max(
-            sectionContainerRef.current?.scrollTop || 0,
-            document.documentElement.scrollTop,
-            window.scrollY
-        );
+            const scrollY = Math.max(
+                sectionContainerRef.current?.scrollTop || 0,
+                document.documentElement.scrollTop,
+                window.scrollY
+            );
+            const x = (event.clientX / bodyWidth) * 100;
+            const y = ((event.clientY + scrollY) / bodyHeight) * 100;
 
-        const x = (event.clientX / bodyWidth) * 100;
-        const y = ((event.clientY + scrollY) / bodyHeight) * 100;
-
-        setCursor({ x, y });
+            setCursor({ x, y });
+        } else {
+            if (wsRef.current?.readyState === WebSocket.OPEN && isAllowed.current) {
+                wsRef.current?.send(
+                    JSON.stringify({
+                        type: "ping",
+                    })
+                );
+                isAllowed.current = false;
+                setTimeout(() => {
+                    isAllowed.current = true;
+                }, 2000);
+            }
+        }
     }
 
     return (

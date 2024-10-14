@@ -3,14 +3,14 @@
 import React, { useEffect, useRef } from "react";
 import styles from "@/styles/home.module.scss";
 import Markdown from "react-markdown";
-import { TestimonialType } from "@/lib/types";
+import { TestimonialsSectionType } from "@/lib/types";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 export default function Testimonials({
     testimonials,
 }: {
-    testimonials: TestimonialType[];
+    testimonials: TestimonialsSectionType;
 }) {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,9 +50,12 @@ export default function Testimonials({
     }, []);
 
     return (
-        <div className={`${styles.testimonialContainer}`} ref={containerRef}>
-            <div className="testimonials">
-                {testimonials.map((testimonial, i) => (
+        <div ref={containerRef}>
+            <h2 className={styles.sectionHeading}>
+                {testimonials.testimonialHeading}
+            </h2>
+            <div className={`${styles.testimonialContainer} testimonials`}>
+                {testimonials.testimonials.map((testimonial, i) => (
                     <div
                         className={`${styles.testimonialWrapper} stagger`}
                         key={i}

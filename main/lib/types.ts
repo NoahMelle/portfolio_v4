@@ -63,3 +63,8 @@ export interface TestimonialType {
     testimonialRole: { name: string };
     image: { url: string };
 }
+
+export interface TestimonialsSectionType {
+    testimonialHeading: string;
+    testimonials: TestimonialType[];
+}

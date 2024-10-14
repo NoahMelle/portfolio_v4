@@ -71,7 +71,6 @@ wss.on("connection", (ws) => {
 
         switch (message.type) {
             case "cursor":
-                // Update the last move time
                 clients.set(ws, {
                     ...metadata,
                     lastMove: new Date().getTime(),
@@ -85,6 +84,12 @@ wss.on("connection", (ws) => {
                     },
                     ws
                 );
+                break;
+            case "ping":
+                clients.set(ws, {
+                    ...metadata,
+                    lastMove: new Date().getTime(),
+                });
                 break;
         }
     });
