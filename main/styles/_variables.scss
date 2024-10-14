@@ -18,3 +18,17 @@ $tabletBreakpoint: 768px;
     background-color: rgba($color, $opacity);
     box-shadow: 0 0 75px 75px rgba($color, $opacity);
 }
+
+@mixin glassMorhpism($color, $opacity: 1) {
+    background-color: rgba($color, $opacity);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 1rem;
+    border: 1px solid lighten($color, 10%);
+}
+
+@mixin responsiveGrid($min, $max) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($min, $max));
+    gap: 2rem;
+}

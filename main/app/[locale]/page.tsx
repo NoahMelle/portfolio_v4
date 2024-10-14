@@ -10,6 +10,9 @@ import Skills from "@/Components/custom/Skills";
 import CursorTracker from "@/Components/custom/CursorTracker";
 import bgImage from "@/public/img/backgrounds/patterngrid.png";
 import Image from "next/image";
+import Markdown from "react-markdown";
+import Stagger from "@/Components/reusable/gsap/Stagger";
+import Testimonials from "@/Components/custom/Testimonials";
 
 export enum TextRevealType {
     "h1",
@@ -34,6 +37,8 @@ export default async function Home() {
                 <AboutMe aboutMe={homepageData.aboutMe} />
             ) : link.title === "Skills" ? (
                 <Skills skills={homepageData.skills} />
+            ) : link.title === "Testimonials" ? (
+                <Testimonials testimonials={homepageData.testimonials} />
             ) : (
                 <div>Content for {link.title}</div>
             )}
@@ -41,7 +46,7 @@ export default async function Home() {
     ));
 
     return (
-        <div className={`${styles.sectionContainer}`} id="section-container">
+        <div className={`${styles.sectionContainer} section-scroll`} id="section-container">
             <div className={styles.sectionWrapper}>
                 <header className={`${styles.hero}`}>
                     <div className="h-full w-full overflow-hidden absolute left-0 top-0 -z-10">

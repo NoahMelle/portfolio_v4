@@ -1,41 +1,5 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
-export interface UtilsString extends Struct.ComponentSchema {
-  collectionName: 'components_utils_strings';
-  info: {
-    displayName: 'String';
-  };
-  attributes: {
-    value: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
-export interface UtilsLink extends Struct.ComponentSchema {
-  collectionName: 'components_utils_links';
-  info: {
-    displayName: 'Link';
-  };
-  attributes: {
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    url: Schema.Attribute.String & Schema.Attribute.Required;
-    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-  };
-}
-
-export interface UtilsIconLink extends Struct.ComponentSchema {
-  collectionName: 'components_utils_icon_links';
-  info: {
-    displayName: 'Icon Link';
-    description: '';
-  };
-  attributes: {
-    url: Schema.Attribute.String & Schema.Attribute.Required;
-    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    icon: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    alt: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
 export interface ComponentsTechStack extends Struct.ComponentSchema {
   collectionName: 'components_components_tech_stacks';
   info: {
@@ -133,12 +97,45 @@ export interface ComponentsAboutMeText extends Struct.ComponentSchema {
   };
 }
 
+export interface UtilsString extends Struct.ComponentSchema {
+  collectionName: 'components_utils_strings';
+  info: {
+    displayName: 'String';
+  };
+  attributes: {
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface UtilsLink extends Struct.ComponentSchema {
+  collectionName: 'components_utils_links';
+  info: {
+    displayName: 'Link';
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+  };
+}
+
+export interface UtilsIconLink extends Struct.ComponentSchema {
+  collectionName: 'components_utils_icon_links';
+  info: {
+    displayName: 'Icon Link';
+    description: '';
+  };
+  attributes: {
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    icon: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    alt: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'utils.string': UtilsString;
-      'utils.link': UtilsLink;
-      'utils.icon-link': UtilsIconLink;
       'components.tech-stack': ComponentsTechStack;
       'components.skills': ComponentsSkills;
       'components.my-info': ComponentsMyInfo;
@@ -147,6 +144,9 @@ declare module '@strapi/strapi' {
       'components.heading': ComponentsHeading;
       'components.about-me': ComponentsAboutMe;
       'components.about-me-text': ComponentsAboutMeText;
+      'utils.string': UtilsString;
+      'utils.link': UtilsLink;
+      'utils.icon-link': UtilsIconLink;
     }
   }
 }

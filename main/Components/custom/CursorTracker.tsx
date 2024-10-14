@@ -138,8 +138,6 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
             // window.innerHeight
         );
 
-        console.log(bodyHeight);
-
         const bodyWidth = window.innerWidth;
 
         const scrollY = Math.max(

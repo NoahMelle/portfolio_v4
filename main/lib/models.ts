@@ -1,4 +1,4 @@
-import { JumpToListType, HeroType, MarqueeType, AboutMeType, SocialLink, SkillsSectionType } from "./types";
+import { JumpToListType, HeroType, MarqueeType, AboutMeType, SocialLink, SkillsSectionType, TestimonialType } from "./types";
 import { getAgeFromBday } from "./utils";
 import { getYearsDiff } from "./utils";
 
@@ -10,6 +10,7 @@ export class HomepageProps {
     marquee: MarqueeType;
     aboutMe: AboutMeType;
     skills: SkillsSectionType;
+    testimonials: TestimonialType[];
 
     constructor(
         jumpToList: JumpToListType,
@@ -20,6 +21,7 @@ export class HomepageProps {
         aboutMe: AboutMeType,
         socialLinks: SocialLink[],
         skills: SkillsSectionType,
+        testimonials: TestimonialType[]
     ) {
         const birthDate = new Date(dateOfBirth); // Parse once
         const age = getAgeFromBday(birthDate);
@@ -64,6 +66,13 @@ export class HomepageProps {
                 },
             }))
         };
+        this.testimonials = testimonials.map((testimonial) => ({
+            ...testimonial,
+            image: {
+                ...testimonial.image,
+                url: (process.env.BASEURL_API ?? "") + testimonial.image.url,
+            },
+        }));
         this.skills = {
             ...skills,
             techStack: {

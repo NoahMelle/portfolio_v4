@@ -56,3 +56,10 @@ export interface TechStackSkillType {
     name: string;
     icon: { url: string };
 }
+
+export interface TestimonialType {
+    name: string;
+    content: string;
+    testimonialRole: { name: string };
+    image: { url: string };
+}

@@ -68,6 +68,7 @@ export async function getHomepageData(locale: string) {
 
     const myInfo = await getMyInfo();
     const skills = await getAllSkills();
+    const testimonials = await getTestimonials();
 
     const data = new HomepageProps(
         res.jumpToList,
@@ -80,7 +81,8 @@ export async function getHomepageData(locale: string) {
         {
             ...res.skills,
             allSkills: skills,
-        }
+        },
+        testimonials,
     );
 
     return data;
@@ -131,3 +133,27 @@ export async function getAllSkills() {
 
     return res.data.data.skills;
 }
+
+export async function getTestimonials() {
+    const res = await axios({
+        ...apiConfig,
+        data: {
+            query: `
+                query {
+                    testimonials {
+                        content
+                        name
+                        testimonialRole {
+                            name
+                        }
+                        image {
+                            url
+                        }
+                    }
+                }
+            `,
+        },
+    });
+
+    return res.data.data.testimonials;
+}   
