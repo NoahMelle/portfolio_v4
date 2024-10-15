@@ -46,6 +46,7 @@ export async function getHomepageData(locale: string) {
                         }
                         skills {
                             skillText
+                            skillsHeading
                             techStack {
                                 heading
                                 techStackSkills {

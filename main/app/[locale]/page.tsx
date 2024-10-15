@@ -10,8 +10,7 @@ import Skills from "@/Components/custom/Skills";
 import CursorTracker from "@/Components/custom/CursorTracker";
 import bgImage from "@/public/img/backgrounds/patterngrid.png";
 import Image from "next/image";
-import Markdown from "react-markdown";
-import Stagger from "@/Components/reusable/gsap/Stagger";
+import Education from "@/Components/custom/Education";
 import Testimonials from "@/Components/custom/Testimonials";
 
 export enum TextRevealType {
@@ -31,22 +30,31 @@ export default async function Home() {
 
     const homepageData = await getHomepageData(locale);
 
-    const sections = homepageData.jumpToList.links.map((link, index) => (
-        <Section key={link.url} index={index + 1} link={link}>
-            {link.title === "About" ? (
-                <AboutMe aboutMe={homepageData.aboutMe} />
-            ) : link.title === "Skills" ? (
-                <Skills skills={homepageData.skills} />
-            ) : link.title === "Testimonials" ? (
-                <Testimonials testimonials={homepageData.testimonials} />
-            ) : (
-                <div>Content for {link.title}</div>
-            )}
-        </Section>
-    ));
+    const sections = homepageData.jumpToList.links.map((link, index) =>
+        link.title !== "Education" ? (
+            <Section key={link.url} index={index + 1} link={link}>
+                {link.title === "About" ? (
+                    <AboutMe aboutMe={homepageData.aboutMe} />
+                ) : link.title === "Skills" ? (
+                    <Skills skills={homepageData.skills} />
+                ) : link.title === "Testimonials" ? (
+                    <Testimonials testimonials={homepageData.testimonials} />
+                ) : link.title === "Education" ? (
+                    <Education />
+                ) : (
+                    <div>Content for {link.title}</div>
+                )}
+            </Section>
+        ) : (
+            <Education />
+        )
+    );
 
     return (
-        <div className={`${styles.sectionContainer} section-scroll`} id="section-container">
+        <div
+            className={`${styles.sectionContainer} section-scroll`}
+            id="section-container"
+        >
             <div className={styles.sectionWrapper}>
                 <header className={`${styles.hero}`}>
                     <div className="h-full w-full overflow-hidden absolute left-0 top-0 -z-10">

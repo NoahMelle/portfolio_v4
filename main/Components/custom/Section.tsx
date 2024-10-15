@@ -8,13 +8,18 @@ export default function Section({
     children,
     index,
     link,
+    padding,
 }: {
     children: React.ReactNode;
     index: number;
     link: { title: string; url: string };
+    padding?: boolean;
 }) {
     return (
-        <div className={styles.section} id={link.title.toLowerCase()}>
+        <div
+            className={`${styles.section} ${padding ? styles.padding : ""}`}
+            id={link.title.toLowerCase()}
+        >
             <div className={styles.sectionTop}>
                 <div className="relative flex items-center justify-center h-[40px] aspect-square">
                     <div className={styles.sectionIndexDecoration}></div>
@@ -37,7 +42,11 @@ export default function Section({
                     className={`absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] h-full w-[1400px] max-w-none object-contain ${styles.backgroundImage}`}
                 />
             </div>
-            <div className={styles.sectionContent}>{children}</div>
+            {padding ? (
+                <div className={styles.sectionContent}>{children}</div>
+            ) : (
+                children
+            )}
         </div>
     );
 }

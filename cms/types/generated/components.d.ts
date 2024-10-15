@@ -67,6 +67,7 @@ export interface ComponentsSkills extends Struct.ComponentSchema {
   attributes: {
     skillText: Schema.Attribute.RichText & Schema.Attribute.Required;
     techStack: Schema.Attribute.Component<'components.tech-stack', false>;
+    skillsHeading: Schema.Attribute.String;
   };
 }
 

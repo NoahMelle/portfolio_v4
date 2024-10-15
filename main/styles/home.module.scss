@@ -79,10 +79,10 @@
     z-index: 0;
     background-color: #000000;
     color: white;
-    padding: clamp(1rem, 5vw, 5rem);
     padding-bottom: 3rem;
     scroll-snap-align: start;
     background-position: center;
+    padding: clamp(1rem, 5vw, 5rem);
     .sectionTop {
         display: flex;
         align-items: center;

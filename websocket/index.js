@@ -150,6 +150,8 @@ function checkInactiveClients() {
             clients.delete(client);
         }
     }
+
+    console.log("Active clients: ", clients.size);
 }
 
 function broadcastMessage(message, sender) {

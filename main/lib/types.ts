@@ -38,6 +38,7 @@ export interface SocialLink {
 
 export interface SkillsSectionType {
     skillText: string;
+    skillsHeading: string;
     techStack: TechStackType;
     allSkills: SkillType[];
 }
