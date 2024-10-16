@@ -18,7 +18,7 @@ export default function Section({
     return (
         <div
             className={`${styles.section} ${padding ? styles.padding : ""}`}
-            id={link.title.toLowerCase()}
+            id={link.url.replace("#", "")}
         >
             <div className={styles.sectionTop}>
                 <div className="relative flex items-center justify-center h-[40px] aspect-square">

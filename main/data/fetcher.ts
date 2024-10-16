@@ -123,6 +123,36 @@ export async function getMyInfo() {
     return res.data.data.global.myInfo;
 }
 
+export async function getMetadata(locale: string, page: string) {
+    const pages = ["homepage"];
+
+    if (!pages.includes(page)) {
+        throw new Error("Invalid page name");
+    }
+
+    const res = await axios({
+        ...apiConfig,
+        data: {
+            query: `
+                query($locale: I18NLocaleCode!) {
+                    ${page}(locale: $locale) {
+                        metadata {
+                            title
+                            description
+                        }
+                    }
+                }
+            `,
+            variables: {
+                locale,
+                page,
+            },
+        },
+    });
+
+    return res.data.data[page].metadata;
+}
+
 export async function getAllSkills() {
     const res = await axios({
         ...apiConfig,
@@ -163,4 +193,4 @@ export async function getTestimonials() {
     });
 
     return res.data.data.testimonials;
-}   
+}

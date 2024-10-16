@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_seo_open_graph_tags",
+  "info": {
+    "displayName": "Open Graph Tags"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "website",
+        "article",
+        "video.movie",
+        "video.episode",
+        "video.tv_show",
+        "video.other",
+        "music.song",
+        "music.album",
+        "music.playlist",
+        "music.radio_station",
+        "book",
+        "profile",
+        "product"
+      ]
+    }
+  }
+}
