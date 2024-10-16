@@ -15,7 +15,7 @@ $blackText: #3f4144;
         opacity: 0;
     }
     to {
-        opacity: .7;
+        opacity: 0.7;
     }
 }
 
@@ -41,7 +41,7 @@ $blackText: #3f4144;
 @mixin overlayShine($color) {
     position: relative;
     &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -62,4 +62,26 @@ $blackText: #3f4144;
     100% {
         background-position: 200%;
     }
+}
+
+@mixin gridLayout($gap: 1rem, $column-count: 2, $min-width: 300px) {
+    --grid-layout-gap: #{$gap};
+    --grid-column-count: #{$column-count}; /* This can be overridden by inline style */
+    --grid-item--min-width: #{$min-width}; /* This can be overridden by inline style */
+
+    --gap-count: calc(var(--grid-column-count) - 1);
+    --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+    --grid-item--max-width: calc(
+        (100% - var(--total-gap-width)) / var(--grid-column-count)
+    );
+
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(
+            max(var(--grid-item--min-width), var(--grid-item--max-width)),
+            1fr
+        )
+    );
+    grid-gap: var(--grid-layout-gap);
 }

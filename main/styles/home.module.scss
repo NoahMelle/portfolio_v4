@@ -300,8 +300,7 @@
 }
 
 .projects {
-    columns: 3 300px;
-    gap: 2rem;
+    @include gridLayout(1rem, 3, 200px);
     justify-content: center;
     .project {
         position: relative;
@@ -320,7 +319,7 @@
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
             opacity: 0;
             transition: opacity 0.3s;
-            z-index: 15;
+            z-index: 5;
         }
         &:hover {
             .projectImage {
@@ -332,6 +331,7 @@
         }
         .projectImage {
             position: absolute;
+            filter: brightness(0.9);
             top: 0;
             transition: transform 0.3s;
             left: 0;
