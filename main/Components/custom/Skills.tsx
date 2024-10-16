@@ -101,9 +101,9 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                                     <div className="flex justify-end">
                                         <div>{skill.name}</div>
                                     </div>
-                                    <div className="h-7 border-black border-[1px]">
+                                    <div className={`h-7 border-[1px] ${styles.skillBar}`}>
                                         <div
-                                            className="h-full bg-black transition-all duration-500"
+                                            className={`h-full transition-all duration-500 ${styles.skillBarFill}`}
                                             style={{
                                                 width: `${skill.confidenceLevel}%`,
                                             }}
@@ -131,9 +131,9 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                                     length: totalPages.current,
                                 }).map((e, i) => (
                                     <button
-                                        className={`block h-[6px] basis-[6px] bg-black transition-all ${
+                                        className={`block h-[6px] basis-[6px] transition-all ${
                                             currentSkillPage === i ? "grow" : ""
-                                        }`}
+                                        } ${styles.skillPageButton}`}
                                         onClick={() => setCurrentSkillPage(i)}
                                         key={i}
                                     ></button>

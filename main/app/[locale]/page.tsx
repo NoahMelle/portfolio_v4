@@ -1,4 +1,4 @@
-import { getHomepageData } from "@/data/fetcher";
+import { getHomepageData, getMetadata } from "@/data/fetcher";
 import { getLocale } from "next-intl/server";
 import styles from "@/styles/home.module.scss";
 import Marquee from "react-fast-marquee";
@@ -12,6 +12,7 @@ import bgImage from "@/public/img/backgrounds/patterngrid.png";
 import Image from "next/image";
 import Education from "@/Components/custom/Education";
 import Testimonials from "@/Components/custom/Testimonials";
+import AnchorNav from "@/Components/custom/navbar/AnchorNav";
 
 export enum TextRevealType {
     "h1",
@@ -73,28 +74,8 @@ export default async function Home() {
                                 <p>{homepageData.hero.subheading}</p>
                             </SlideFromLeft>
                         </div>
-                        <div className={styles.jumpToList}>
-                            <h3 className={styles.jumpToHeader}>
-                                {homepageData.jumpToList.header}
-                            </h3>
-                            <ul className={styles.jumpToListLinks}>
-                                {homepageData.jumpToList.links.map((link) => (
-                                    <li key={link.url}>
-                                        <a
-                                            href={link.url}
-                                            target={
-                                                link.isExternal
-                                                    ? "_blank"
-                                                    : "_self"
-                                            }
-                                            rel="noopener noreferrer"
-                                        >
-                                            {link.title}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                    
+                        <AnchorNav links={homepageData.jumpToList.links} heading={homepageData.jumpToList.header}/>
                     </div>
                     <div className={styles.marquee}>
                         <Marquee autoFill>
@@ -112,4 +93,16 @@ export default async function Home() {
             </div>
         </div>
     );
+}
+
+export async function generateMetadata() {
+    const locale = await getLocale();
+    const metadata = await getMetadata(locale, "homepage");
+
+    console.log(metadata);
+
+    return {
+        title: metadata.title,
+        description: metadata.description || "",
+    };
 }

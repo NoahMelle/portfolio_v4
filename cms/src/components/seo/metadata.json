@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_seo_metadata",
+  "info": {
+    "displayName": "Metadata",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "keywords": {
+      "type": "component",
+      "repeatable": true,
+      "component": "utils.string"
+    },
+    "ogTags": {
+      "type": "component",
+      "repeatable": false,
+      "component": "seo.open-graph-tags"
+    }
+  }
+}

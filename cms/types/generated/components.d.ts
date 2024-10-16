@@ -36,6 +36,49 @@ export interface UtilsIconLink extends Struct.ComponentSchema {
   };
 }
 
+export interface SeoOpenGraphTags extends Struct.ComponentSchema {
+  collectionName: 'components_seo_open_graph_tags';
+  info: {
+    displayName: 'Open Graph Tags';
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    description: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    type: Schema.Attribute.Enumeration<
+      [
+        'website',
+        'article',
+        'video.movie',
+        'video.episode',
+        'video.tv_show',
+        'video.other',
+        'music.song',
+        'music.album',
+        'music.playlist',
+        'music.radio_station',
+        'book',
+        'profile',
+        'product',
+      ]
+    >;
+  };
+}
+
+export interface SeoMetadata extends Struct.ComponentSchema {
+  collectionName: 'components_seo_metadata';
+  info: {
+    displayName: 'Metadata';
+    description: '';
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    description: Schema.Attribute.Text;
+    keywords: Schema.Attribute.Component<'utils.string', true>;
+    ogTags: Schema.Attribute.Component<'seo.open-graph-tags', false>;
+  };
+}
+
 export interface ComponentsTestimonials extends Struct.ComponentSchema {
   collectionName: 'components_components_testimonials';
   info: {
@@ -150,6 +193,8 @@ declare module '@strapi/strapi' {
       'utils.string': UtilsString;
       'utils.link': UtilsLink;
       'utils.icon-link': UtilsIconLink;
+      'seo.open-graph-tags': SeoOpenGraphTags;
+      'seo.metadata': SeoMetadata;
       'components.testimonials': ComponentsTestimonials;
       'components.tech-stack': ComponentsTechStack;
       'components.skills': ComponentsSkills;

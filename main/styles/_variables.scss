@@ -6,6 +6,10 @@ $h2Heading: clamp(2.5rem, 3vw, 4rem);
 
 $tabletBreakpoint: 768px;
 
+$white: #eef3f3;
+$black: #0e0e0e;
+$blackText: #3f4144;
+
 @keyframes fadeIn {
     from {
         opacity: 0;

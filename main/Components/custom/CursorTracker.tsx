@@ -44,10 +44,15 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
             handleMouseMove(event);
         });
 
+        window.addEventListener("touchmove", (event) => {
+            handleMouseMove(event);
+        });
+
         return () => {
             ws?.close();
             window.removeEventListener("mousemove", () => {});
             window.removeEventListener("scroll", () => {});
+            window.removeEventListener("touchmove", () => {});
         };
     }, []);
 
@@ -88,7 +93,6 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                                 ...data.position,
                                 color: data.color,
                             });
-                            // console.log(data, newCursors);
                             return newCursors;
                         });
                         break;
@@ -137,6 +141,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     }
 
     function handleMouseMove(event: Event) {
+
         if (event instanceof MouseEvent) {
             const bodyHeight = Math.max(
                 sectionContainerRef.current?.scrollHeight || 0
@@ -166,6 +171,8 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                 setTimeout(() => {
                     isAllowed.current = true;
                 }, 2000);
+            } else if (wsRef.current?.readyState === WebSocket.CLOSED) {
+                connect();
             }
         }
     }
