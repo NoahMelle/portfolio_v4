@@ -13,6 +13,7 @@ import Image from "next/image";
 import Education from "@/Components/custom/Education";
 import Testimonials from "@/Components/custom/Testimonials";
 import AnchorNav from "@/Components/custom/navbar/AnchorNav";
+import Projects from "@/Components/custom/Projects";
 
 export enum TextRevealType {
     "h1",
@@ -31,25 +32,36 @@ export default async function Home() {
 
     const homepageData = await getHomepageData(locale);
 
-    const sections = homepageData.jumpToList.links.map((link, index) =>
-        link.title !== "Education" ? (
-            <Section key={link.url} index={index + 1} link={link}>
-                {link.title === "About" ? (
-                    <AboutMe aboutMe={homepageData.aboutMe} />
-                ) : link.title === "Skills" ? (
-                    <Skills skills={homepageData.skills} />
-                ) : link.title === "Testimonials" ? (
-                    <Testimonials testimonials={homepageData.testimonials} />
-                ) : link.title === "Education" ? (
-                    <Education />
-                ) : (
-                    <div>Content for {link.title}</div>
-                )}
+    const sections = homepageData.jumpToList.links
+        .map((link, index) => {
+            switch (link.url.replace("#", "")) {
+                case "about":
+                    return <AboutMe aboutMe={homepageData.aboutMe} />;
+                case "skills":
+                    return <Skills skills={homepageData.skills} />;
+                case "testimonials":
+                    return (
+                        <Testimonials
+                            testimonials={homepageData.testimonials}
+                        />
+                    );
+                case "education":
+                    return <Education />;
+                case "projects":
+                    return <Projects projects={homepageData.projects} />;
+                default:
+                    return <div>Content for {link.title}</div>;
+            }
+        })
+        .map((section, index) => (
+            <Section
+                key={index}
+                index={index + 1}
+                link={homepageData.jumpToList.links[index]}
+            >
+                {section}
             </Section>
-        ) : (
-            <Education />
-        )
-    );
+        ));
 
     return (
         <div
@@ -74,8 +86,11 @@ export default async function Home() {
                                 <p>{homepageData.hero.subheading}</p>
                             </SlideFromLeft>
                         </div>
-                    
-                        <AnchorNav links={homepageData.jumpToList.links} heading={homepageData.jumpToList.header}/>
+
+                        <AnchorNav
+                            links={homepageData.jumpToList.links}
+                            heading={homepageData.jumpToList.header}
+                        />
                     </div>
                     <div className={styles.marquee}>
                         <Marquee autoFill>

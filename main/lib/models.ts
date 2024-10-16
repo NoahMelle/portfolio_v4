@@ -1,4 +1,13 @@
-import { JumpToListType, HeroType, MarqueeType, AboutMeType, SocialLink, SkillsSectionType, TestimonialsSectionType } from "./types";
+import {
+    JumpToListType,
+    HeroType,
+    MarqueeType,
+    AboutMeType,
+    SocialLink,
+    SkillsSectionType,
+    TestimonialsSectionType,
+    ProjectType,
+} from "./types";
 import { getAgeFromBday } from "./utils";
 import { getYearsDiff } from "./utils";
 
@@ -11,6 +20,7 @@ export class HomepageProps {
     aboutMe: AboutMeType;
     skills: SkillsSectionType;
     testimonials: TestimonialsSectionType;
+    projects: ProjectType[];
 
     constructor(
         jumpToList: JumpToListType,
@@ -21,7 +31,8 @@ export class HomepageProps {
         aboutMe: AboutMeType,
         socialLinks: SocialLink[],
         skills: SkillsSectionType,
-        testimonials: TestimonialsSectionType
+        testimonials: TestimonialsSectionType,
+        projects: ProjectType[]
     ) {
         const birthDate = new Date(dateOfBirth); // Parse once
         const age = getAgeFromBday(birthDate);
@@ -64,7 +75,7 @@ export class HomepageProps {
                     ...link.icon,
                     url: (process.env.BASEURL_API ?? "") + link.icon.url,
                 },
-            }))
+            })),
         };
         this.testimonials = {
             ...testimonials,
@@ -73,24 +84,37 @@ export class HomepageProps {
                     ...testimonial,
                     image: {
                         ...testimonial.image,
-                        url: (process.env.BASEURL_API ?? "") + testimonial.image.url,
+                        url:
+                            (process.env.BASEURL_API ?? "") +
+                            testimonial.image.url,
                     },
                 };
             }),
-        }
+        };
         this.skills = {
             ...skills,
             techStack: {
                 ...skills.techStack,
-                techStackSkills: skills.techStack.techStackSkills.map((skill) => ({
-                    ...skill,
-                    icon: {
-                        ...skill.icon,
-                        url: (process.env.BASEURL_API ?? "") + skill.icon.url,
-                    },
-                })),
-            }
-        }
+                techStackSkills: skills.techStack.techStackSkills.map(
+                    (skill) => ({
+                        ...skill,
+                        icon: {
+                            ...skill.icon,
+                            url:
+                                (process.env.BASEURL_API ?? "") +
+                                skill.icon.url,
+                        },
+                    })
+                ),
+            },
+        };
+        this.projects = projects.map((project) => ({
+            ...project,
+            screenshots: project.screenshots.map((screenshot) => ({
+                ...screenshot,
+                url: (process.env.BASEURL_API ?? "") + screenshot.url,
+            })),
+        }));
     }
 
     getAge() {

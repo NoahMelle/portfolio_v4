@@ -73,6 +73,7 @@ export async function getHomepageData(locale: string) {
     const myInfo = await getMyInfo();
     const skills = await getAllSkills();
     const testimonials = await getTestimonials();
+    const projects = await getProjects(locale);
 
     const data = new HomepageProps(
         res.jumpToList,
@@ -89,7 +90,8 @@ export async function getHomepageData(locale: string) {
         {
             ...res.testimonials,
             testimonials,
-        }
+        },
+        projects
     );
 
     return data;
@@ -193,4 +195,31 @@ export async function getTestimonials() {
     });
 
     return res.data.data.testimonials;
+}
+
+export async function getProjects(locale: string) {
+    return (
+        await axios({
+            ...apiConfig,
+            data: {
+                query: `
+                query($locale: I18NLocaleCode!) {
+                    projects(locale: $locale) {
+                        screenshots {
+                            url
+                        }
+                        title
+                        description
+                        skills {
+                            name
+                        }
+                    }
+                }
+            `,
+                variables: {
+                    locale,
+                },
+            },
+        })
+    ).data.data.projects;
 }

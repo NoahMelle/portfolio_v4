@@ -55,9 +55,9 @@ wss.on("connection", (ws) => {
         lastMove: new Date().getTime(),
     };
 
-    if (!inactivityTimeout) {
-        startInactivityCheck();
-    }
+    // if (!inactivityTimeout) {
+    //     startInactivityCheck();
+    // }
 
     console.log("Client connected");
     clients.set(ws, metadata);

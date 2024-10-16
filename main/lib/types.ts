@@ -4,7 +4,7 @@ export interface JumpToListType {
 }
 
 export interface LinkType {
-    title: string;  
+    title: string;
     url: string;
     isExternal?: boolean;
 }
@@ -68,4 +68,11 @@ export interface TestimonialType {
 export interface TestimonialsSectionType {
     testimonialHeading: string;
     testimonials: TestimonialType[];
+}
+
+export interface ProjectType {
+    title: string;
+    description?: string;
+    screenshots: { url: string }[];
+    skills: SkillType[];
 }

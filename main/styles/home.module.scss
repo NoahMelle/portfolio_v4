@@ -299,6 +299,51 @@
     }
 }
 
+.projects {
+    columns: 3 300px;
+    gap: 2rem;
+    justify-content: center;
+    .project {
+        position: relative;
+        aspect-ratio: 10/9;
+        border-radius: 1rem;
+        overflow: hidden;
+        padding: 1rem;
+        box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+        background-color: #3c5759;
+        .projectOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 15;
+        }
+        &:hover {
+            .projectImage {
+                transform: scale(1.05);
+            }
+            .projectOverlay {
+                opacity: 1;
+            }
+        }
+        .projectImage {
+            position: absolute;
+            top: 0;
+            transition: transform 0.3s;
+            left: 0;
+            user-select: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+    }
+}
+
 @keyframes bounce {
     50% {
         transform: translateY(-30%);
