@@ -108,17 +108,35 @@ export class HomepageProps {
                 ),
             },
         };
-        this.projects = projects.map((project) => ({
-            ...project,
-            screenshots: project.screenshots.map((screenshot) => ({
-                ...screenshot,
-                url: (process.env.BASEURL_API ?? "") + screenshot.url,
-            })),
-        }));
+        this.projects = projects.map((project) => new Project(project));
     }
 
     getAge() {
         return getAgeFromBday(this.dateOfBirth); // Avoid multiple parsing
+    }
+}
+
+export class Project {
+    title: string;
+    description?: string;
+    slug: string;
+    screenshots: { url: string }[];
+    skills: { name: string; confidenceLevel: number }[];
+    frontPhoto: { url: string };
+
+    constructor(project: ProjectType) {
+        this.title = project.title;
+        this.description = project.description;
+        this.slug = project.slug;
+        this.screenshots = project.screenshots.map((screenshot) => ({
+            ...screenshot,
+            url: (process.env.BASEURL_API ?? "") + screenshot.url,
+        }));
+        this.skills = project.skills;
+        this.frontPhoto = {
+            ...project.frontPhoto,
+            url: (process.env.BASEURL_API ?? "") + project.frontPhoto.url,
+        };
     }
 }
 

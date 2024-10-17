@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "projectpages",
+  "info": {
+    "singularName": "projectpage",
+    "pluralName": "projectpages",
+    "displayName": "Projectpage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "backgroundImage": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

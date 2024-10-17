@@ -600,6 +600,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     singularName: 'project';
     pluralName: 'projects';
     displayName: 'Project';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -636,6 +637,20 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
         };
       }>;
     skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    frontPhoto: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -647,6 +662,43 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::project.project'
+    >;
+  };
+}
+
+export interface ApiProjectpageProjectpage extends Struct.SingleTypeSchema {
+  collectionName: 'projectpages';
+  info: {
+    singularName: 'projectpage';
+    pluralName: 'projectpages';
+    displayName: 'Projectpage';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::projectpage.projectpage'
     >;
   };
 }
@@ -1202,6 +1254,7 @@ declare module '@strapi/strapi' {
       'api::global.global': ApiGlobalGlobal;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::project.project': ApiProjectProject;
+      'api::projectpage.projectpage': ApiProjectpageProjectpage;
       'api::skill.skill': ApiSkillSkill;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'api::testimonial-role.testimonial-role': ApiTestimonialRoleTestimonialRole;

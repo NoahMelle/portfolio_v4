@@ -1,5 +1,5 @@
 import axios from "axios";
-import { HomepageProps } from "@/lib/models";
+import { HomepageProps, Project } from "@/lib/models";
 
 const apiConfig = {
     headers: {
@@ -210,6 +210,10 @@ export async function getProjects(locale: string) {
                         }
                         title
                         description
+                        slug
+                        frontPhoto {
+                            url
+                        }
                         skills {
                             name
                         }
@@ -222,4 +226,35 @@ export async function getProjects(locale: string) {
             },
         })
     ).data.data.projects;
+}
+
+export async function getProject(slug: string) {
+    const res = await axios({
+        ...apiConfig,
+        data: {
+            query: `
+                query($slug: String!) {
+                    projects(filters: { slug: {eq:$slug} }) {
+                        screenshots {
+                            url
+                        }
+                        title
+                        description
+                        slug
+                        frontPhoto {
+                            url
+                        }
+                        skills {
+                            name
+                        }
+                    }
+                }
+            `,
+            variables: {
+                slug,
+            },
+        },
+    });
+
+    return new Project(res.data.data.projects[0]);
 }
