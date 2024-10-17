@@ -1,35 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    position: relative;
-}
-
-@layer utilities {
-    .text-balance {
-        text-wrap: balance;
-    }
-}
-
-::selection {
-    background-color: rgb(22, 22, 22);
-    color: white;
-}
-
-@layer base {
-    :root {
-        --radius: 0.5rem;
-    }
-}
-
-* {
-    cursor: none !important;
-}
-
 .cursor {
     position: absolute;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     mix-blend-mode: difference;
     width: 6px;
     height: 6px;
@@ -38,23 +9,19 @@ body {
         0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33) opacity;
     user-select: none;
     pointer-events: none;
-    z-index: 10000;
+    z-index: 10000000;
     transform: scale(1);
 
     &.active {
         opacity: 0.5;
         transform: scale(0);
     }
-
-    &.hidden {
-        opacity: 0;
-    }
 }
 
 .aura {
     position: absolute;
     background-color: transparent;
-    border: 1px solid #ffffff;
+    border: 1px solid #FFFFFF;
     mix-blend-mode: difference;
     width: 50px;
     height: 50px;
@@ -65,13 +32,13 @@ body {
     pointer-events: none;
     z-index: 10000;
     transform: translate(5px, 5px);
-    transform-origin: center;
 
     &.active {
         opacity: 0.4;
         transform: scale(1.4);
     }
-    &.hidden {
-        opacity: 0;
-    }
+}
+
+.hidden {
+    opacity: 0;
 }

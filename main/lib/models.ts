@@ -121,10 +121,11 @@ export class Project {
     description?: string;
     slug: string;
     screenshots: { url: string }[];
-    skills: { name: string; confidenceLevel: number }[];
+    skills: { name: string; confidenceLevel: number; icon?: { url: string } }[];
     tags: { name: string }[] = [];
     frontPhoto: { url: string };
     categories?: { name: string }[];
+    createdAt: Date;
 
     constructor(project: ProjectType) {
         this.title = project.title;
@@ -134,13 +135,21 @@ export class Project {
             ...screenshot,
             url: (process.env.BASEURL_API ?? "") + screenshot.url,
         }));
-        this.skills = project.skills;
+        this.skills = project.skills.map((skill) => ({
+            ...skill,
+            icon: {
+                ...skill.icon,
+                url: (process.env.BASEURL_API ?? "") + skill?.icon?.url,
+            },
+        })
+        );
         this.frontPhoto = {
             ...project.frontPhoto,
             url: (process.env.BASEURL_API ?? "") + project.frontPhoto.url,
         };
         this.tags = project.tags ?? [];
         this.categories = project.categories ?? [];
+        this.createdAt = new Date(project.createdAt);
     }
 }
 

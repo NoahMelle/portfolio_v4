@@ -46,6 +46,7 @@ export interface SkillsSectionType {
 export interface SkillType {
     name: string;
     confidenceLevel: number;
+    icon?: { url: string };
 }
 
 export interface TechStackType {
@@ -79,6 +80,7 @@ export interface ProjectType {
     skills: SkillType[];
     tags?: { name: string }[];
     categories?: { name: string }[];
+    createdAt: Date;
 }
 
 export interface ProjectPageType {

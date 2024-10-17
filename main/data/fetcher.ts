@@ -239,6 +239,7 @@ export async function getProject(slug: string) {
                             url
                         }
                         title
+                        createdAt
                         description
                         slug
                         frontPhoto {
@@ -252,6 +253,9 @@ export async function getProject(slug: string) {
                         }
                         skills {
                             name
+                            icon {
+                                url
+                            }
                         }
                     }
                 }
@@ -292,4 +296,29 @@ export async function getProjectPageData(locale: string, slug: string) {
     const project = await getProject(slug);
 
     return new ProjectPage(res.backgroundImage, res.dateHeading, res.technologiesHeading, res.categoriesHeading, project);
+}
+
+export async function getHomepageLinks(locale: string) {
+    const res = await axios({
+        ...apiConfig,
+        data: {
+            query: `
+                query($locale: I18NLocaleCode!) {
+                    homepage(locale: $locale) {
+                        jumpToList {
+                            links {
+                                title
+                                url
+                            }
+                        }
+                    }
+                }
+            `,
+            variables: {
+                locale,
+            },
+        },
+    });
+
+    return res.data.data.homepage.jumpToList.links;
 }
