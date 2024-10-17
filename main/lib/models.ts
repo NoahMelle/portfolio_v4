@@ -122,7 +122,9 @@ export class Project {
     slug: string;
     screenshots: { url: string }[];
     skills: { name: string; confidenceLevel: number }[];
+    tags: { name: string }[] = [];
     frontPhoto: { url: string };
+    categories?: { name: string }[];
 
     constructor(project: ProjectType) {
         this.title = project.title;
@@ -136,6 +138,27 @@ export class Project {
         this.frontPhoto = {
             ...project.frontPhoto,
             url: (process.env.BASEURL_API ?? "") + project.frontPhoto.url,
+        };
+        this.tags = project.tags ?? [];
+        this.categories = project.categories ?? [];
+    }
+}
+
+export class ProjectPage {
+    backgroundImg: { url: string };
+    project: ProjectType;
+    headings: { date: string; technologies: string; categories: string };
+
+    constructor(backgroundImg: { url: string }, dateHeading: string, technologiesHeading: string, categoriesHeading: string, project: ProjectType) {
+        this.backgroundImg = {
+            ...backgroundImg,
+            url: (process.env.BASEURL_API ?? "") + backgroundImg.url,
+        };
+        this.project = project;
+        this.headings = {
+            date: dateHeading,
+            technologies: technologiesHeading,
+            categories: categoriesHeading,
         };
     }
 }

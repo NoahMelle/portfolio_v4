@@ -1,5 +1,5 @@
 import axios from "axios";
-import { HomepageProps, Project } from "@/lib/models";
+import { HomepageProps, Project, ProjectPage } from "@/lib/models";
 
 const apiConfig = {
     headers: {
@@ -244,6 +244,12 @@ export async function getProject(slug: string) {
                         frontPhoto {
                             url
                         }
+                        categories {
+                            name
+                        }
+                        tags {
+                            name
+                        }
                         skills {
                             name
                         }
@@ -257,4 +263,33 @@ export async function getProject(slug: string) {
     });
 
     return new Project(res.data.data.projects[0]);
+}
+
+export async function getProjectPageData(locale: string, slug: string) {
+    const res = (
+        await axios({
+            ...apiConfig,
+            data: {
+                query: `
+                    query($locale: I18NLocaleCode) {
+                        projectpage(locale: $locale) {
+                            backgroundImage {
+                                url
+                            }
+                            dateHeading
+                            technologiesHeading
+                            categoriesHeading
+                        }
+                    }
+            `,
+                variables: {
+                    locale,
+                },
+            },
+        })
+    ).data.data.projectpage;
+
+    const project = await getProject(slug);
+
+    return new ProjectPage(res.backgroundImage, res.dateHeading, res.technologiesHeading, res.categoriesHeading, project);
 }

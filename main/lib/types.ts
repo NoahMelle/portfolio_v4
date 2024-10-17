@@ -77,4 +77,14 @@ export interface ProjectType {
     screenshots: { url: string }[];
     frontPhoto: { url: string };
     skills: SkillType[];
+    tags?: { name: string }[];
+    categories?: { name: string }[];
+}
+
+export interface ProjectPageType {
+    backgroundImage: { url: string},
+    dateHeading: string;
+    technologiesHeading: string;
+    cateogriesHeading: string;
+    project: ProjectType;
 }
