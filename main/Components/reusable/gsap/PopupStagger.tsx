@@ -28,7 +28,7 @@ export default function PopupStagger({ children, containerStyles }: { children: 
                     stagger: 0.1,
                     scrollTrigger: {
                         trigger: ".trigger",
-                        start: "50% bottom",
+                        start: "top bottom",
                     },
                 }
             );

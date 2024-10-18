@@ -28,7 +28,7 @@ body {
 }
 
 .cursor {
-    position: absolute;
+    position: fixed;
     background-color: #ffffff;
     mix-blend-mode: difference;
     width: 6px;
@@ -38,7 +38,7 @@ body {
         0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33) opacity;
     user-select: none;
     pointer-events: none;
-    z-index: 10000;
+    z-index: 999999999;
     transform: scale(1);
 
     &.active {
@@ -52,7 +52,7 @@ body {
 }
 
 .aura {
-    position: absolute;
+    position: fixed;
     background-color: transparent;
     border: 1px solid #ffffff;
     mix-blend-mode: difference;
@@ -63,7 +63,7 @@ body {
         0.2s cubic-bezier(0.75, -0.27, 0.3, 1.33) opacity;
     user-select: none;
     pointer-events: none;
-    z-index: 10000;
+    z-index: 999999999;
     transform: translate(5px, 5px);
     transform-origin: center;
 
@@ -73,5 +73,14 @@ body {
     }
     &.hidden {
         opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .cursor {
+        display: none;
+    }
+    .aura {
+        display: none;
     }
 }

@@ -10,3 +10,10 @@
     padding: $xlFont;
     padding-top: 80px;
 }
+
+.category {
+    width: fit-content;
+    padding: 0.3rem 1rem;
+    border: 2px solid rgba($color: $blackText, $alpha: 0.5);
+    border-radius: 999px;
+}

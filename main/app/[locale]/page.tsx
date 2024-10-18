@@ -113,9 +113,7 @@ export default async function Home() {
 export async function generateMetadata() {
     const locale = await getLocale();
     const metadata = await getMetadata(locale, "homepage");
-
-    console.log(metadata);
-
+    
     return {
         title: metadata.title,
         description: metadata.description || "",

@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { usePathname } from "next/navigation";
 
-const LAG_FACTOR = 15;
+const LAG_FACTOR = 9;
 
 export default function GSAPCursor() {
     const pathname = usePathname();
@@ -101,8 +101,8 @@ export default function GSAPCursor() {
     const initializeCursor = (cursor: HTMLDivElement, follower: HTMLDivElement) => {
         // Update mouse coordinates
         const mouseCoords = (e: MouseEvent) => {
-            mouseX = e.pageX;
-            mouseY = e.pageY;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         };
 
         // Animate cursor position using GSAP

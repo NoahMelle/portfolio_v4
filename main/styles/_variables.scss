@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 $xlFont: clamp(1.5rem, 2.5vw, 2.5rem);
 $lgFont: clamp(1rem, 2vw, 1.5rem);
 $bigHeaderSize: clamp(3rem, 5vw, 5rem);
@@ -6,9 +8,9 @@ $h2Heading: clamp(2.5rem, 3vw, 4rem);
 
 $tabletBreakpoint: 768px;
 
-$white: #eef3f3;
+$white: #f1f1f1;
 $black: #0e0e0e;
-$blackText: #3f4144;
+$blackText: #56585c;
 
 @keyframes fadeIn {
     from {
@@ -84,4 +86,12 @@ $blackText: #3f4144;
         )
     );
     grid-gap: var(--grid-layout-gap);
+}
+
+@mixin neumorphism($size: 200px) {
+    $factor: 0.1;
+    border-radius: 50px;
+    background: linear-gradient(145deg, #ffffff, #cacaca);
+    box-shadow: calc($factor * $size) calc($factor * $size) $size #cacaca,
+        calc(-1 * $factor * $size) calc(-1 * $factor * $size) $size #ffffff;
 }

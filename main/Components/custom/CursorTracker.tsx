@@ -104,17 +104,20 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                         });
                         toast.error(`${data.username} disconnected.`, {
                             description: "Their cursor is no longer visible.",
+                            closeButton: true,
                         });
                         break;
                     case "connect":
                         toast.success(`${data.username} connected.`, {
                             description: "Their cursor is now visible.",
+                            closeButton: true,
                         });
                         break;
                     case "idle":
                         toast.error("You have been disconnected.", {
                             description:
                                 "You were idle for too long. Please move your cursor to reconnect.",
+                            closeButton: true,
                         });
                         ws.close();
                         setOtherCursors(new Map());
@@ -122,6 +125,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                     case "pong":
                         toast.success("Pong!", {
                             description: "You are still connected to the server.",
+                            closeButton: true,
                         });
                 }
             }
@@ -129,6 +133,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         ws.onopen = () => {
             toast.success("Connected to server.", {
                 description: "You can now see other users' cursors.",
+                closeButton: true,
             });
         };
         setWs(ws);

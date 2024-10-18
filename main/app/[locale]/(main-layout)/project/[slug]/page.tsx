@@ -39,7 +39,7 @@ export default async function Project({
                         <div className="flex gap-2 flex-wrap">
                             {projectPageData.project.tags &&
                                 projectPageData.project?.tags.map((tag) => (
-                                    <span className="font-medium lowercase rounded-full">
+                                    <span className="font-medium lowercase rounded-full" key={tag.name}>
                                         #{tag.name}
                                     </span>
                                 ))}
@@ -56,7 +56,7 @@ export default async function Project({
                                         {projectPageData.project.categories &&
                                             projectPageData.project.categories.map(
                                                 (category) => (
-                                                    <p className="text-xl px-3 py-1 bg-gray-400/40 w-fit rounded-full">
+                                                    <p className={styles.category} key={category.name}>
                                                         {category.name}
                                                     </p>
                                                 )
@@ -85,7 +85,7 @@ export default async function Project({
                         </h3>
                         <ul className="flex gap-7 flex-wrap justify-center">
                             {projectPageData.project.skills.map((skill) => (
-                                <li>
+                                <li key={skill.name}>
                                     {skill.icon && (
                                         <Image
                                             src={skill?.icon?.url}
