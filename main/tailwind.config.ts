@@ -13,7 +13,7 @@ const config: Config = {
   			background: 'var(--background)',
   			foreground: 'var(--foreground)',
 			black: '#3f4144',
-			white: '#f1f1f1',
+			white: '#eef2f3',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

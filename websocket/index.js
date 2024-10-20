@@ -55,9 +55,9 @@ wss.on("connection", (ws) => {
         lastMove: new Date().getTime(),
     };
 
-    // if (!inactivityTimeout) {
-    //     startInactivityCheck();
-    // }
+    if (!inactivityTimeout) {
+        startInactivityCheck();
+    }
 
     console.log("Client connected");
     clients.set(ws, metadata);
@@ -103,12 +103,12 @@ wss.on("connection", (ws) => {
     );
 
     ws.on("close", () => {
-        if (clients.size === 0) {
-            stopInactivityCheck();
-        }
 
         console.log("Client disconnected");
         clients.delete(ws);
+        if (clients.size === 0) {
+            stopInactivityCheck();
+        }
         broadcastMessage(
             {
                 type: "disconnect",

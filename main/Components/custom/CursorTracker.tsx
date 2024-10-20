@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     const [ws, setWs] = React.useState<WebSocket | null>(null);
@@ -15,6 +16,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     const isAllowed = React.useRef(true);
     const sectionContainerRef = React.useRef<HTMLElement | null>(null);
     const invisibleDivRef = React.useRef<HTMLElement | null>(null);
+    const pathname = usePathname();
 
     //FIXME: multiple websocket instances opened upon page change
 
@@ -30,13 +32,27 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     }
 
     React.useEffect(() => {
+        if (wsRef.current) {
+            wsRef.current.close();
+            wsRef.current = null;
+        }
+
+        connect();
+
+        return () => {
+            if (wsRef.current) {
+                wsRef.current.close();
+                wsRef.current = null;
+            }
+        }
+    }, [pathname, wsUrl]);
+
+    React.useEffect(() => {
+        console.log("mounting");
+        console.log(wsRef.current);
         sectionContainerRef.current =
             document.getElementById("section-container");
         invisibleDivRef.current = document.getElementById("invisible-div");
-
-        if (!wsRef.current) {
-            connect();
-        }
 
         window.addEventListener("mousemove", (event) => {
             handleMouseMove(event);
@@ -51,7 +67,6 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         });
 
         return () => {
-            ws?.close();
             window.removeEventListener("mousemove", () => {});
             window.removeEventListener("scroll", () => {});
             window.removeEventListener("touchmove", () => {});
