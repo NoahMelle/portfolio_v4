@@ -16,7 +16,7 @@ export default function Navbar({ links }: { links: LinkType[] }) {
             <div className="container mx-auto md:flex justify-between items-center">
                 <div className="md:contents flex justify-between">
                     <div className="font-medium">
-                        <Link href="/">Noah's Portfolio</Link>
+                        <Link href="/">Noah&apos;s Portfolio</Link>
                     </div>
                     <div className="block md:hidden">
                         <button

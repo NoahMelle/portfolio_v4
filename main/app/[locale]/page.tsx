@@ -15,14 +15,6 @@ import Testimonials from "@/Components/custom/Testimonials";
 import AnchorNav from "@/Components/custom/navbar/AnchorNav";
 import Projects from "@/Components/custom/Projects";
 
-export enum TextRevealType {
-    "h1",
-    "h2",
-    "h3",
-    "h4",
-    "p",
-}
-
 export default async function Home() {
     const locale = await getLocale();
 
@@ -33,7 +25,7 @@ export default async function Home() {
     const homepageData = await getHomepageData(locale);
 
     const sections = homepageData.jumpToList.links
-        .map((link, index) => {
+        .map((link) => {
             switch (link.url.replace("#", "")) {
                 case "about":
                     return <AboutMe aboutMe={homepageData.aboutMe} />;

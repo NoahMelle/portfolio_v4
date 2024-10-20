@@ -2,7 +2,6 @@ import React from "react";
 import styles from "@/styles/home.module.scss";
 import Image from "next/image";
 import bgImage from "@/public/img/backgrounds/patterngrid.png";
-import bgImageBlack from "@/public/img/backgrounds/patterngrid-black.png";
 
 export default function Section({
     children,

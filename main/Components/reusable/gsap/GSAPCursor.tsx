@@ -17,6 +17,65 @@ export default function GSAPCursor() {
     let mouseX = 0;
     let mouseY = 0;
 
+    const initializeCursor = React.useCallback(
+        (cursor: HTMLDivElement, follower: HTMLDivElement) => {
+            // Update mouse coordinates
+            const mouseCoords = (e: MouseEvent) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            };
+
+            // Animate cursor position using GSAP
+            const animateCursor = () => {
+                posX += (mouseX - posX) / LAG_FACTOR;
+                posY += (mouseY - posY) / LAG_FACTOR;
+
+                gsap.set(follower, {
+                    css: {
+                        left: posX - 27,
+                        top: posY - 27,
+                    },
+                });
+
+                gsap.set(cursor, {
+                    css: {
+                        left: mouseX,
+                        top: mouseY,
+                    },
+                });
+            };
+
+            // Hide cursor when off-screen
+            const mouseOut = () => {
+                cursor.classList.add("hidden");
+                follower.classList.add("hidden");
+            };
+
+            // Show cursor when back on screen
+            const mouseIn = () => {
+                cursor.classList.remove("hidden");
+                follower.classList.remove("hidden");
+            };
+
+            // Add event listeners
+            window.addEventListener("mousemove", mouseCoords);
+            window.addEventListener("mouseout", mouseOut);
+            window.addEventListener("mouseover", mouseIn);
+
+            gsap.ticker.add(animateCursor);
+
+            // Cleanup function to remove event listeners and GSAP animation
+            return () => {
+                window.removeEventListener("mousemove", mouseCoords);
+                window.removeEventListener("mouseout", mouseOut);
+                window.removeEventListener("mouseover", mouseIn);
+
+                gsap.ticker.remove(animateCursor);
+            };
+        },
+        []
+    );
+
     // Initialize cursor and animations on component mount
     useEffect(() => {
         const cursor = cursorRef.current;
@@ -29,7 +88,7 @@ export default function GSAPCursor() {
 
         // Cleanup cursor setup on component unmount
         return () => cleanup();
-    }, []);
+    }, [initializeCursor]);
 
     // Reinitialize link hover effects on path change
     useEffect(() => {
@@ -95,74 +154,6 @@ export default function GSAPCursor() {
                     followerRef.current?.classList.remove("active");
                 });
             }
-        };
-    };
-
-    const initializeCursor = (cursor: HTMLDivElement, follower: HTMLDivElement) => {
-        // Update mouse coordinates
-        const mouseCoords = (e: MouseEvent) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        };
-
-        // Animate cursor position using GSAP
-        const animateCursor = () => {
-            posX += (mouseX - posX) / LAG_FACTOR;
-            posY += (mouseY - posY) / LAG_FACTOR;
-
-            gsap.set(follower, {
-                css: {
-                    left: posX - 27,
-                    top: posY - 27,
-                },
-            });
-
-            gsap.set(cursor, {
-                css: {
-                    left: mouseX,
-                    top: mouseY,
-                },
-            });
-        };
-
-        // Hide cursor when off-screen
-        const mouseOut = () => {
-            cursor.classList.add("hidden");
-            follower.classList.add("hidden");
-        };
-
-        // Show cursor when back on screen
-        const mouseIn = () => {
-            cursor.classList.remove("hidden");
-            follower.classList.remove("hidden");
-        };
-
-        const shrinkCursor = () => {
-            follower.classList.add("shrink");
-            console.log("shrink");
-        };
-
-        const growCursor = () => {
-            follower.classList.remove("shrink");
-            console.log("grow");
-        }
-
-        // Add event listeners
-        window.addEventListener("mousemove", mouseCoords);
-        window.addEventListener("mouseout", mouseOut);
-        window.addEventListener("mouseover", mouseIn);
-
-
-        // GSAP animation loop
-        const gsapInterval = gsap.ticker.add(animateCursor);
-
-        // Cleanup function to remove event listeners and GSAP animation
-        return () => {
-            window.removeEventListener("mousemove", mouseCoords);
-            window.removeEventListener("mouseout", mouseOut);
-            window.removeEventListener("mouseover", mouseIn);
-
-            gsap.ticker.remove(animateCursor);
         };
     };
 

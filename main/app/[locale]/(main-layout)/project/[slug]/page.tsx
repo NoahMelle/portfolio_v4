@@ -1,6 +1,5 @@
 import React from "react";
 import { getProjectPageData } from "@/data/fetcher";
-import { ProjectType } from "@/lib/types";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
 import styles from "@/styles/project.module.scss";
@@ -41,7 +40,7 @@ export default async function Project({
                 <Carousel>
                     <CarouselContent>
                         {projectPageData.project.screenshots.map((image) => (
-                            <CarouselItem key={image.url} className="">
+                            <CarouselItem key={image.url}>
                                 <div className="aspect-video border-2 border-black/5 rounded-lg">
                                     <Image
                                         src={image.url}
@@ -124,7 +123,7 @@ export default async function Project({
                         </h3>
                         <ul className="flex gap-7 flex-wrap justify-center">
                             {projectPageData.project.skills.map((skill) => (
-                                <TooltipProvider>
+                                <TooltipProvider key={skill.name}>
                                     <Tooltip>
                                         <TooltipTrigger>
                                             <li key={skill.name}>

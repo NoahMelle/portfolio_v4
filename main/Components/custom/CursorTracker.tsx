@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 
@@ -18,10 +17,9 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
     const invisibleDivRef = React.useRef<HTMLElement | null>(null);
     const pathname = usePathname();
 
-    //FIXME: multiple websocket instances opened upon page change
-
+    // Function to convert hex color to RGB
     function hexToRgb(hex: string) {
-        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         return result
             ? {
                   r: parseInt(result[1], 16),
@@ -31,73 +29,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
             : null;
     }
 
-    React.useEffect(() => {
-        if (wsRef.current) {
-            wsRef.current.close();
-            wsRef.current = null;
-        }
-
-        connect();
-
-        return () => {
-            if (wsRef.current) {
-                wsRef.current.close();
-                wsRef.current = null;
-            }
-        }
-    }, [pathname, wsUrl]);
-
-    React.useEffect(() => {
-        console.log("mounting");
-        console.log(wsRef.current);
-        sectionContainerRef.current =
-            document.getElementById("section-container");
-        invisibleDivRef.current = document.getElementById("invisible-div");
-
-        window.addEventListener("mousemove", (event) => {
-            handleMouseMove(event);
-        });
-
-        window.addEventListener("scroll", (event) => {
-            handleMouseMove(event);
-        });
-
-        window.addEventListener("touchmove", (event) => {
-            handleMouseMove(event);
-        });
-
-        return () => {
-            window.removeEventListener("mousemove", () => {});
-            window.removeEventListener("scroll", () => {});
-            window.removeEventListener("touchmove", () => {});
-        };
-    }, []);
-
-    React.useEffect(() => {
-        if (ws?.readyState === WebSocket.OPEN && isAllowed.current) {
-            ws.send(
-                JSON.stringify({
-                    type: "cursor",
-                    data: cursor,
-                })
-            );
-            isAllowed.current = false;
-            setTimeout(() => {
-                isAllowed.current = true;
-            }, 50);
-        } else if (ws?.readyState === WebSocket.CLOSED) {
-            connect();
-        }
-
-        return () => {
-            if (cursorTimeout.current !== null) {
-                window.clearTimeout(cursorTimeout.current);
-                cursorTimeout.current = null;
-            }
-        };
-    }, [cursor]);
-
-    function connect() {
+    const connect = React.useCallback(() => {
         const ws = new WebSocket(wsUrl);
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -155,15 +87,28 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         };
         setWs(ws);
         wsRef.current = ws;
-    }
+    }, [wsUrl]);
 
-    function handleMouseMove(event: Event) {
+    React.useEffect(() => {
+        if (wsRef.current) {
+            wsRef.current.close();
+            wsRef.current = null;
+        }
 
+        connect();
+
+        return () => {
+            if (wsRef.current) {
+                wsRef.current.close();
+                wsRef.current = null;
+            }
+        };
+    }, [pathname, wsUrl, connect]);
+
+    const handleMouseMove = React.useCallback((event: Event) => {
         if (event instanceof MouseEvent) {
             const bodyHeight = Math.max(
                 sectionContainerRef.current?.scrollHeight || 0
-                // (invisibleDivRef.current?.offsetHeight || 0),
-                // window.innerHeight
             );
 
             const bodyWidth = window.innerWidth;
@@ -192,7 +137,47 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                 connect();
             }
         }
-    }
+    }, [wsRef, connect]);
+
+    React.useEffect(() => {
+        sectionContainerRef.current =
+            document.getElementById("section-container");
+        invisibleDivRef.current = document.getElementById("invisible-div");
+
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("scroll", handleMouseMove);
+        window.addEventListener("touchmove", handleMouseMove);
+
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("scroll", handleMouseMove);
+            window.removeEventListener("touchmove", handleMouseMove);
+        };
+    }, [handleMouseMove]);
+
+    React.useEffect(() => {
+        if (ws?.readyState === WebSocket.OPEN && isAllowed.current) {
+            ws.send(
+                JSON.stringify({
+                    type: "cursor",
+                    data: cursor,
+                })
+            );
+            isAllowed.current = false;
+            setTimeout(() => {
+                isAllowed.current = true;
+            }, 50);
+        } else if (ws?.readyState === WebSocket.CLOSED) {
+            connect();
+        }
+
+        return () => {
+            if (cursorTimeout.current !== null) {
+                window.clearTimeout(cursorTimeout.current);
+                cursorTimeout.current = null;
+            }
+        };
+    }, [cursor, ws, connect]);
 
     return (
         <>

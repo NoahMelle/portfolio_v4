@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import Navbar from "@/Components/reusable/Navbar";
 import { getHomepageLinks } from "@/data/fetcher";
 import { getLocale } from "next-intl/server";
 import Image from "next/image";

@@ -6,7 +6,6 @@ import Markdown from "react-markdown";
 import styles from "@/styles/home.module.scss";
 import Image from "next/image";
 import { SkillType } from "@/lib/types";
-import { defaultOverrides } from "next/dist/server/require-hook";
 import {
     Tooltip,
     TooltipContent,
@@ -20,7 +19,6 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
     const totalPages = React.useRef(
         Math.ceil(skills.allSkills.length / skillsPerPage)
     );
-    const skillContainerRef = React.useRef<HTMLDivElement>(null);
     const [touchstartX, setTouchstartX] = React.useState(0);
     const [touchendX, setTouchendX] = React.useState(0);
     const [showingSkills, setShowingSkills] = React.useState<SkillType[]>([]);
@@ -33,13 +31,23 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
         setTouchendX(e.changedTouches[0].clientX);
     };
 
+    const handlePrevNext = React.useCallback((amt: number) => {
+        let target = currentSkillPage + amt;
+        if (target < 0) {
+            target = totalPages.current - 1;
+        } else if (target >= skills.allSkills.length / skillsPerPage) {
+            target = 0;
+        }
+        setCurrentSkillPage(target);
+    }, [currentSkillPage, skills.allSkills.length, skillsPerPage]);
+
     React.useEffect(() => {
         if (touchendX < touchstartX) {
             handlePrevNext(1);
         } else if (touchendX > touchstartX) {
             handlePrevNext(-1);
         }
-    }, [touchendX]);
+    }, [touchendX, touchstartX, handlePrevNext]);
 
     React.useEffect(() => {
         const newSkills = skills.allSkills.filter(
@@ -48,17 +56,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                 index <= skillsPerPage * currentSkillPage + skillsPerPage - 1
         );
         setShowingSkills(newSkills);
-    }, [currentSkillPage]);
-
-    const handlePrevNext = (amt: number) => {
-        let target = currentSkillPage + amt;
-        if (target < 0) {
-            target = totalPages.current - 1;
-        } else if (target >= skills.allSkills.length / skillsPerPage) {
-            target = 0;
-        }
-        setCurrentSkillPage(target);
-    };
+    }, [currentSkillPage, skills.allSkills]);
 
     return (
         <div>

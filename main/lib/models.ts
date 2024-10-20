@@ -172,7 +172,7 @@ export class ProjectPage {
     }
 }
 
-function replaceDynamicText(text: string, requiredData: any) {
+function replaceDynamicText(text: string, requiredData: { age: number; startedProgramming: string }) {
     const dict = {
         "{{age}}": requiredData.age.toString(),
         "{{experience}}": getYearsDiff(

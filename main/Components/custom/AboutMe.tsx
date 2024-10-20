@@ -3,7 +3,6 @@ import React from "react";
 import { AboutMeType } from "@/lib/types";
 import styles from "@/styles/home.module.scss";
 import Image from "next/image";
-import SlideFromLeft from "../reusable/SlideFromLeft";
 
 export default function AboutMe({ aboutMe }: { aboutMe: AboutMeType }) {
     return (
@@ -48,8 +47,10 @@ export default function AboutMe({ aboutMe }: { aboutMe: AboutMeType }) {
                                 }
                                 rel="noopener noreferrer"
                             >
-                                <img
+                                <Image
                                     src={socialLink.icon.url}
+                                    width={32}
+                                    height={32}
                                     alt={socialLink.alt}
                                     className="w-8 h-8 invert opacity-70 select-none"
                                 />
