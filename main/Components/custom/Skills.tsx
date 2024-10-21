@@ -54,7 +54,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
         const newSkills = skills.allSkills.filter(
             (skill, index) =>
                 index >= skillsPerPage * currentSkillPage &&
-                index <= skillsPerPage * currentSkillPage + skillsPerPage - 1
+                index < skillsPerPage * (currentSkillPage + 1)
         );
         setShowingSkills(newSkills);
     }, [currentSkillPage, skills.allSkills]);
