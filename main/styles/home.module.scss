@@ -300,7 +300,7 @@
 }
 
 .projects {
-    @include gridLayout(1rem, 3, 200px);
+    @include gridLayout(1rem, 3, 250px);
     justify-content: center;
     .project {
         position: relative;

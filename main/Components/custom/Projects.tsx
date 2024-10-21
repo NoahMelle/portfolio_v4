@@ -12,6 +12,9 @@ export default function Projects({ projects }: { projects: ProjectType[] }) {
                     key={i}
                     className={styles.project}
                     href={"/project/" + project.slug}
+                    style={{
+                        backgroundColor: project.backgroundColor,
+                    }}
                 >
                     <div className="z-10 relative flex flex-col justify-between h-full">
                         <ul className="ml-auto mr-0 flex gap-1 justify-end max-w-full flex-wrap">

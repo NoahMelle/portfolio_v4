@@ -98,6 +98,7 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         connect();
 
         return () => {
+            toast.dismiss();
             if (wsRef.current) {
                 wsRef.current.close();
                 wsRef.current = null;
