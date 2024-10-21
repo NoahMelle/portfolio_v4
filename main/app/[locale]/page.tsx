@@ -18,9 +18,13 @@ import Projects from "@/Components/custom/Projects";
 export default async function Home() {
     const locale = await getLocale();
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    console.log(process.env.NODE_ENV);
+
     const wsProtocol = process.env.WEBSOCKET_PROTOCOL || "ws";
     const wsHost = process.env.WEBSOCKET_HOST || "localhost";
-    const wsPort = process.env.WEBSOCKET_PORT || "8080";
+    const wsPort = (process.env.WEBSOCKET_PORT || "8080")
 
     const homepageData = await getHomepageData(locale);
 
@@ -96,7 +100,7 @@ export default async function Home() {
                 </header>
                 <div className={styles.invisibleDiv} id="invisible-div"></div>
                 {sections}
-                <CursorTracker wsUrl={`${wsProtocol}://${wsHost}:${wsPort}`} />
+                <CursorTracker wsUrl={`${wsProtocol}://${wsHost}${isProduction ? "" : `:${wsPort}`}`} />
             </div>
         </div>
     );
