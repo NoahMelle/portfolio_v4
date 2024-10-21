@@ -299,6 +299,16 @@
     }
 }
 
+.skillText {
+    a {
+        color: blue;
+        text-decoration: underline;
+        &:visited {
+            color: purple;
+        }
+    }
+}
+
 .projects {
     @include gridLayout(1rem, 3, 250px);
     justify-content: center;

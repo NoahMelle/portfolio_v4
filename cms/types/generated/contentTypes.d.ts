@@ -669,13 +669,10 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::project-category.project-category'
     >;
-    backgroundColor: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    backgroundColor: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::theme-color.theme-color'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -976,6 +973,37 @@ export interface ApiTestimonialRoleTestimonialRole
       'oneToMany',
       'api::testimonial-role.testimonial-role'
     >;
+  };
+}
+
+export interface ApiThemeColorThemeColor extends Struct.CollectionTypeSchema {
+  collectionName: 'theme_colors';
+  info: {
+    singularName: 'theme-color';
+    pluralName: 'theme-colors';
+    displayName: 'Theme Color';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    color: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    projects: Schema.Attribute.Relation<'oneToMany', 'api::project.project'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::theme-color.theme-color'
+    > &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1370,6 +1398,7 @@ declare module '@strapi/strapi' {
       'api::skill.skill': ApiSkillSkill;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'api::testimonial-role.testimonial-role': ApiTestimonialRoleTestimonialRole;
+      'api::theme-color.theme-color': ApiThemeColorThemeColor;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;

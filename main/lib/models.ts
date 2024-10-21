@@ -126,7 +126,7 @@ export class Project {
     frontPhoto: { url: string };
     categories?: { name: string }[];
     createdAt: Date;
-    backgroundColor: string;
+    backgroundColor: { color: string };
 
     constructor(project: ProjectType) {
         this.title = project.title;
@@ -151,7 +151,7 @@ export class Project {
         this.tags = project.tags ?? [];
         this.categories = project.categories ?? [];
         this.createdAt = new Date(project.createdAt);
-        this.backgroundColor = project.backgroundColor;
+        this.backgroundColor = project.backgroundColor
     }
 }
 

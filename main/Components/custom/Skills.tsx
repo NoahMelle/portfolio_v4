@@ -2,7 +2,7 @@
 
 import React from "react";
 import { SkillsSectionType } from "@/lib/types";
-import Markdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import styles from "@/styles/home.module.scss";
 import Image from "next/image";
 import { SkillType } from "@/lib/types";
@@ -12,6 +12,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/Components/ui/tooltip";
+import LinkRenderer from "../reusable/LinkRenderer";
 
 export default function Skills({ skills }: { skills: SkillsSectionType }) {
     const [currentSkillPage, setCurrentSkillPage] = React.useState(0);
@@ -64,7 +65,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                 <div className="basis-full">
                     <div className="max-w-[600px] flex flex-col gap-8 md:gap-16">
                         <div className="text-lg">
-                            <Markdown>{skills.skillText}</Markdown>
+                            <ReactMarkdown className={styles.skillText} components={{ a: LinkRenderer }}>{skills.skillText}</ReactMarkdown>
                         </div>
                         <div className={`flex flex-col gap-4`}>
                             <h3 className="text-xl font-semibold">

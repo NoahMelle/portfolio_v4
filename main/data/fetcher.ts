@@ -211,7 +211,9 @@ export async function getProjects(locale: string) {
                         title
                         description
                         slug
-                        backgroundColor
+                        backgroundColor {
+                            color
+                        }
                         frontPhoto {
                             url
                         }
@@ -242,7 +244,9 @@ export async function getProject(slug: string) {
                         title
                         createdAt
                         description
-                        backgroundColor
+                        backgroundColor {
+                            color
+                        }
                         slug
                         frontPhoto {
                             url

@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "theme_colors",
+  "info": {
+    "singularName": "theme-color",
+    "pluralName": "theme-colors",
+    "displayName": "Theme Color"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "color": {
+      "type": "customField",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+      "customField": "plugin::color-picker.color"
+    },
+    "projects": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::project.project",
+      "mappedBy": "backgroundColor"
+    }
+  }
+}

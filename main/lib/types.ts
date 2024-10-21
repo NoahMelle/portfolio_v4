@@ -81,7 +81,7 @@ export interface ProjectType {
     tags?: { name: string }[];
     categories?: { name: string }[];
     createdAt: Date;
-    backgroundColor: string;
+    backgroundColor: { color: string };
 }
 
 export interface ProjectPageType {

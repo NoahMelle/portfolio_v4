@@ -27,8 +27,6 @@ export default async function Project({
 
     const projectPageData = await getProjectPageData(locale, params.slug);
 
-    console.log(projectPageData.project.screenshots);
-
     return (
         <div
             style={{
