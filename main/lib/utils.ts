@@ -6,8 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getYearsDiff(date1: Date, date2: Date): number {
-  var ageDifMs = date1.getTime() - date2.getTime();
-  var ageDate = new Date(ageDifMs); // miliseconds from epoch
+  const ageDifMs = date1.getTime() - date2.getTime();
+  const ageDate = new Date(ageDifMs); // miliseconds from epoch
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 

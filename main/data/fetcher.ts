@@ -1,5 +1,5 @@
 import axios from "axios";
-import { HomepageProps } from "@/lib/models";
+import { HomepageProps, Project, ProjectPage } from "@/lib/models";
 
 const apiConfig = {
     headers: {
@@ -73,6 +73,7 @@ export async function getHomepageData(locale: string) {
     const myInfo = await getMyInfo();
     const skills = await getAllSkills();
     const testimonials = await getTestimonials();
+    const projects = await getProjects(locale);
 
     const data = new HomepageProps(
         res.jumpToList,
@@ -89,7 +90,8 @@ export async function getHomepageData(locale: string) {
         {
             ...res.testimonials,
             testimonials,
-        }
+        },
+        projects
     );
 
     return data;
@@ -193,4 +195,130 @@ export async function getTestimonials() {
     });
 
     return res.data.data.testimonials;
+}
+
+export async function getProjects(locale: string) {
+    return (
+        await axios({
+            ...apiConfig,
+            data: {
+                query: `
+                query($locale: I18NLocaleCode!) {
+                    projects(locale: $locale) {
+                        screenshots {
+                            url
+                        }
+                        title
+                        description
+                        slug
+                        frontPhoto {
+                            url
+                        }
+                        skills {
+                            name
+                        }
+                    }
+                }
+            `,
+                variables: {
+                    locale,
+                },
+            },
+        })
+    ).data.data.projects;
+}
+
+export async function getProject(slug: string) {
+    const res = await axios({
+        ...apiConfig,
+        data: {
+            query: `
+                query($slug: String!) {
+                    projects(filters: { slug: {eq:$slug} }) {
+                        screenshots {
+                            url
+                        }
+                        title
+                        createdAt
+                        description
+                        slug
+                        frontPhoto {
+                            url
+                        }
+                        categories {
+                            name
+                        }
+                        tags {
+                            name
+                        }
+                        skills {
+                            name
+                            icon {
+                                url
+                            }
+                        }
+                    }
+                }
+            `,
+            variables: {
+                slug,
+            },
+        },
+    });
+
+    return new Project(res.data.data.projects[0]);
+}
+
+export async function getProjectPageData(locale: string, slug: string) {
+    const res = (
+        await axios({
+            ...apiConfig,
+            data: {
+                query: `
+                    query($locale: I18NLocaleCode) {
+                        projectpage(locale: $locale) {
+                            backgroundImage {
+                                url
+                            }
+                            dateHeading
+                            technologiesHeading
+                            categoriesHeading
+                        }
+                    }
+            `,
+                variables: {
+                    locale,
+                },
+            },
+        })
+    ).data.data.projectpage;
+
+    const project = await getProject(slug);
+
+    return new ProjectPage(res.backgroundImage, res.dateHeading, res.technologiesHeading, res.categoriesHeading, project);
+}
+
+export async function getHomepageLinks(locale: string) {
+    const res = await axios({
+        ...apiConfig,
+        data: {
+            query: `
+                query($locale: I18NLocaleCode!) {
+                    homepage(locale: $locale) {
+                        jumpToList {
+                            links {
+                                title
+                                url
+                            }
+                        }
+                    }
+                }
+            `,
+            variables: {
+                locale,
+            },
+        },
+    });
+
+    return res.data.data.homepage.jumpToList.links;
 }

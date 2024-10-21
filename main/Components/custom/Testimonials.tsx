@@ -5,6 +5,7 @@ import styles from "@/styles/home.module.scss";
 import Markdown from "react-markdown";
 import { TestimonialsSectionType } from "@/lib/types";
 import gsap from "gsap";
+import Image from "next/image";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 export default function Testimonials({
@@ -64,10 +65,12 @@ export default function Testimonials({
                             <Markdown>{testimonial.content}</Markdown>
                             <div className="h-[50px] flex gap-4">
                                 <div className={styles.testimonialImage}>
-                                    <img
+                                    <Image
                                         src={testimonial.image.url}
                                         alt={testimonial.name}
                                         className="h-full"
+                                        width={50}
+                                        height={50}
                                     />
                                 </div>
                                 <div className="flex flex-col justify-center">

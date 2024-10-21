@@ -11,7 +11,6 @@ export default function SlideFromLeft({
     children: React.ReactNode;
     delay?: number;
 }) {
-    const [loading, setLoading] = React.useState(true);
     const container = React.useRef(null);
 
     useGSAP(
@@ -22,7 +21,6 @@ export default function SlideFromLeft({
                 { x: "-100%" },
                 { x: "0%", duration: 1, ease: "power3.inOut", delay: delay }
             );
-            setLoading(false);
         },
         { scope: container }
     );

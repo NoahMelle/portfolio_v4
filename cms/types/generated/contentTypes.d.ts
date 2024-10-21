@@ -600,6 +600,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     singularName: 'project';
     pluralName: 'projects';
     displayName: 'Project';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -636,6 +637,28 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
         };
       }>;
     skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    frontPhoto: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    tags: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::project-tag.project-tag'
+    >;
+    categories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::project-category.project-category'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -647,6 +670,119 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::project.project'
+    >;
+  };
+}
+
+export interface ApiProjectCategoryProjectCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'project_categories';
+  info: {
+    singularName: 'project-category';
+    pluralName: 'project-categories';
+    displayName: 'Project Category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    projects: Schema.Attribute.Relation<'manyToMany', 'api::project.project'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project-category.project-category'
+    >;
+  };
+}
+
+export interface ApiProjectTagProjectTag extends Struct.CollectionTypeSchema {
+  collectionName: 'project_tags';
+  info: {
+    singularName: 'project-tag';
+    pluralName: 'project-tags';
+    displayName: 'Project Tag';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    projects: Schema.Attribute.Relation<'manyToMany', 'api::project.project'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project-tag.project-tag'
+    >;
+  };
+}
+
+export interface ApiProjectpageProjectpage extends Struct.SingleTypeSchema {
+  collectionName: 'projectpages';
+  info: {
+    singularName: 'projectpage';
+    pluralName: 'projectpages';
+    displayName: 'Projectpage';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    backgroundImage: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    categoriesHeading: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    dateHeading: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    technologiesHeading: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::projectpage.projectpage'
     >;
   };
 }
@@ -1202,6 +1338,9 @@ declare module '@strapi/strapi' {
       'api::global.global': ApiGlobalGlobal;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::project.project': ApiProjectProject;
+      'api::project-category.project-category': ApiProjectCategoryProjectCategory;
+      'api::project-tag.project-tag': ApiProjectTagProjectTag;
+      'api::projectpage.projectpage': ApiProjectpageProjectpage;
       'api::skill.skill': ApiSkillSkill;
       'api::testimonial.testimonial': ApiTestimonialTestimonial;
       'api::testimonial-role.testimonial-role': ApiTestimonialRoleTestimonialRole;

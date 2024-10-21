@@ -1,4 +1,13 @@
-import { JumpToListType, HeroType, MarqueeType, AboutMeType, SocialLink, SkillsSectionType, TestimonialsSectionType } from "./types";
+import {
+    JumpToListType,
+    HeroType,
+    MarqueeType,
+    AboutMeType,
+    SocialLink,
+    SkillsSectionType,
+    TestimonialsSectionType,
+    ProjectType,
+} from "./types";
 import { getAgeFromBday } from "./utils";
 import { getYearsDiff } from "./utils";
 
@@ -11,6 +20,7 @@ export class HomepageProps {
     aboutMe: AboutMeType;
     skills: SkillsSectionType;
     testimonials: TestimonialsSectionType;
+    projects: ProjectType[];
 
     constructor(
         jumpToList: JumpToListType,
@@ -21,7 +31,8 @@ export class HomepageProps {
         aboutMe: AboutMeType,
         socialLinks: SocialLink[],
         skills: SkillsSectionType,
-        testimonials: TestimonialsSectionType
+        testimonials: TestimonialsSectionType,
+        projects: ProjectType[]
     ) {
         const birthDate = new Date(dateOfBirth); // Parse once
         const age = getAgeFromBday(birthDate);
@@ -64,7 +75,7 @@ export class HomepageProps {
                     ...link.icon,
                     url: (process.env.BASEURL_API ?? "") + link.icon.url,
                 },
-            }))
+            })),
         };
         this.testimonials = {
             ...testimonials,
@@ -73,24 +84,31 @@ export class HomepageProps {
                     ...testimonial,
                     image: {
                         ...testimonial.image,
-                        url: (process.env.BASEURL_API ?? "") + testimonial.image.url,
+                        url:
+                            (process.env.BASEURL_API ?? "") +
+                            testimonial.image.url,
                     },
                 };
             }),
-        }
+        };
         this.skills = {
             ...skills,
             techStack: {
                 ...skills.techStack,
-                techStackSkills: skills.techStack.techStackSkills.map((skill) => ({
-                    ...skill,
-                    icon: {
-                        ...skill.icon,
-                        url: (process.env.BASEURL_API ?? "") + skill.icon.url,
-                    },
-                })),
-            }
-        }
+                techStackSkills: skills.techStack.techStackSkills.map(
+                    (skill) => ({
+                        ...skill,
+                        icon: {
+                            ...skill.icon,
+                            url:
+                                (process.env.BASEURL_API ?? "") +
+                                skill.icon.url,
+                        },
+                    })
+                ),
+            },
+        };
+        this.projects = projects.map((project) => new Project(project));
     }
 
     getAge() {
@@ -98,7 +116,63 @@ export class HomepageProps {
     }
 }
 
-function replaceDynamicText(text: string, requiredData: any) {
+export class Project {
+    title: string;
+    description?: string;
+    slug: string;
+    screenshots: { url: string }[];
+    skills: { name: string; confidenceLevel: number; icon?: { url: string } }[];
+    tags: { name: string }[] = [];
+    frontPhoto: { url: string };
+    categories?: { name: string }[];
+    createdAt: Date;
+
+    constructor(project: ProjectType) {
+        this.title = project.title;
+        this.description = project.description;
+        this.slug = project.slug;
+        this.screenshots = project.screenshots.map((screenshot) => ({
+            ...screenshot,
+            url: (process.env.BASEURL_API ?? "") + screenshot.url,
+        }));
+        this.skills = project.skills.map((skill) => ({
+            ...skill,
+            icon: {
+                ...skill.icon,
+                url: (process.env.BASEURL_API ?? "") + skill?.icon?.url,
+            },
+        })
+        );
+        this.frontPhoto = {
+            ...project.frontPhoto,
+            url: (process.env.BASEURL_API ?? "") + project.frontPhoto.url,
+        };
+        this.tags = project.tags ?? [];
+        this.categories = project.categories ?? [];
+        this.createdAt = new Date(project.createdAt);
+    }
+}
+
+export class ProjectPage {
+    backgroundImg: { url: string };
+    project: ProjectType;
+    headings: { date: string; technologies: string; categories: string };
+
+    constructor(backgroundImg: { url: string }, dateHeading: string, technologiesHeading: string, categoriesHeading: string, project: ProjectType) {
+        this.backgroundImg = {
+            ...backgroundImg,
+            url: (process.env.BASEURL_API ?? "") + backgroundImg.url,
+        };
+        this.project = project;
+        this.headings = {
+            date: dateHeading,
+            technologies: technologiesHeading,
+            categories: categoriesHeading,
+        };
+    }
+}
+
+function replaceDynamicText(text: string, requiredData: { age: number; startedProgramming: string }) {
     const dict = {
         "{{age}}": requiredData.age.toString(),
         "{{experience}}": getYearsDiff(

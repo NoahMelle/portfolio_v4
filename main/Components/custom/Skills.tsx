@@ -6,7 +6,12 @@ import Markdown from "react-markdown";
 import styles from "@/styles/home.module.scss";
 import Image from "next/image";
 import { SkillType } from "@/lib/types";
-import { defaultOverrides } from "next/dist/server/require-hook";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/Components/ui/tooltip";
 
 export default function Skills({ skills }: { skills: SkillsSectionType }) {
     const [currentSkillPage, setCurrentSkillPage] = React.useState(0);
@@ -14,7 +19,6 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
     const totalPages = React.useRef(
         Math.ceil(skills.allSkills.length / skillsPerPage)
     );
-    const skillContainerRef = React.useRef<HTMLDivElement>(null);
     const [touchstartX, setTouchstartX] = React.useState(0);
     const [touchendX, setTouchendX] = React.useState(0);
     const [showingSkills, setShowingSkills] = React.useState<SkillType[]>([]);
@@ -27,13 +31,23 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
         setTouchendX(e.changedTouches[0].clientX);
     };
 
+    const handlePrevNext = React.useCallback((amt: number) => {
+        let target = currentSkillPage + amt;
+        if (target < 0) {
+            target = totalPages.current - 1;
+        } else if (target >= skills.allSkills.length / skillsPerPage) {
+            target = 0;
+        }
+        setCurrentSkillPage(target);
+    }, [currentSkillPage, skills.allSkills.length, skillsPerPage]);
+
     React.useEffect(() => {
         if (touchendX < touchstartX) {
             handlePrevNext(1);
         } else if (touchendX > touchstartX) {
             handlePrevNext(-1);
         }
-    }, [touchendX]);
+    }, [touchendX, touchstartX, handlePrevNext]);
 
     React.useEffect(() => {
         const newSkills = skills.allSkills.filter(
@@ -42,17 +56,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                 index <= skillsPerPage * currentSkillPage + skillsPerPage - 1
         );
         setShowingSkills(newSkills);
-    }, [currentSkillPage]);
-
-    const handlePrevNext = (amt: number) => {
-        let target = currentSkillPage + amt;
-        if (target < 0) {
-            target = totalPages.current - 1;
-        } else if (target >= skills.allSkills.length / skillsPerPage) {
-            target = 0;
-        }
-        setCurrentSkillPage(target);
-    };
+    }, [currentSkillPage, skills.allSkills]);
 
     return (
         <div>
@@ -66,21 +70,35 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                             <h3 className="text-xl font-semibold">
                                 {skills.techStack.heading}
                             </h3>
-                            <div className="flex gap-4 flex-wrap">
+                            <ul className="flex gap-4 flex-wrap">
                                 {skills.techStack.techStackSkills.map(
                                     (skill, i) => (
-                                        <Image
-                                            src={skill.icon.url}
-                                            alt={skill.name}
-                                            className="invert-[90%] select-none"
-                                            height={40}
-                                            width={40}
-                                            title={skill.name}
-                                            key={i}
-                                        />
+                                        <TooltipProvider key={i}>
+                                            <Tooltip>
+                                                <TooltipTrigger>
+                                                    <li>
+                                                        {skill.icon && (
+                                                            <Image
+                                                                src={
+                                                                    skill?.icon
+                                                                        ?.url
+                                                                }
+                                                                alt={skill.name}
+                                                                width={40}
+                                                                height={40}
+                                                                className="invert-[80%] select-none"
+                                                            />
+                                                        )}
+                                                    </li>
+                                                </TooltipTrigger>
+                                                <TooltipContent>
+                                                    {skill.name}
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
                                     )
                                 )}
-                            </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -101,7 +119,9 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                                     <div className="flex justify-end">
                                         <div>{skill.name}</div>
                                     </div>
-                                    <div className={`h-7 border-[1px] ${styles.skillBar}`}>
+                                    <div
+                                        className={`h-7 border-[1px] ${styles.skillBar}`}
+                                    >
                                         <div
                                             className={`h-full transition-all duration-500 ${styles.skillBarFill}`}
                                             style={{

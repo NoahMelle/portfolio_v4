@@ -4,7 +4,7 @@ export interface JumpToListType {
 }
 
 export interface LinkType {
-    title: string;  
+    title: string;
     url: string;
     isExternal?: boolean;
 }
@@ -46,6 +46,7 @@ export interface SkillsSectionType {
 export interface SkillType {
     name: string;
     confidenceLevel: number;
+    icon?: { url: string };
 }
 
 export interface TechStackType {
@@ -68,4 +69,24 @@ export interface TestimonialType {
 export interface TestimonialsSectionType {
     testimonialHeading: string;
     testimonials: TestimonialType[];
+}
+
+export interface ProjectType {
+    title: string;
+    description?: string;
+    slug: string;
+    screenshots: { url: string }[];
+    frontPhoto: { url: string };
+    skills: SkillType[];
+    tags?: { name: string }[];
+    categories?: { name: string }[];
+    createdAt: Date;
+}
+
+export interface ProjectPageType {
+    backgroundImage: { url: string},
+    dateHeading: string;
+    technologiesHeading: string;
+    cateogriesHeading: string;
+    project: ProjectType;
 }

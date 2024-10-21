@@ -29,7 +29,7 @@ export default function AnchorNav({
 
     const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
-        const targetSelector = e.currentTarget.getAttribute("href");
+        const targetSelector = e.currentTarget.getAttribute("href")?.replace("/", "");
         const targetElement =
             targetSelector && document.querySelector(targetSelector);
         const scroller = document.querySelector("#section-container");
