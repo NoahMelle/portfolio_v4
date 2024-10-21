@@ -33,14 +33,16 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
     };
 
     const handlePrevNext = React.useCallback((amt: number) => {
-        let target = currentSkillPage + amt;
-        if (target < 0) {
-            target = totalPages.current - 1;
-        } else if (target >= skills.allSkills.length / skillsPerPage) {
-            target = 0;
-        }
-        setCurrentSkillPage(target);
-    }, [currentSkillPage, skills.allSkills.length, skillsPerPage]);
+        setCurrentSkillPage((prev) => {
+            let target = prev + amt;
+            if (target < 0) {
+                target = totalPages.current - 1;
+            } else if (target >= totalPages.current) {
+                target = 0;
+            }
+            return target;
+        })
+    }, []);
 
     React.useEffect(() => {
         if (touchendX < touchstartX) {
