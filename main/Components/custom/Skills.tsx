@@ -20,17 +20,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
     const totalPages = React.useRef(
         Math.ceil(skills.allSkills.length / skillsPerPage)
     );
-    const [touchstartX, setTouchstartX] = React.useState(0);
-    const [touchendX, setTouchendX] = React.useState(0);
     const [showingSkills, setShowingSkills] = React.useState<SkillType[]>([]);
-
-    const handleTouchStart = (e: React.TouchEvent) => {
-        setTouchstartX(e.touches[0].clientX);
-    };
-
-    const handleTouchEnd = (e: React.TouchEvent) => {
-        setTouchendX(e.changedTouches[0].clientX);
-    };
 
     const handlePrevNext = React.useCallback((amt: number) => {
         setCurrentSkillPage((prev) => {
@@ -41,16 +31,8 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                 target = 0;
             }
             return target;
-        })
+        });
     }, []);
-
-    React.useEffect(() => {
-        if (touchendX < touchstartX) {
-            handlePrevNext(1);
-        } else if (touchendX > touchstartX) {
-            handlePrevNext(-1);
-        }
-    }, [touchendX, touchstartX, handlePrevNext]);
 
     React.useEffect(() => {
         const newSkills = skills.allSkills.filter(
@@ -67,7 +49,12 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                 <div className="basis-full">
                     <div className="max-w-[600px] flex flex-col gap-8 md:gap-16">
                         <div className="text-lg">
-                            <ReactMarkdown className={styles.skillText} components={{ a: LinkRenderer }}>{skills.skillText}</ReactMarkdown>
+                            <ReactMarkdown
+                                className={styles.skillText}
+                                components={{ a: LinkRenderer }}
+                            >
+                                {skills.skillText}
+                            </ReactMarkdown>
                         </div>
                         <div className={`flex flex-col gap-4`}>
                             <h3 className="text-xl font-semibold">
@@ -114,8 +101,6 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                             style={{
                                 gridTemplateRows: `repeat(${skillsPerPage}, 1fr)`,
                             }}
-                            onTouchStart={handleTouchStart}
-                            onTouchEnd={handleTouchEnd}
                         >
                             {showingSkills.map((skill, i) => (
                                 <div key={i} className={styles.skill}>

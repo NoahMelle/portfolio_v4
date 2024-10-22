@@ -45,7 +45,7 @@ export default async function Project({
                                         alt="Project Screenshot"
                                         width={1000}
                                         height={500}
-                                        className="w-full h-full object-cover block rounded-lg"
+                                        className="w-full h-full object-cover block rounded-lg select-none"
                                     />
                                 </div>
                             </CarouselItem>
