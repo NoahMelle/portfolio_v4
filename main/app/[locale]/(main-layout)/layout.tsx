@@ -12,8 +12,6 @@ export default async function layout({
     const locale = await getLocale();
     const links = await getHomepageLinks(locale);
 
-    console.log(links);
-
     return (
         <div>
             {/* <Navbar links={links} /> */}
@@ -28,7 +26,7 @@ export default async function layout({
                     <span className="text-lg font-medium">Home</span>
                 </Link>
             </nav>
-            <div>{children}</div>
+            <div className="min-h-screen">{children}</div>
         </div>
     );
 }

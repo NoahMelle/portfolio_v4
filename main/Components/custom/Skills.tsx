@@ -123,7 +123,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                         <div className="flex mt-10 w-full justify-between items-center">
                             <button
                                 onClick={() => handlePrevNext(-1)}
-                                className="hover:bg-slate-100 px-3 py-1 transition-colors bg-transparent]"
+                                className="px-3 py-1 transition-colors"
                             >
                                 PREV
                             </button>
@@ -149,7 +149,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                             </div>
                             <button
                                 onClick={() => handlePrevNext(1)}
-                                className="hover:bg-slate-100 px-3 py-1 transition-colors bg-transparent"
+                                className="px-3 py-1 transition-colors"
                             >
                                 NEXT
                             </button>

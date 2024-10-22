@@ -91,3 +91,8 @@ export interface ProjectPageType {
     cateogriesHeading: string;
     project: ProjectType;
 }
+
+export interface NotFoundType {
+    heading: string;
+    toHomepageButton: LinkType;
+}

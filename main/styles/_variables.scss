@@ -1,9 +1,9 @@
 @use 'sass:math';
 
 $xlFont: clamp(1.5rem, 2.5vw, 2.5rem);
-$lgFont: clamp(1rem, 2vw, 1.5rem);
-$bigHeaderSize: clamp(3rem, 5vw, 5rem);
-$h3Heading: clamp(1.5rem, 2.5vw, 2.5rem);
+$lgFont: clamp(1.2rem, 1vw, 1.5rem);
+$bigHeaderSize: clamp(2.5rem, 4vw, 4.5rem);
+$h3Heading: clamp(1.2rem, 2vw, 2rem);
 $h2Heading: clamp(2.5rem, 3vw, 4rem);
 
 $tabletBreakpoint: 768px;
@@ -11,6 +11,7 @@ $tabletBreakpoint: 768px;
 $white: #eef2f3;
 $black: #0e0e0e;
 $blackText: #56585c;
+$primary: #3c5759;
 
 @keyframes fadeIn {
     from {

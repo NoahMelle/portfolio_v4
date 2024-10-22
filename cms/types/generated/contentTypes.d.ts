@@ -604,6 +604,49 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiNotFoundNotFound extends Struct.SingleTypeSchema {
+  collectionName: 'not_founds';
+  info: {
+    singularName: 'not-found';
+    pluralName: 'not-founds';
+    displayName: 'Not Found';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    heading: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    toHomepageButton: Schema.Attribute.Component<'utils.link', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::not-found.not-found'
+    >;
+  };
+}
+
 export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   collectionName: 'projects';
   info: {
@@ -1391,6 +1434,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::global.global': ApiGlobalGlobal;
       'api::homepage.homepage': ApiHomepageHomepage;
+      'api::not-found.not-found': ApiNotFoundNotFound;
       'api::project.project': ApiProjectProject;
       'api::project-category.project-category': ApiProjectCategoryProjectCategory;
       'api::project-tag.project-tag': ApiProjectTagProjectTag;

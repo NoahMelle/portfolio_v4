@@ -19,7 +19,7 @@ const AnimatedText = ({ text }: { text: string }) => {
         if (!paragraph) return;
 
         const words = paragraph.querySelectorAll(".word-inner");
-        const duration = 1 + words.length * 0.01;
+        const duration = 1 + words.length * 0.15;
 
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -29,14 +29,15 @@ const AnimatedText = ({ text }: { text: string }) => {
             },
         });
 
-        tl.fromTo(
+        gsap.fromTo(
             words,
-            { y: "110%" },
+            { y: "110%", opacity: 0 },
             {
                 y: "0%",
                 duration: duration,
+                opacity: 1,
                 stagger: {
-                    amount: 0.2,
+                    amount: 0.3,
                 },
                 ease: "expo.out",
             }
@@ -52,9 +53,9 @@ const AnimatedText = ({ text }: { text: string }) => {
             {splitTextIntoWords(text).map((word, index) => (
                 <span
                     key={index}
-                    className="word-wrapper inline-block overflow-hidden relative"
+                    className="word-wrapper inline-blockrelative"
                 >
-                    <span className="word-inner inline-block translate-y-full">
+                    <span className="word-inner inline-block translate-y-full opacity-0">
                         {word}
                     </span>
                     &nbsp;

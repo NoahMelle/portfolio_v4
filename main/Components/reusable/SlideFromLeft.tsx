@@ -18,8 +18,8 @@ export default function SlideFromLeft({
             gsap.registerPlugin(useGSAP);
             gsap.fromTo(
                 ".target",
-                { x: "-100%" },
-                { x: "0%", duration: 1, ease: "power3.inOut", delay: delay }
+                { x: "-100%", opacity: 0 },
+                { x: "0%", duration: 1, ease: "power3.inOut", delay: delay, opacity: 1 }
             );
         },
         { scope: container }
@@ -27,7 +27,8 @@ export default function SlideFromLeft({
 
     return (
         <div ref={container}>
-            <div className="target translate-x-[-100%]">{children}</div>
+            <div className="target -translate-x-full opacity-0">
+                {children}</div>
         </div>
     );
 }

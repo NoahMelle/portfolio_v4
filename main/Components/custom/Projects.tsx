@@ -28,7 +28,7 @@ export default function Projects({ projects }: { projects: ProjectType[] }) {
                             ))}
                         </ul>
                         <div className="bg-white/90 px-6 py-2 rounded-lg shadow-[0_0_10px_rgba(0,0,0,.3)] w-fit">
-                            <h3 className="text-2xl text-black">
+                            <h3 className="text-xl text-black">
                                 {project.title}
                             </h3>
                         </div>

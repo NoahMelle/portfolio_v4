@@ -20,8 +20,6 @@ export default async function Home() {
 
     const isProduction = process.env.NODE_ENV === 'production';
 
-    console.log(process.env.NODE_ENV);
-
     const wsProtocol = process.env.WEBSOCKET_PROTOCOL || "ws";
     const wsHost = process.env.WEBSOCKET_HOST || "localhost";
     const wsPort = (process.env.WEBSOCKET_PORT || "8080")
@@ -78,7 +76,7 @@ export default async function Home() {
                             <h2 className={styles.heroHeader}>
                                 <TextReveal text={homepageData.hero.title} />
                             </h2>
-                            <SlideFromLeft delay={0.3}>
+                            <SlideFromLeft delay={0.5}>
                                 <p>{homepageData.hero.subheading}</p>
                             </SlideFromLeft>
                         </div>

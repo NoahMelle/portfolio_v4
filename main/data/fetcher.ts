@@ -1,5 +1,6 @@
 import axios from "axios";
 import { HomepageProps, Project, ProjectPage } from "@/lib/models";
+import { NotFoundType } from "@/lib/types";
 
 const apiConfig = {
     headers: {
@@ -272,6 +273,10 @@ export async function getProject(slug: string) {
         },
     });
 
+    if (!res.data.data.projects.length) {
+        return null;
+    }
+
     return new Project(res.data.data.projects[0]);
 }
 
@@ -301,6 +306,10 @@ export async function getProjectPageData(locale: string, slug: string) {
 
     const project = await getProject(slug);
 
+    if (!project) {
+        return null;
+    }
+
     return new ProjectPage(res.backgroundImage, res.dateHeading, res.technologiesHeading, res.categoriesHeading, project);
 }
 
@@ -327,4 +336,28 @@ export async function getHomepageLinks(locale: string) {
     });
 
     return res.data.data.homepage.jumpToList.links;
+}
+
+export async function getNotFoundData(locale: string): Promise<NotFoundType> {
+    const res = await axios({
+        ...apiConfig,
+        data: {
+            query: `
+                query($locale: I18NLocaleCode!) {
+                    notFound(locale: $locale) {
+                        heading
+                        toHomepageButton {
+                            url
+                            title
+                        }
+                    }
+                }
+            `,
+            variables: {
+                locale,
+            },
+        },
+    });
+
+    return res.data.data.notFound;
 }

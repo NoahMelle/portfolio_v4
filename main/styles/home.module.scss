@@ -8,7 +8,7 @@
 }
 
 .marquee {
-    background-color: #3c5759;
+    background-color: $primary;
     color: white;
     padding: 1rem 0;
     width: 100%;
@@ -34,22 +34,6 @@
         left: 50%;
         animation: bounce 1s ease infinite;
         translate: -50%;
-
-        // &::after {
-        //     bottom: 2rem;
-        //     color: $blackText;
-        //     content: "╲╱";
-        //     font-size: 2rem;
-        //     height: 4rem;
-        //     left: 50%;
-        //     letter-spacing: -1px;
-        //     line-height: 4rem;
-        //     margin-left: -3rem;
-        //     opacity: 0.8;
-        //     position: absolute;
-        //     text-align: center;
-        //     width: 6rem;
-        // }
     }
 
     .backgroundImage {
@@ -301,11 +285,8 @@
 
 .skillText {
     a {
-        color: blue;
+        color: #166568;
         text-decoration: underline;
-        &:visited {
-            color: purple;
-        }
     }
 }
 

@@ -17,6 +17,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/Components/ui/tooltip";
+import { notFound } from "next/navigation";
 
 export default async function Project({
     params,
@@ -26,6 +27,11 @@ export default async function Project({
     const locale = await getLocale();
 
     const projectPageData = await getProjectPageData(locale, params.slug);
+
+    if (!projectPageData) {
+        console.log("Project not found");
+        return notFound();
+    }
 
     return (
         <div

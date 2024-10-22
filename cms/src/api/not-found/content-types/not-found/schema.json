@@ -1,0 +1,37 @@
+{
+  "kind": "singleType",
+  "collectionName": "not_founds",
+  "info": {
+    "singularName": "not-found",
+    "pluralName": "not-founds",
+    "displayName": "Not Found"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "heading": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "toHomepageButton": {
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "utils.link"
+    }
+  }
+}
