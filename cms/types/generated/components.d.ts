@@ -1,38 +1,124 @@
-import type { Struct, Schema } from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
-export interface UtilsString extends Struct.ComponentSchema {
-  collectionName: 'components_utils_strings';
+export interface ComponentsAboutMe extends Struct.ComponentSchema {
+  collectionName: 'components_components_about_mes';
   info: {
-    displayName: 'String';
-  };
-  attributes: {
-    value: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
-export interface UtilsLink extends Struct.ComponentSchema {
-  collectionName: 'components_utils_links';
-  info: {
-    displayName: 'Link';
-  };
-  attributes: {
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    url: Schema.Attribute.String & Schema.Attribute.Required;
-    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-  };
-}
-
-export interface UtilsIconLink extends Struct.ComponentSchema {
-  collectionName: 'components_utils_icon_links';
-  info: {
-    displayName: 'Icon Link';
     description: '';
+    displayName: 'About Me';
   };
   attributes: {
-    url: Schema.Attribute.String & Schema.Attribute.Required;
-    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    icon: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    alt: Schema.Attribute.String & Schema.Attribute.Required;
+    aboutMeTexts: Schema.Attribute.Component<'components.about-me-text', true>;
+    heading: Schema.Attribute.String;
+    iconLinks: Schema.Attribute.Component<'utils.icon-link', true>;
+  };
+}
+
+export interface ComponentsAboutMeText extends Struct.ComponentSchema {
+  collectionName: 'components_components_about_me_texts';
+  info: {
+    description: '';
+    displayName: 'About Me Text';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files'>;
+    text: Schema.Attribute.Text;
+  };
+}
+
+export interface ComponentsHeading extends Struct.ComponentSchema {
+  collectionName: 'components_components_headings';
+  info: {
+    description: '';
+    displayName: 'Hero';
+  };
+  attributes: {
+    ctaButton: Schema.Attribute.Component<'utils.link', false>;
+    subheading: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface ComponentsLinkArray extends Struct.ComponentSchema {
+  collectionName: 'components_components_link_arrays';
+  info: {
+    description: '';
+    displayName: 'Link Array';
+  };
+  attributes: {
+    header: Schema.Attribute.String;
+    links: Schema.Attribute.Component<'utils.link', true>;
+  };
+}
+
+export interface ComponentsMarquee extends Struct.ComponentSchema {
+  collectionName: 'components_components_marquees';
+  info: {
+    displayName: 'Marquee';
+  };
+  attributes: {
+    text: Schema.Attribute.Component<'utils.string', true>;
+  };
+}
+
+export interface ComponentsMyInfo extends Struct.ComponentSchema {
+  collectionName: 'components_components_my_infos';
+  info: {
+    description: '';
+    displayName: 'My Info';
+  };
+  attributes: {
+    dateOfBirth: Schema.Attribute.Date;
+    socialLinks: Schema.Attribute.Component<'utils.icon-link', true>;
+    startedProgramming: Schema.Attribute.Date;
+  };
+}
+
+export interface ComponentsSkills extends Struct.ComponentSchema {
+  collectionName: 'components_components_skills';
+  info: {
+    description: '';
+    displayName: 'Skills';
+  };
+  attributes: {
+    skillsHeading: Schema.Attribute.String;
+    skillText: Schema.Attribute.RichText & Schema.Attribute.Required;
+    techStack: Schema.Attribute.Component<'components.tech-stack', false>;
+  };
+}
+
+export interface ComponentsTechStack extends Struct.ComponentSchema {
+  collectionName: 'components_components_tech_stacks';
+  info: {
+    description: '';
+    displayName: 'techStack';
+  };
+  attributes: {
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    techStackSkills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
+  };
+}
+
+export interface ComponentsTestimonials extends Struct.ComponentSchema {
+  collectionName: 'components_components_testimonials';
+  info: {
+    displayName: 'Testimonials';
+  };
+  attributes: {
+    testimonialHeading: Schema.Attribute.String;
+  };
+}
+
+export interface SeoMetadata extends Struct.ComponentSchema {
+  collectionName: 'components_seo_metadata';
+  info: {
+    description: '';
+    displayName: 'Metadata';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    keywords: Schema.Attribute.Component<'utils.string', true>;
+    ogTags: Schema.Attribute.Component<'seo.open-graph-tags', false>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -42,9 +128,9 @@ export interface SeoOpenGraphTags extends Struct.ComponentSchema {
     displayName: 'Open Graph Tags';
   };
   attributes: {
-    title: Schema.Attribute.String;
     description: Schema.Attribute.String;
     image: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String;
     type: Schema.Attribute.Enumeration<
       [
         'website',
@@ -65,145 +151,59 @@ export interface SeoOpenGraphTags extends Struct.ComponentSchema {
   };
 }
 
-export interface SeoMetadata extends Struct.ComponentSchema {
-  collectionName: 'components_seo_metadata';
+export interface UtilsIconLink extends Struct.ComponentSchema {
+  collectionName: 'components_utils_icon_links';
   info: {
-    displayName: 'Metadata';
     description: '';
+    displayName: 'Icon Link';
   };
   attributes: {
+    alt: Schema.Attribute.String & Schema.Attribute.Required;
+    icon: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface UtilsLink extends Struct.ComponentSchema {
+  collectionName: 'components_utils_links';
+  info: {
+    displayName: 'Link';
+  };
+  attributes: {
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
-    description: Schema.Attribute.Text;
-    keywords: Schema.Attribute.Component<'utils.string', true>;
-    ogTags: Schema.Attribute.Component<'seo.open-graph-tags', false>;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ComponentsTestimonials extends Struct.ComponentSchema {
-  collectionName: 'components_components_testimonials';
+export interface UtilsString extends Struct.ComponentSchema {
+  collectionName: 'components_utils_strings';
   info: {
-    displayName: 'Testimonials';
+    displayName: 'String';
   };
   attributes: {
-    testimonialHeading: Schema.Attribute.String;
-  };
-}
-
-export interface ComponentsTechStack extends Struct.ComponentSchema {
-  collectionName: 'components_components_tech_stacks';
-  info: {
-    displayName: 'techStack';
-    description: '';
-  };
-  attributes: {
-    heading: Schema.Attribute.String & Schema.Attribute.Required;
-    techStackSkills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
-  };
-}
-
-export interface ComponentsSkills extends Struct.ComponentSchema {
-  collectionName: 'components_components_skills';
-  info: {
-    displayName: 'Skills';
-    description: '';
-  };
-  attributes: {
-    skillText: Schema.Attribute.RichText & Schema.Attribute.Required;
-    techStack: Schema.Attribute.Component<'components.tech-stack', false>;
-    skillsHeading: Schema.Attribute.String;
-  };
-}
-
-export interface ComponentsMyInfo extends Struct.ComponentSchema {
-  collectionName: 'components_components_my_infos';
-  info: {
-    displayName: 'My Info';
-    description: '';
-  };
-  attributes: {
-    dateOfBirth: Schema.Attribute.Date;
-    startedProgramming: Schema.Attribute.Date;
-    socialLinks: Schema.Attribute.Component<'utils.icon-link', true>;
-  };
-}
-
-export interface ComponentsMarquee extends Struct.ComponentSchema {
-  collectionName: 'components_components_marquees';
-  info: {
-    displayName: 'Marquee';
-  };
-  attributes: {
-    text: Schema.Attribute.Component<'utils.string', true>;
-  };
-}
-
-export interface ComponentsLinkArray extends Struct.ComponentSchema {
-  collectionName: 'components_components_link_arrays';
-  info: {
-    displayName: 'Link Array';
-    description: '';
-  };
-  attributes: {
-    header: Schema.Attribute.String;
-    links: Schema.Attribute.Component<'utils.link', true>;
-  };
-}
-
-export interface ComponentsHeading extends Struct.ComponentSchema {
-  collectionName: 'components_components_headings';
-  info: {
-    displayName: 'Hero';
-    description: '';
-  };
-  attributes: {
-    title: Schema.Attribute.String;
-    subheading: Schema.Attribute.Text;
-    ctaButton: Schema.Attribute.Component<'utils.link', false>;
-  };
-}
-
-export interface ComponentsAboutMe extends Struct.ComponentSchema {
-  collectionName: 'components_components_about_mes';
-  info: {
-    displayName: 'About Me';
-    description: '';
-  };
-  attributes: {
-    aboutMeTexts: Schema.Attribute.Component<'components.about-me-text', true>;
-    heading: Schema.Attribute.String;
-    iconLinks: Schema.Attribute.Component<'utils.icon-link', true>;
-  };
-}
-
-export interface ComponentsAboutMeText extends Struct.ComponentSchema {
-  collectionName: 'components_components_about_me_texts';
-  info: {
-    displayName: 'About Me Text';
-    description: '';
-  };
-  attributes: {
-    text: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<'images' | 'files'>;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'utils.string': UtilsString;
-      'utils.link': UtilsLink;
-      'utils.icon-link': UtilsIconLink;
-      'seo.open-graph-tags': SeoOpenGraphTags;
-      'seo.metadata': SeoMetadata;
-      'components.testimonials': ComponentsTestimonials;
-      'components.tech-stack': ComponentsTechStack;
-      'components.skills': ComponentsSkills;
-      'components.my-info': ComponentsMyInfo;
-      'components.marquee': ComponentsMarquee;
-      'components.link-array': ComponentsLinkArray;
-      'components.heading': ComponentsHeading;
       'components.about-me': ComponentsAboutMe;
       'components.about-me-text': ComponentsAboutMeText;
+      'components.heading': ComponentsHeading;
+      'components.link-array': ComponentsLinkArray;
+      'components.marquee': ComponentsMarquee;
+      'components.my-info': ComponentsMyInfo;
+      'components.skills': ComponentsSkills;
+      'components.tech-stack': ComponentsTechStack;
+      'components.testimonials': ComponentsTestimonials;
+      'seo.metadata': SeoMetadata;
+      'seo.open-graph-tags': SeoOpenGraphTags;
+      'utils.icon-link': UtilsIconLink;
+      'utils.link': UtilsLink;
+      'utils.string': UtilsString;
     }
   }
 }
