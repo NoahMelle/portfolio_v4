@@ -71,10 +71,12 @@ export async function getHomepageData(locale: string) {
         })
     ).data.data.homepage;
 
-    const myInfo = await getMyInfo();
-    const skills = await getAllSkills();
-    const testimonials = await getTestimonials();
-    const projects = await getProjects(locale);
+    const [myInfo, skills, testimonials, projects] = await Promise.all([
+        getMyInfo(),
+        getAllSkills(),
+        getTestimonials(),
+        getProjects(locale),
+    ]);
 
     const data = new HomepageProps(
         res.jumpToList,
