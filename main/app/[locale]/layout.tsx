@@ -6,7 +6,7 @@ import localFont from 'next/font/local'
 import { Toaster } from "@/Components/ui/sonner";
 import GSAPCursor from "@/Components/reusable/gsap/GSAPCursor";
 
-const authorFont = localFont({src: "../fonts/satoshi.ttf"})
+const authorFont = localFont({src: "../fonts/Author-Variable.ttf"})
 
 export const metadata: Metadata = {
   title: "Noey's Portfolio",

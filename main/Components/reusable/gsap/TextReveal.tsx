@@ -39,7 +39,7 @@ const AnimatedText = ({ text }: { text: string }) => {
                 stagger: {
                     amount: 0.3,
                 },
-                ease: "expo.out",
+                ease: "power4.out",
             }
         );
 
