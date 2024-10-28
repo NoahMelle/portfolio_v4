@@ -234,13 +234,13 @@ export async function getProjects(locale: string) {
     ).data.data.projects;
 }
 
-export async function getProject(slug: string) {
+export async function getProject(slug: string, locale: string) {
     const res = await axios({
         ...apiConfig,
         data: {
             query: `
-                query($slug: String!) {
-                    projects(filters: { slug: {eq:$slug} }) {
+                query($slug: String!, $locale: I18NLocaleCode) {
+                    projects(filters: { slug: {eq:$slug} }, locale: $locale) {
                         screenshots {
                             url
                         }
@@ -271,6 +271,7 @@ export async function getProject(slug: string) {
             `,
             variables: {
                 slug,
+                locale,
             },
         },
     });
@@ -306,7 +307,7 @@ export async function getProjectPageData(locale: string, slug: string) {
         })
     ).data.data.projectpage;
 
-    const project = await getProject(slug);
+    const project = await getProject(slug, locale);
 
     if (!project) {
         return null;
