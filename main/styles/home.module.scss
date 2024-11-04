@@ -1,4 +1,6 @@
+@use 'sass:color';
 @import "./variables";
+
 
 .heroHeader {
     font-size: $bigHeaderSize;
@@ -173,7 +175,7 @@
 }
 
 .testimonial {
-    @include glassMorhpism(#1d1d1d, 0.8);
+    @include glassMorhpism($black, 0.8);
     height: fit-content;
 }
 
@@ -192,8 +194,8 @@
                 border-radius: 50%;
                 overflow: hidden;
                 border: 1px solid #3a3a3a;
-                background-color: #272727;
-                @include overlayShine(rgba(255, 255, 255, 0.1));
+                background-color: color.adjust($black, $lightness: 7%);
+                @include overlayShine(rgba(255, 255, 255, 0.05));
             }
         }
     }
