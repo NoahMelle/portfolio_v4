@@ -87,6 +87,16 @@
         }
       },
       "component": "seo.metadata"
+    },
+    "experience": {
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "components.experience"
     }
   }
 }

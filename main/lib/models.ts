@@ -7,6 +7,7 @@ import {
     SkillsSectionType,
     TestimonialsSectionType,
     ProjectType,
+    ExperienceType
 } from "./types";
 import { getAgeFromBday } from "./utils";
 import { getYearsDiff } from "./utils";
@@ -21,6 +22,7 @@ export class HomepageProps {
     skills: SkillsSectionType;
     testimonials: TestimonialsSectionType;
     projects: ProjectType[];
+    experience: ExperienceType;
 
     constructor(
         jumpToList: JumpToListType,
@@ -32,7 +34,8 @@ export class HomepageProps {
         socialLinks: SocialLink[],
         skills: SkillsSectionType,
         testimonials: TestimonialsSectionType,
-        projects: ProjectType[]
+        projects: ProjectType[],
+        experience: ExperienceType
     ) {
         const birthDate = new Date(dateOfBirth); // Parse once
         const age = getAgeFromBday(birthDate);
@@ -109,6 +112,16 @@ export class HomepageProps {
             },
         };
         this.projects = projects.map((project) => new Project(project));
+        this.experience = {
+            ...experience,
+            experienceTexts: experience.experienceTexts.map((exp) => ({
+                ...exp,
+                startingDate: new Date(exp.startingDate),
+                endingDate: exp.endingDate
+                    ? new Date(exp.endingDate)
+                    : undefined,
+            })),
+        };
     }
 
     getAge() {

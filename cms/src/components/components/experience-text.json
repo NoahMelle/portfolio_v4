@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_components_experience_texts",
+  "info": {
+    "displayName": "Experience Text"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "text"
+    },
+    "startingDate": {
+      "type": "date"
+    },
+    "endingDate": {
+      "type": "date"
+    }
+  }
+}

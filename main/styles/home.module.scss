@@ -163,7 +163,7 @@
     // Black sections
     &:not(:nth-child(even)) {
         .backgroundImage {
-            opacity: 0.3;
+            opacity: 0.1;
         }
         ::selection {
             background-color: $white;
@@ -331,6 +331,65 @@
             height: 100%;
             object-fit: cover;
             z-index: 0;
+        }
+    }
+}
+
+.experience {
+    .experienceTimeline {
+        display: grid;
+        grid-template-columns: 1fr 1px 1fr;
+        gap: 2rem;
+        width: fit-content;
+        align-items: center;
+        margin: 0 auto;
+        .separator {
+            grid-column: 2;
+            grid-row: 1/-1;
+            background-color: rgba(#FFFFFF, 0.3);
+            box-shadow: 0 0 14px 1px rgba(#FFFFFF, 0.3);
+            height: 100%;
+        }
+        .experienceItem {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1rem;
+            @for $i from 1 through 20 {
+                &:nth-child(#{$i}) {
+                    grid-row: $i;
+                }
+            }
+            &:nth-child(even) {
+                grid-column: 1;
+            }
+            &:nth-child(odd) {
+                grid-column: 3;
+                flex-direction: row-reverse;
+            }
+            .experienceContent {
+                max-width: 400px;
+                background-color: $black;
+                padding: 1rem;
+                outline: 1px solid rgba(#ffffff, 0.1);
+                @include shineBorder(rgba(#ffffff, 0.3), 1px, 1rem, 0.3);
+            }
+            .experienceDate {
+                text-wrap: nowrap;
+            }
+        }
+        @media (max-width: $desktopBreakpoint) {
+            grid-template-columns: 1px 1fr;
+            gap: 3rem 1rem;
+            .experienceItem:nth-child(odd), .experienceItem:nth-child(even) {
+                grid-column: 2;
+                grid-row: auto;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .separator {
+                grid-column: 1;
+            }
         }
     }
 }

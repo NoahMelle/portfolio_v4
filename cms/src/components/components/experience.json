@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_components_experiences",
+  "info": {
+    "displayName": "Experience",
+    "icon": ""
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "experienceTexts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.experience-text"
+    }
+  }
+}

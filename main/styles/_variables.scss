@@ -1,4 +1,4 @@
-@use 'sass:math';
+@use "sass:math";
 
 $xlFont: clamp(1.5rem, 2.5vw, 2.5rem);
 $lgFont: clamp(1.2rem, 1vw, 1.5rem);
@@ -7,11 +7,47 @@ $h3Heading: clamp(1.2rem, 2vw, 2rem);
 $h2Heading: clamp(2.5rem, 3vw, 4rem);
 
 $tabletBreakpoint: 768px;
+$desktopBreakpoint: 1024px;
 
 $white: #eef2f3;
-$black: #0e0e0e;
+$black: #0a0a0a;
 $blackText: #56585c;
 $primary: #3c5759;
+
+@mixin shineBorder($color, $size, $radius, $intensity: 1) {
+    position: relative;
+    border-radius: $radius;
+    &:hover::before {
+        content: "";
+        width: calc(100% + $size * 2);
+        height: calc(100% + $size * 2);
+        border-radius: $radius;
+        background: linear-gradient(
+            45deg,
+            transparent 0%,
+            transparent 50%,
+            rgba(white, $intensity) 50%,
+            rgba($color, $intensity / 2) 55%,
+            transparent 60%,
+            transparent 100%
+        );
+        background-size: 400% 400%;
+        position: absolute;
+        z-index: -1;
+        top: calc(-1 * $size);
+        left: calc(-1 * $size);
+        animation: shine 10s linear infinite;
+    }
+}
+
+@keyframes shine {
+    0% {
+        background-position: -30% 0%;
+    }
+    100% {
+        background-position: 130% 0%;
+    }
+}
 
 @keyframes fadeIn {
     from {
@@ -93,6 +129,7 @@ $primary: #3c5759;
     $factor: 0.1;
     border-radius: 50px;
     background: linear-gradient(145deg, #ffffff, #cacaca);
-    box-shadow: calc($factor * $size) calc($factor * $size) $size #cacaca,
+    box-shadow:
+        calc($factor * $size) calc($factor * $size) $size #cacaca,
         calc(-1 * $factor * $size) calc(-1 * $factor * $size) $size #ffffff;
 }

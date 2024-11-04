@@ -25,6 +25,34 @@ export interface ComponentsAboutMeText extends Struct.ComponentSchema {
   };
 }
 
+export interface ComponentsExperience extends Struct.ComponentSchema {
+  collectionName: 'components_components_experiences';
+  info: {
+    displayName: 'Experience';
+    icon: '';
+  };
+  attributes: {
+    experienceTexts: Schema.Attribute.Component<
+      'components.experience-text',
+      true
+    >;
+    heading: Schema.Attribute.String;
+  };
+}
+
+export interface ComponentsExperienceText extends Struct.ComponentSchema {
+  collectionName: 'components_components_experience_texts';
+  info: {
+    displayName: 'Experience Text';
+  };
+  attributes: {
+    content: Schema.Attribute.Text;
+    endingDate: Schema.Attribute.Date;
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
+    startingDate: Schema.Attribute.Date;
+  };
+}
+
 export interface ComponentsHeading extends Struct.ComponentSchema {
   collectionName: 'components_components_headings';
   info: {
@@ -192,6 +220,8 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'components.about-me': ComponentsAboutMe;
       'components.about-me-text': ComponentsAboutMeText;
+      'components.experience': ComponentsExperience;
+      'components.experience-text': ComponentsExperienceText;
       'components.heading': ComponentsHeading;
       'components.link-array': ComponentsLinkArray;
       'components.marquee': ComponentsMarquee;

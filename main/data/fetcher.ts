@@ -61,6 +61,15 @@ export async function getHomepageData(locale: string) {
                         testimonials {
                             testimonialHeading
                         }
+                        experience {
+                            heading
+                            experienceTexts {
+                                heading
+                                content
+                                startingDate
+                                endingDate
+                            }
+                        }
                     }
                 }
             `,
@@ -94,7 +103,8 @@ export async function getHomepageData(locale: string) {
             ...res.testimonials,
             testimonials,
         },
-        projects
+        projects,
+        res.experience
     );
 
     return data;

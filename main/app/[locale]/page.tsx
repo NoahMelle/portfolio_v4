@@ -10,10 +10,10 @@ import Skills from "@/Components/custom/Skills";
 import CursorTracker from "@/Components/custom/CursorTracker";
 import bgImage from "@/public/img/backgrounds/patterngrid.png";
 import Image from "next/image";
-import Education from "@/Components/custom/Education";
 import Testimonials from "@/Components/custom/Testimonials";
 import AnchorNav from "@/Components/custom/navbar/AnchorNav";
 import Projects from "@/Components/custom/Projects";
+import Experience from "@/Components/custom/Experience";
 
 export default async function Home() {
     const locale = await getLocale();
@@ -39,10 +39,10 @@ export default async function Home() {
                             testimonials={homepageData.testimonials}
                         />
                     );
-                case "education":
-                    return <Education />;
                 case "projects":
                     return <Projects projects={homepageData.projects} />;
+                case "experience":
+                    return <Experience experience={homepageData.experience} />;
                 default:
                     return <div>Content for {link.title}</div>;
             }

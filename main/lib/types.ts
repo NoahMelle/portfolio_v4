@@ -49,6 +49,18 @@ export interface SkillType {
     icon?: { url: string };
 }
 
+export interface ExperienceType {
+    heading: string;
+    experienceTexts: ExperienceTextType[];
+}
+
+export interface ExperienceTextType {
+    heading: string;
+    content: string;
+    startingDate: Date;
+    endingDate?: Date;
+}
+
 export interface TechStackType {
     heading: string;
     techStackSkills: TechStackSkillType[];
