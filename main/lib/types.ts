@@ -12,6 +12,7 @@ export interface LinkType {
 export interface HeroType {
     title: string;
     subheading: string;
+    image: { url: string };
 }
 
 export interface MarqueeType {

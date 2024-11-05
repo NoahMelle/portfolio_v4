@@ -14,15 +14,16 @@ import Testimonials from "@/Components/custom/Testimonials";
 import AnchorNav from "@/Components/custom/navbar/AnchorNav";
 import Projects from "@/Components/custom/Projects";
 import Experience from "@/Components/custom/Experience";
+import Hero from "@/Components/custom/Hero";
 
 export default async function Home() {
     const locale = await getLocale();
 
-    const isProduction = process.env.NODE_ENV === 'production';
+    const isProduction = process.env.NODE_ENV === "production";
 
     const wsProtocol = process.env.WEBSOCKET_PROTOCOL || "ws";
     const wsHost = process.env.WEBSOCKET_HOST || "localhost";
-    const wsPort = (process.env.WEBSOCKET_PORT || "8080")
+    const wsPort = process.env.WEBSOCKET_PORT || "8080";
 
     const homepageData = await getHomepageData(locale);
 
@@ -63,42 +64,12 @@ export default async function Home() {
             id="section-container"
         >
             <div className={styles.sectionWrapper}>
-                <header className={`${styles.hero}`}>
-                    <div className="h-full w-full overflow-hidden absolute left-0 top-0 -z-10">
-                        <Image
-                            src={bgImage}
-                            alt="background"
-                            className={`absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] h-full w-[1400px] max-w-none object-contain ${styles.backgroundImage}`}
-                        />
-                    </div>
-                    <div className={styles.heroContent}>
-                        <div className="flex flex-col gap-3">
-                            <h2 className={styles.heroHeader}>
-                                <TextReveal text={homepageData.hero.title} />
-                            </h2>
-                            <SlideFromLeft delay={0.5}>
-                                <p>{homepageData.hero.subheading}</p>
-                            </SlideFromLeft>
-                        </div>
-
-                        <AnchorNav
-                            links={homepageData.jumpToList.links}
-                            heading={homepageData.jumpToList.header}
-                        />
-                    </div>
-                    <div className={styles.marquee}>
-                        <Marquee autoFill>
-                            {homepageData.marquee.text.map((text) => (
-                                <span key={text.value} className="px-4 text-lg">
-                                    • {text.value}
-                                </span>
-                            ))}
-                        </Marquee>
-                    </div>
-                </header>
+                <Hero heroData={homepageData.hero} />
                 <div className={styles.invisibleDiv} id="invisible-div"></div>
                 {sections}
-                <CursorTracker wsUrl={`${wsProtocol}://${wsHost}${isProduction ? "" : `:${wsPort}`}`} />
+                <CursorTracker
+                    wsUrl={`${wsProtocol}://${wsHost}${isProduction ? "" : `:${wsPort}`}`}
+                />
             </div>
         </div>
     );
@@ -107,7 +78,7 @@ export default async function Home() {
 export async function generateMetadata() {
     const locale = await getLocale();
     const metadata = await getMetadata(locale, "homepage");
-    
+
     return {
         title: metadata.title,
         description: metadata.description || "",

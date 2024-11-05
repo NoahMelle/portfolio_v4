@@ -61,6 +61,7 @@ export interface ComponentsHeading extends Struct.ComponentSchema {
   };
   attributes: {
     ctaButton: Schema.Attribute.Component<'utils.link', false>;
+    image: Schema.Attribute.Media<'images'>;
     subheading: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };

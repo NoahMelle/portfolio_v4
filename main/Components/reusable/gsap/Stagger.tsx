@@ -20,9 +20,10 @@ export default function Stagger({ children }: { children: React.ReactNode }) {
                 },
                 {
                     autoAlpha: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: "power3.inOut",
+                    y: "+=0",
+                    duration: 0.2,
+                    ease: "power4.inOut",
+
                     stagger: 0.2,
                     scrollTrigger: {
                         trigger: ".test", // Updated to use the trigger property

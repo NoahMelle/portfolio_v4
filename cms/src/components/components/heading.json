@@ -16,6 +16,13 @@
       "type": "component",
       "repeatable": false,
       "component": "utils.link"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

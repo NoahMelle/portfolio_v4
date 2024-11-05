@@ -30,6 +30,9 @@ export async function getHomepageData(locale: string) {
                         hero {
                             title
                             subheading
+                            image {
+                                url
+                            }
                         }
                         marquee {
                             text {

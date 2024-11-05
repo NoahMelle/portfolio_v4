@@ -14,7 +14,7 @@ import { getYearsDiff } from "./utils";
 
 export class HomepageProps {
     jumpToList: JumpToListType;
-    hero: { title: string; subheading: string };
+    hero: HeroType;
     dateOfBirth: Date;
     startedProgramming: string;
     marquee: MarqueeType;
@@ -47,6 +47,10 @@ export class HomepageProps {
                 age,
                 startedProgramming,
             }),
+            image: {
+                ...hero.image,
+                url: (process.env.BASEURL_API ?? "") + hero.image.url,
+            }
         };
         this.marquee = {
             ...marquee,

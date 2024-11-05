@@ -34,14 +34,14 @@ export default function Section({
                 </div>
                 <h3>{link.title}</h3>
             </div>
-            <div className="h-full w-full overflow-hidden absolute left-0 top-0 -z-10">
+            {/* <div className="h-full w-full overflow-hidden absolute left-0 top-0 -z-10">
                 <Image
                     src={bgImage}
                     alt="background"
                     className={`absolute top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%] h-full w-[1400px] select-none max-w-none object-contain ${styles.backgroundImage}`}
                     draggable={false}
                 />
-            </div>
+            </div> */}
             {padding ? (
                 <div className={styles.sectionContent}>{children}</div>
             ) : (
