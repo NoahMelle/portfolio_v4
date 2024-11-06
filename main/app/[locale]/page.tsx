@@ -1,17 +1,11 @@
 import { getHomepageData, getMetadata } from "@/data/fetcher";
 import { getLocale } from "next-intl/server";
 import styles from "@/styles/home.module.scss";
-import Marquee from "react-fast-marquee";
 import Section from "@/Components/custom/Section";
 import AboutMe from "@/Components/custom/AboutMe";
-import SlideFromLeft from "@/Components/reusable/SlideFromLeft";
-import TextReveal from "@/Components/reusable/gsap/TextReveal";
 import Skills from "@/Components/custom/Skills";
 import CursorTracker from "@/Components/custom/CursorTracker";
-import bgImage from "@/public/img/backgrounds/patterngrid.png";
-import Image from "next/image";
 import Testimonials from "@/Components/custom/Testimonials";
-import AnchorNav from "@/Components/custom/navbar/AnchorNav";
 import Projects from "@/Components/custom/Projects";
 import Experience from "@/Components/custom/Experience";
 import Hero from "@/Components/custom/Hero";

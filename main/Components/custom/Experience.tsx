@@ -96,8 +96,8 @@ export default function Experience({
                     ease: "none", // No easing for a linear transition
                     scrollTrigger: {
                         trigger: ".separator", // The element to trigger the animation
-                        start: "", 
-                        end: "top top", // Animate it till the top of the separator hits the top of the viewport
+                        start: "top bottom", 
+                        end: "bottom top", // Animate it till the top of the separator hits the top of the viewport
                         scroller: scroller,
                         scrub: 0.5, // Delay the animation by 0.5 seconds to sync with scroll
                     },
