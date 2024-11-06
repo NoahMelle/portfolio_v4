@@ -293,6 +293,7 @@
 }
 
 .experience {
+    padding: 100px 0;
     .experienceTimeline {
         display: grid;
         grid-template-columns: 1fr 1px 1fr;
@@ -312,6 +313,7 @@
             justify-content: flex-end;
             align-items: center;
             gap: 1rem;
+            opacity: 0;
             @for $i from 1 through 20 {
                 &:nth-child(#{$i}) {
                     grid-row: $i;

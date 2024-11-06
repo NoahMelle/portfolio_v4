@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_components_about_me_infos",
+  "info": {
+    "displayName": "About Me Info",
+    "icon": ""
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "content": {
+      "type": "string"
+    },
+    "alt": {
+      "type": "string"
+    }
+  }
+}

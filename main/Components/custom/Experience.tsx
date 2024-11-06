@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Experience({
     experience,
@@ -17,80 +17,100 @@ export default function Experience({
     const containerRef = React.useRef(null);
 
     React.useEffect(() => {
-      if (typeof window !== "undefined") {
-          gsap.registerPlugin(ScrollTrigger);
+        if (typeof window !== "undefined") {
+            gsap.registerPlugin(ScrollTrigger);
 
-          const sectionScroll = document.querySelector(".section-scroll");
-          const STAGGER = 1;
+            const sectionScroll = document.querySelector(".section-scroll");
+            const STAGGER = 1;
 
-          const scroller =
-              sectionScroll?.scrollHeight && sectionScroll.scrollHeight > document.body.scrollHeight
-                  ? sectionScroll
-                  : document.body;
+            const scroller =
+                sectionScroll?.scrollHeight &&
+                sectionScroll.scrollHeight > document.body.scrollHeight
+                    ? sectionScroll
+                    : document.body;
 
-          const animationLeft = gsap.fromTo(".stagger-left", {
-              x: 50,
-              opacity: 0,
-              y: 0,
-          }, {
-              x: 0,
-              y: 0,
-              delay: STAGGER / 4,
-              duration: STAGGER,
-              opacity: 1,
-              scrollTrigger: {
-                  trigger: ".experiences",
-                  start: "top bottom",
-                  scroller: scroller,
-              },
-              stagger: STAGGER
-          });
+            // Batch animation for stagger-left elements
+            ScrollTrigger.batch(".stagger-left", {
+                onEnter: (batch) => {
+                    gsap.fromTo(
+                        batch,
+                        { x: 50, opacity: 0 },
+                        {
+                            x: 0,
+                            opacity: 1,
+                            duration: STAGGER,
+                            stagger: 0.2,
+                            ease: "power1.out",
+                        }
+                    );
+                },
+                onLeaveBack: (batch) => {
+                    gsap.to(batch, {
+                        x: 50,
+                        opacity: 0,
+                        duration: STAGGER,
+                        stagger: 0.2,
+                        ease: "power1.out",
+                    });
+                },
+                start: "top center",
+                scroller: scroller,
+            });
 
-          const animationRight = gsap.fromTo(".stagger-right", {
-              x: -50,
-              opacity: 0,
-              y: 0,
-          }, {
-              x: 0,
-              y: 0,
-              duration: STAGGER / 2,
-              opacity: 1,
-              delay: STAGGER / 2 + STAGGER / 4,
-              scrollTrigger: {
-                  trigger: ".experiences",
-                  start: "top bottom",
-                  scroller: scroller,
-              },
-              stagger: STAGGER
-          });
+            // Batch animation for stagger-right elements
+            ScrollTrigger.batch(".stagger-right", {
+                onEnter: (batch) => {
+                    gsap.fromTo(
+                        batch,
+                        { x: -50, opacity: 0 },
+                        {
+                            x: 0,
+                            opacity: 1,
+                            duration: STAGGER,
+                            stagger: 0.2,
+                            ease: "power1.out",
+                        }
+                    );
+                },
+                onLeaveBack: (batch) => {
+                    gsap.to(batch, {
+                        x: -50,
+                        opacity: 0,
+                        duration: STAGGER,
+                        stagger: 0.2,
+                        ease: "power1.out",
+                    });
+                },
+                start: "top center",
+                scroller: scroller,
+            });
 
-          const revealSeparator = gsap.fromTo(".separator", {
-              scaleY: 0,
-          }, {
-              scaleY: 1,
-              transformOrigin: "top",
-              duration: experience.experienceTexts.length * STAGGER,
-              scrollTrigger: {
-                  trigger: ".experiences",
-                  start: "top bottom",
-                  scroller: scroller,
-              }
-          });
+            const revealSeparator = gsap.fromTo(
+                ".separator",
+                {
+                    scaleY: 0, // Start with scaleY 0 (invisible)
+                },
+                {
+                    scaleY: 1, // End with scaleY 1 (fully revealed)
+                    transformOrigin: "top", // Make the scale happen from the top
+                    ease: "none", // No easing for a linear transition
+                    scrollTrigger: {
+                        trigger: ".separator", // The element to trigger the animation
+                        start: "", 
+                        end: "top top", // Animate it till the top of the separator hits the top of the viewport
+                        scroller: scroller,
+                        scrub: 0.5, // Delay the animation by 0.5 seconds to sync with scroll
+                    },
+                }
+            );
+            
+            
 
-          return () => {
-              if (animationLeft.scrollTrigger) {
-                  animationLeft.scrollTrigger.kill();
-              }
-              if (animationRight.scrollTrigger) {
-                  animationRight.scrollTrigger.kill();
-              }
-              if (animationRight) {
-                  animationRight.kill();
-              };
-              animationLeft.kill();
-          };
-      }
-  }, []);
+            return () => {
+                ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+            };
+        }
+    }, []);
 
     return (
         <div className={`${styles.experience}`} ref={containerRef}>
@@ -112,7 +132,7 @@ export default function Experience({
                             {experienceText.endingDate?.getFullYear() ??
                                 "Present"}
                         </p>
-                        <div key={index} className={styles.experienceContent}>
+                        <div className={styles.experienceContent}>
                             <h3 className="text-xl">
                                 {experienceText.heading}
                             </h3>

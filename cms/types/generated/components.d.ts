@@ -7,9 +7,23 @@ export interface ComponentsAboutMe extends Struct.ComponentSchema {
     displayName: 'About Me';
   };
   attributes: {
-    aboutMeTexts: Schema.Attribute.Component<'components.about-me-text', true>;
-    heading: Schema.Attribute.String;
     iconLinks: Schema.Attribute.Component<'utils.icon-link', true>;
+    image: Schema.Attribute.Media<'images'>;
+    quickInfo: Schema.Attribute.Component<'components.about-me-info', true>;
+    text: Schema.Attribute.RichText;
+  };
+}
+
+export interface ComponentsAboutMeInfo extends Struct.ComponentSchema {
+  collectionName: 'components_components_about_me_infos';
+  info: {
+    displayName: 'About Me Info';
+    icon: '';
+  };
+  attributes: {
+    alt: Schema.Attribute.String;
+    content: Schema.Attribute.String;
+    icon: Schema.Attribute.Media<'images'>;
   };
 }
 
@@ -220,6 +234,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'components.about-me': ComponentsAboutMe;
+      'components.about-me-info': ComponentsAboutMeInfo;
       'components.about-me-text': ComponentsAboutMeText;
       'components.experience': ComponentsExperience;
       'components.experience-text': ComponentsExperienceText;

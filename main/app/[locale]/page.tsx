@@ -70,6 +70,13 @@ export default async function Home() {
                 <CursorTracker
                     wsUrl={`${wsProtocol}://${wsHost}${isProduction ? "" : `:${wsPort}`}`}
                 />
+                <footer className="min-h-[400px] snap-start bg-white relative">
+                    <div>
+                        <h4>
+                            Noey, 2021. All rights reserved. Built with Next.js and Tailwind CSS.
+                        </h4>
+                    </div>
+                </footer>
             </div>
         </div>
     );

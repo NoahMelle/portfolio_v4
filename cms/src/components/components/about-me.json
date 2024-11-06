@@ -6,19 +6,27 @@
   },
   "options": {},
   "attributes": {
-    "aboutMeTexts": {
-      "displayName": "About Me Text",
-      "type": "component",
-      "repeatable": true,
-      "component": "components.about-me-text"
-    },
-    "heading": {
-      "type": "string"
-    },
     "iconLinks": {
       "type": "component",
       "repeatable": true,
       "component": "utils.icon-link"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "text": {
+      "type": "richtext"
+    },
+    "quickInfo": {
+      "displayName": "About Me Info",
+      "type": "component",
+      "repeatable": true,
+      "component": "components.about-me-info"
     }
   }
 }

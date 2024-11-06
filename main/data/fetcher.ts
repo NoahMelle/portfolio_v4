@@ -40,13 +40,17 @@ export async function getHomepageData(locale: string) {
                             }
                         }
                         aboutMe {
-                            heading
-                            aboutMeTexts {
-                                text
-                                image {
+                            quickInfo {
+                                icon {
                                     url
                                 }
+                                content
+                                alt
                             }
+                            image {
+                                url
+                            }
+                            text
                         }
                         skills {
                             skillText

@@ -20,14 +20,16 @@ export interface MarqueeType {
 }
 
 export interface AboutMeType {
-    heading: string;
-    aboutMeTexts: AboutMeTextType[];
+    quickInfo: quickInfoType[];
+    image: { url: string };
+    text: string;
     socialLinks: SocialLink[];
 }
 
-export interface AboutMeTextType {
-    text: string;
-    image: { url: string };
+export interface quickInfoType {
+    icon: { url: string };
+    content: string;
+    alt: string;
 }
 
 export interface SocialLink {

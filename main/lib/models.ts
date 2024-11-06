@@ -66,16 +66,6 @@ export class HomepageProps {
         this.startedProgramming = startedProgramming;
         this.aboutMe = {
             ...aboutMe,
-            aboutMeTexts: aboutMe.aboutMeTexts.map((text) => ({
-                image: {
-                    ...text.image,
-                    url: (process.env.BASEURL_API ?? "") + text.image.url,
-                },
-                text: replaceDynamicText(text.text, {
-                    age,
-                    startedProgramming,
-                }),
-            })),
             socialLinks: socialLinks.map((link) => ({
                 ...link,
                 icon: {
@@ -83,6 +73,17 @@ export class HomepageProps {
                     url: (process.env.BASEURL_API ?? "") + link.icon.url,
                 },
             })),
+            quickInfo: aboutMe.quickInfo.map((quickInfo) => ({
+                ...quickInfo,
+                icon: {
+                    ...quickInfo.icon,
+                    url: (process.env.BASEURL_API ?? "") + quickInfo.icon.url,
+                },
+            })),
+            image: {
+                ...aboutMe.image,
+                url: (process.env.BASEURL_API ?? "") + aboutMe.image.url,
+            },
         };
         this.testimonials = {
             ...testimonials,
