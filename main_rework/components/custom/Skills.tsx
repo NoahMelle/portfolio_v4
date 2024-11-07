@@ -11,7 +11,7 @@ import {
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/Components/ui/tooltip";
+} from "@/components/ui/tooltip";
 import LinkRenderer from "../reusable/LinkRenderer";
 
 export default function Skills({ skills }: { skills: SkillsSectionType }) {
