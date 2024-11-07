@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import gsap from "gsap";
 import { usePathname } from "next/navigation";
 
@@ -77,7 +77,7 @@ export default function GSAPCursor() {
     );
 
     // Initialize cursor and animations on component mount
-    useEffect(() => {
+    React.useLayoutEffect(() => {
         const cursor = cursorRef.current;
         const follower = followerRef.current;
 
@@ -91,7 +91,7 @@ export default function GSAPCursor() {
     }, [initializeCursor]);
 
     // Reinitialize link hover effects on path change
-    useEffect(() => {
+    React.useLayoutEffect(() => {
         const cursor = cursorRef.current;
         const follower = followerRef.current;
 

@@ -5,11 +5,12 @@
     "workspaces": [
         "cms",
         "main",
-        "websocket"
+        "websocket",
+        "main_rework"
     ],
     "scripts": {
         "start:all": "concurrently \"NODE_ENV=production npm run start -w cms\" \"npm run start -w main\" \"npm run dev -w websocket\"",
-        "dev:all": "concurrently \"npm run develop -w cms\" \"npm run dev -w main\" \"npm run dev -w websocket\""
+        "dev:all": "concurrently \"npm run develop -w cms\" \"npm run dev -w main_rework\" \"npm run dev -w websocket\""
     },
     "dependencies": {
         "concurrently": "^9.0.1"
