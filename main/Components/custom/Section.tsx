@@ -1,30 +1,33 @@
 import React from "react";
 import styles from "@/styles/home.module.scss";
-import Image from "next/image";
-import bgImage from "@/public/img/backgrounds/patterngrid.png";
 
 export default function Section({
     children,
     index,
     link,
     padding,
+    isLast
 }: {
     children: React.ReactNode;
     index: number;
     link: { title: string; url: string };
     padding?: boolean;
+    isLast?: boolean;
 }) {
     return (
         <div
             className={`${styles.section} ${padding ? styles.padding : ""}`}
             id={link.url.replace("#", "")}
+            style={{
+                scrollSnapAlign: isLast ? "none" : "start",
+            }}
         >
             <div className={styles.sectionTop}>
                 <div className="relative flex items-center justify-center h-[40px] aspect-square">
                     <div className={styles.sectionIndexDecoration}></div>
-                    <h4 className="text-xl">
+                    <h3 className="text-xl">
                         {String(index).padStart(2, "0")}
-                    </h4>
+                    </h3>
                     <div
                         className={[
                             styles.sectionIndexDecoration,

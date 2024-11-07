@@ -3,8 +3,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import "../globals.css"
 import localFont from 'next/font/local'
-import { Toaster } from "@/Components/ui/sonner";
-import GSAPCursor from "@/Components/reusable/gsap/GSAPCursor";
+import { Toaster } from "@/components/ui/sonner";
+import GSAPCursor from "@/components/reusable/GSAPCursor";
 
 const authorFont = localFont({src: "../fonts/satoshi.ttf"})
 
@@ -15,13 +15,12 @@ export const metadata: Metadata = {
 
 export default async function LocaleLayout({
     children,
-    params: { locale },
+    params,
 }: {
     children: React.ReactNode;
-    params: { locale: string };
+    params: Promise<{ locale: string }>;
 }) {
-    // Providing all messages to the client
-    // side is the easiest way to get started
+    const { locale } = await params;
     const messages = await getMessages();
 
     return (

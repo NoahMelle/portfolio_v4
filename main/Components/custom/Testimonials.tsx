@@ -77,9 +77,9 @@ export default function Testimonials({
                                     />
                                 </div>
                                 <div className="flex flex-col justify-center">
-                                    <h4 className="leading-none">
+                                    <h3 className="leading-none">
                                         {testimonial.name}
-                                    </h4>
+                                    </h3>
                                     <p className="text-gray-400">
                                         {testimonial?.testimonialRole?.name}
                                     </p>

@@ -42,6 +42,9 @@
             aspect-ratio: 1/1;
             border-radius: 50%;
             border: 2px solid $black;
+            @media (max-width: $desktopBreakpoint) {
+                display: none;
+            }
         }
     }
     .heroTitle {
@@ -72,8 +75,7 @@
         border-radius: 50%;
         left: clamp(1rem, 5vw, 5rem);
         top: clamp(1rem, 5vw, 5rem);
-        opacity: 0;
-        // transform: rotate(20deg);
+        transform-origin: center;
         position: absolute;
         max-width: 100%;
         aspect-ratio: 1/1;

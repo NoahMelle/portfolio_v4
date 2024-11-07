@@ -4,10 +4,7 @@ import React from "react";
 import { ExperienceType } from "@/lib/types";
 import styles from "@/styles/home.module.scss";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import ScrollTrigger from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Experience({
     experience,

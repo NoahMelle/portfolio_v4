@@ -8,13 +8,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Loading from "@/app/[locale]/loading";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Hero({ heroData }: { heroData: HeroType }) {
     const containerRef = React.useRef(null);
     const [loading, setLoading] = React.useState(true);
 
     React.useLayoutEffect(() => {
+      gsap.registerPlugin(ScrollTrigger);
         let textAnimation: gsap.core.Tween | undefined;
         let imageAnimation: gsap.core.Timeline | undefined;
         let imageOpacityAnimation: gsap.core.Tween | undefined;
@@ -37,13 +36,14 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
 
         imageAnimation
             .from(".rotating-image", {
-                clipPath: "circle(0% at 50% 50%)",
+                clipPath: "circle(0%)",
                 opacity: 1,
+                transformOrigin: "center",
             })
             .to(".rotating-image", {
-                clipPath: "circle(100% at 50% 50%)",
+                clipPath: "circle(100%)",
                 duration: 1,
-                ease: "power2.inOut",
+                ease: "power4.inOut",
             })
             .to(".rotating-image", {
                 scrollTrigger: {
@@ -136,9 +136,9 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
                             </React.Fragment>
                         ))}
                     </h1>
-                    <h3 className={styles.heroSubheading}>
+                    <h2 className={styles.heroSubheading}>
                         {heroData.subheading}
-                    </h3>
+                    </h2>
                 </div>
             </header>
         </>
