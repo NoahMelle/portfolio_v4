@@ -107,6 +107,8 @@ export default function GSAPCursor() {
         const links = document.getElementsByTagName("a");
         const buttons = document.getElementsByTagName("button");
 
+        // console.log(links);
+
         // Add hover effects on links
         for (let i = 0; i < links.length; i++) {
             links[i].addEventListener("mouseover", () => {

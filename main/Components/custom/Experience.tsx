@@ -89,13 +89,13 @@ export default function Experience({
             {
                 scaleY: 1, // End with scaleY 1 (fully revealed)
                 transformOrigin: "top", // Make the scale happen from the top
-                ease: "none", // No easing for a linear transition
+                ease: "linear", 
                 scrollTrigger: {
-                    trigger: ".separator", // The element to trigger the animation
-                    start: "top bottom",
-                    end: "bottom top", // Animate it till the top of the separator hits the top of the viewport
+                    trigger: ".experiences", // The element to trigger the animation
+                    start: "top center", // When the top of the trigger element hits the top of the viewport
+                    end: "bottom center",
                     scroller: scroller,
-                    scrub: 0.5, // Delay the animation by 0.5 seconds to sync with scroll
+                    scrub: 1, // Delay the animation by 0.5 seconds to sync with scroll
                 },
             }
         );
