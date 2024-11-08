@@ -8,10 +8,10 @@ import Image from "next/image";
 import { SkillType } from "@/lib/types";
 import {
     Tooltip,
-    TooltipContent,
     TooltipProvider,
+    TooltipContent,
     TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "../ui/tooltip";
 import LinkRenderer from "../reusable/LinkRenderer";
 
 export default function Skills({ skills }: { skills: SkillsSectionType }) {
@@ -66,20 +66,17 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                                         <TooltipProvider key={i}>
                                             <Tooltip>
                                                 <TooltipTrigger>
-                                                    <div>
-                                                        {skill.icon && (
-                                                            <Image
-                                                                src={
-                                                                    skill?.icon
-                                                                        ?.url
-                                                                }
-                                                                alt={skill.name}
-                                                                width={40}
-                                                                height={40}
-                                                                className="invert-[80%] select-none"
-                                                            />
-                                                        )}
-                                                    </div>
+                                                    {skill.icon && (
+                                                        <Image
+                                                            src={
+                                                                skill?.icon?.url
+                                                            }
+                                                            alt={skill.name}
+                                                            width={40}
+                                                            height={40}
+                                                            className="invert-[80%] select-none"
+                                                        />
+                                                    )}
                                                 </TooltipTrigger>
                                                 <TooltipContent>
                                                     {skill.name}

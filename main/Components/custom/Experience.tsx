@@ -17,7 +17,7 @@ export default function Experience({
         gsap.registerPlugin(ScrollTrigger);
 
         const sectionScroll = document.querySelector(".section-scroll");
-        const STAGGER = 1;
+        const STAGGER = 0.5;
 
         const scroller =
             sectionScroll?.scrollHeight &&
@@ -36,7 +36,7 @@ export default function Experience({
                         opacity: 1,
                         duration: STAGGER,
                         stagger: 0.2,
-                        ease: "power1.out",
+                        ease: "power1.inOut",
                     }
                 );
             },

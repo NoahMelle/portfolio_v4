@@ -15,9 +15,9 @@ export default function AboutMe({ aboutMe }: { aboutMe: AboutMeType }) {
                         <Markdown>{aboutMe.text}</Markdown>
                     </div>
                     <div>
-                        <ul className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-5">
                             {aboutMe.quickInfo.map((quickInfo, index) => (
-                                <li key={index} className="flex gap-4">
+                                <div key={index} className="flex gap-4">
                                     <Image
                                         src={quickInfo.icon.url}
                                         width={20}
@@ -26,9 +26,9 @@ export default function AboutMe({ aboutMe }: { aboutMe: AboutMeType }) {
                                         className="select-none object-contain"
                                     />
                                     <span>{quickInfo.content}</span>
-                                </li>
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                         <ul className="flex gap-2 mt-5">
                             {aboutMe.socialLinks.map((socialLink, index) => (
                                 <li key={index}>
