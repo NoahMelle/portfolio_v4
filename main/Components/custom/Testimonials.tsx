@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "@/styles/home.module.scss";
 import Markdown from "react-markdown";
 import { TestimonialsSectionType } from "@/lib/types";

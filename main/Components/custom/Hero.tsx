@@ -14,17 +14,14 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
 
     React.useLayoutEffect(() => {
       gsap.registerPlugin(ScrollTrigger);
-        let textAnimation: gsap.core.Tween | undefined;
-        let imageAnimation: gsap.core.Timeline | undefined;
         let imageOpacityAnimation: gsap.core.Tween | undefined;
-        let circleAnimation: gsap.core.Timeline | undefined;
 
-        textAnimation = gsap.to(".word", {
+        const textAnimation = gsap.to(".word", {
             duration: 0.5,
             y: "0%",
             stagger: 0.05,
         });
-        imageAnimation = gsap.timeline();
+        const imageAnimation = gsap.timeline();
 
         const sectionScroll = document.querySelector(".section-scroll");
 
@@ -58,7 +55,7 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
                 ease: "power4.inOut",
             });
 
-        circleAnimation = gsap.timeline();
+        const circleAnimation = gsap.timeline();
 
         circleAnimation
             .from(".hero-circle", {

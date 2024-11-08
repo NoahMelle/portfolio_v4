@@ -76,22 +76,19 @@ export default function GSAPCursor() {
         []
     );
 
-    // Initialize cursor and animations on component mount
     React.useLayoutEffect(() => {
         const cursor = cursorRef.current;
         const follower = followerRef.current;
 
         if (!cursor || !follower) return;
 
-        // Initialize cursor functionality
         const cleanup = initializeCursor(cursor, follower);
 
-        // Cleanup cursor setup on component unmount
         return () => cleanup();
     }, [initializeCursor]);
 
     // Reinitialize link hover effects on path change
-    React.useLayoutEffect(() => {
+    React.useEffect(() => {
         const cursor = cursorRef.current;
         const follower = followerRef.current;
 
@@ -100,14 +97,15 @@ export default function GSAPCursor() {
         cursor.classList.remove("active");
         follower.classList.remove("active");
 
-        initializeLinks();
+        // Wait till the page is fully loaded
+        setTimeout(() => {
+            initializeLinks();
+        }, 1000);
     }, [pathname]);
 
     const initializeLinks = () => {
         const links = document.getElementsByTagName("a");
         const buttons = document.getElementsByTagName("button");
-
-        // console.log(links);
 
         // Add hover effects on links
         for (let i = 0; i < links.length; i++) {
