@@ -174,15 +174,10 @@ export class Project {
 }
 
 export class ProjectPage {
-    backgroundImg: { url: string };
     project: ProjectType;
     headings: { date: string; technologies: string; categories: string };
 
-    constructor(backgroundImg: { url: string }, dateHeading: string, technologiesHeading: string, categoriesHeading: string, project: ProjectType) {
-        this.backgroundImg = {
-            ...backgroundImg,
-            url: (process.env.BASEURL_API ?? "") + backgroundImg.url,
-        };
+    constructor(dateHeading: string, technologiesHeading: string, categoriesHeading: string, project: ProjectType) {
         this.project = project;
         this.headings = {
             date: dateHeading,

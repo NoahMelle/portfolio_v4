@@ -7,7 +7,11 @@
     background-position: center;
     width: 100%;
     min-height: 100vh;
-    padding: $xlFont;
+    padding: clamp(1.5rem, 2.5vw, 2.5rem);
+    @media (min-width: $tabletBreakpoint) {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
     padding-top: 80px;
 }
 
@@ -16,4 +20,22 @@
     padding: 0.3rem 1rem;
     border: 2px solid rgba($color: $blackText, $alpha: 0.5);
     border-radius: 999px;
+}
+
+.blur {
+    position: absolute;
+    opacity: 70%;
+    filter: blur(100px) brightness(200%);
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    transition: opacity 0.5s;
+    scale: 100%;
+    z-index: -1;
+}
+.blob {
+    height: 100%;
+    width: 100%;
+    clip-path: circle(50% at 50% 50%);
 }

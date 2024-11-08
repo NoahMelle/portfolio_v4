@@ -330,7 +330,7 @@ export async function getProjectPageData(locale: string, slug: string) {
         return null;
     }
 
-    return new ProjectPage(res.backgroundImage, res.dateHeading, res.technologiesHeading, res.categoriesHeading, project);
+    return new ProjectPage(res.dateHeading, res.technologiesHeading, res.categoriesHeading, project);
 }
 
 export async function getHomepageLinks(locale: string) {

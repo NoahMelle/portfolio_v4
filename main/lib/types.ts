@@ -100,7 +100,6 @@ export interface ProjectType {
 }
 
 export interface ProjectPageType {
-    backgroundImage: { url: string},
     dateHeading: string;
     technologiesHeading: string;
     cateogriesHeading: string;

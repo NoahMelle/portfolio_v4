@@ -47,7 +47,7 @@ export default function AboutMe({ aboutMe }: { aboutMe: AboutMeType }) {
                                             width={24}
                                             height={24}
                                             alt={socialLink.alt}
-                                            className="w-6 h-6 invert opacity-70 select-none"
+                                            className="w-6 h-6 invert select-none"
                                         />
                                     </a>
                                 </li>
