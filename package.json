@@ -2,15 +2,10 @@
     "name": "portfolio-v4",
     "version": "1.0.0",
     "private": true,
-    "workspaces": [
-        "cms",
-        "main",
-        "websocket",
-        "main_rework"
-    ],
     "scripts": {
-        "start:all": "concurrently \"NODE_ENV=production npm run start -w cms\" \"npm run start -w main\" \"npm run dev -w websocket\"",
-        "dev:all": "concurrently \"npm run develop -w cms\" \"npm run dev -w main_rework\" \"npm run dev -w websocket\""
+        "start:all": "concurrently \"cd cms && NODE_ENV=production npm run start\" \"cd main && npm run start\" \"cd websocket && npm run dev\"",
+        "dev:all": "concurrently \"cd cms && npm run develop\" \"cd main && npm run dev\" \"cd websocket && npm run dev\"",
+        "install:all": "cd main && npm install && cd ../cms && npm install && cd ../websocket && npm install"
     },
     "dependencies": {
         "concurrently": "^9.0.1"
