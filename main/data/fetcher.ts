@@ -87,8 +87,8 @@ export async function getHomepageData(locale: string) {
         })
     ).data.data.homepage;
 
-    const [myInfo, skills, testimonials, projects] = await Promise.all([
-        getMyInfo(),
+    const [globalInfo, skills, testimonials, projects] = await Promise.all([
+        getGlobalInfo(),
         getAllSkills(),
         getTestimonials(),
         getProjects(locale),
@@ -98,10 +98,7 @@ export async function getHomepageData(locale: string) {
         res.jumpToList,
         res.hero,
         res.marquee,
-        myInfo.dateOfBirth,
-        myInfo.startedProgramming,
         res.aboutMe,
-        myInfo.socialLinks,
         {
             ...res.skills,
             allSkills: skills,
@@ -111,19 +108,20 @@ export async function getHomepageData(locale: string) {
             testimonials,
         },
         projects,
-        res.experience
+        res.experience,
+        globalInfo
     );
 
     return data;
 }
 
-export async function getMyInfo() {
+export async function getGlobalInfo() {
     const res = await axios({
         ...apiConfig,
         data: {
             query: `
-                query {
-                    global {
+                query($locale: I18NLocaleCode) {
+                    global(locale: $locale) {
                         myInfo {
                             dateOfBirth
                             startedProgramming
@@ -136,13 +134,24 @@ export async function getMyInfo() {
                                 }
                             }
                         }
+                        footer {
+                            cta
+                            buttons {
+                                isExternal
+                                title
+                                url
+                            }
+                            blurColor {
+                                color
+                            }
+                        }
                     }
                 }
             `,
         },
     });
 
-    return res.data.data.global.myInfo;
+    return res.data.data.global;
 }
 
 export async function getMetadata(locale: string, page: string) {
@@ -330,7 +339,12 @@ export async function getProjectPageData(locale: string, slug: string) {
         return null;
     }
 
-    return new ProjectPage(res.dateHeading, res.technologiesHeading, res.categoriesHeading, project);
+    return new ProjectPage(
+        res.dateHeading,
+        res.technologiesHeading,
+        res.categoriesHeading,
+        project
+    );
 }
 
 export async function getHomepageLinks(locale: string) {

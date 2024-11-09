@@ -25,6 +25,16 @@
         }
       },
       "component": "components.my-info"
+    },
+    "footer": {
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "components.footer"
     }
   }
 }

@@ -67,6 +67,22 @@ export interface ComponentsExperienceText extends Struct.ComponentSchema {
   };
 }
 
+export interface ComponentsFooter extends Struct.ComponentSchema {
+  collectionName: 'components_components_footers';
+  info: {
+    description: '';
+    displayName: 'Footer';
+  };
+  attributes: {
+    blurColor: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::theme-color.theme-color'
+    >;
+    buttons: Schema.Attribute.Component<'utils.link', true>;
+    cta: Schema.Attribute.String;
+  };
+}
+
 export interface ComponentsHeading extends Struct.ComponentSchema {
   collectionName: 'components_components_headings';
   info: {
@@ -211,6 +227,7 @@ export interface UtilsIconLink extends Struct.ComponentSchema {
 export interface UtilsLink extends Struct.ComponentSchema {
   collectionName: 'components_utils_links';
   info: {
+    description: '';
     displayName: 'Link';
   };
   attributes: {
@@ -238,6 +255,7 @@ declare module '@strapi/strapi' {
       'components.about-me-text': ComponentsAboutMeText;
       'components.experience': ComponentsExperience;
       'components.experience-text': ComponentsExperienceText;
+      'components.footer': ComponentsFooter;
       'components.heading': ComponentsHeading;
       'components.link-array': ComponentsLinkArray;
       'components.marquee': ComponentsMarquee;

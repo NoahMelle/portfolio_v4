@@ -1,0 +1,12 @@
+@use "variables";
+
+.footer {
+    position: relative;
+    height: fit-content;
+    background-color: variables.$white;
+    padding: variables.$xlFont;
+    padding-top: 0;
+    .cta {
+        font-size: clamp(3rem, 5vw, 4rem);
+    }
+}

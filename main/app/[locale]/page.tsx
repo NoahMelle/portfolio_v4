@@ -9,6 +9,7 @@ import Testimonials from "@/components/custom/Testimonials";
 import Projects from "@/components/custom/Projects";
 import Experience from "@/components/custom/Experience";
 import Hero from "@/components/custom/Hero";
+import Footer from "@/components/custom/Footer";
 
 export default async function Home() {
     const isProduction = process.env.NODE_ENV === "production";
@@ -52,14 +53,7 @@ export default async function Home() {
                     >
                         {section}
                     </Section>
-                    <footer className="min-h-[400px] snap-start bg-white relative">
-                        <div>
-                            <h4>
-                                Noey, 2021. All rights reserved. Built with
-                                Next.js and Tailwind CSS.
-                            </h4>
-                        </div>
-                    </footer>
+                    <Footer footerData={homepageData.globalData.footer} socialLinks={homepageData.globalData.myInfo.socialLinks} />
                 </div>
             ) : (
                 <Section
@@ -82,7 +76,9 @@ export default async function Home() {
                 <div className={styles.invisibleDiv} id="invisible-div"></div>
                 {sections}
                 <CursorTracker
-                    wsUrl={`${wsProtocol}://${wsHost}${isProduction ? "" : `:${wsPort}`}`}
+                    wsUrl={`${wsProtocol}://${wsHost}${
+                        isProduction ? "" : `:${wsPort}`
+                    }`}
                 />
             </div>
         </div>

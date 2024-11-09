@@ -1,16 +1,16 @@
 @use 'sass:color';
-@import "./variables";
+@use "variables";
 
 
 .heroHeader {
-    font-size: $bigHeaderSize;
+    font-size: variables.$bigHeaderSize;
     max-width: 500px;
     line-height: 80%;
     font-weight: 350;
 }
 
 .marquee {
-    background-color: $primary;
+    background-color: variables.$primary;
     color: white;
     padding: 1rem 0;
     width: 100%;
@@ -23,8 +23,8 @@
     position: sticky;
     top: 0;
     background-position: center;
-    background-color: $white;
-    color: $blackText;
+    background-color: variables.$white;
+    color: variables.$blackText;
     z-index: 0;
     display: flex;
     flex-direction: column;
@@ -41,8 +41,8 @@
         .heroCircle {
             aspect-ratio: 1/1;
             border-radius: 50%;
-            border: 2px solid $black;
-            @media (max-width: $desktopBreakpoint) {
+            border: 2px solid variables.$black;
+            @media (max-width: variables.$desktopBreakpoint) {
                 display: none;
             }
         }
@@ -50,7 +50,7 @@
     .heroTitle {
         font-weight: 700;
         text-transform: uppercase;
-        font-size: $xxlFont;
+        font-size: variables.$xxlFont;
         max-width: 1000px;
         line-height: 90%;
         text-align: center;
@@ -66,7 +66,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            text-shadow: 0 0 40px $white;
+            text-shadow: 0 0 40px variables.$white;
             color: transparent;
             z-index: 0;
         }
@@ -80,7 +80,7 @@
         max-width: 100%;
         aspect-ratio: 1/1;
         filter: grayscale(1);
-        @media (max-width: $desktopBreakpoint) {
+        @media (max-width: variables.$desktopBreakpoint) {
             position: relative;
             top: 0;
             left: 0;
@@ -102,7 +102,7 @@
     min-height: 100vh;
     position: relative;
     z-index: 0;
-    background-color: $black;
+    background-color: variables.$black;
     color: white;
     padding-bottom: 3rem;
     scroll-snap-align: start;
@@ -138,8 +138,8 @@
 
     // White sections
     &:nth-child(even) {
-        background-color: $white;
-        color: $blackText;
+        background-color: variables.$white;
+        color: variables.$blackText;
         .backgroundImage {
             filter: brightness(0.9);
         }
@@ -154,14 +154,14 @@
             opacity: 0.1;
         }
         ::selection {
-            background-color: $white;
+            background-color: variables.$white;
             color: black;
         }
     }
 }
 
 .testimonial {
-    @include glassMorhpism($black, 0.8);
+    @include variables.glassMorhpism(variables.$black, 0.8);
     height: fit-content;
 }
 
@@ -180,15 +180,15 @@
                 border-radius: 50%;
                 overflow: hidden;
                 border: 1px solid #3a3a3a;
-                background-color: color.adjust($black, $lightness: 7%);
-                @include overlayShine(rgba(255, 255, 255, 0.05));
+                background-color: color.adjust(variables.$black, $lightness: 7%);
+                @include variables.overlayShine(rgba(255, 255, 255, 0.05));
             }
         }
     }
 }
 
 .sectionHeading {
-    font-size: $h2Heading;
+    font-size: variables.$h2Heading;
     margin-bottom: 2rem;
     font-weight: 500;
     text-align: center;
@@ -229,7 +229,7 @@
     overflow-y: scroll;
 }
 
-@media (min-width: $tabletBreakpoint) {
+@media (min-width: variables.$tabletBreakpoint) {
     .sectionContainer {
         scroll-snap-type: y mandatory;
     }
@@ -248,7 +248,7 @@
 }
 
 .h3Heading {
-    font-size: $h3Heading;
+    font-size: variables.$h3Heading;
 }
 
 .sectionWrapper {
@@ -257,17 +257,17 @@
 }
 
 .skillsContainer {
-    @include colorShadow($white, 0.4);
+    @include variables.colorShadow(variables.$white, 0.4);
 
     .skillBar {
-        border-color: $blackText;
+        border-color: variables.$blackText;
         .skillBarFill {
-            background-color: $blackText;
+            background-color: variables.$blackText;
         }
     }
 
     .skillPageButton {
-        background-color: $blackText;
+        background-color: variables.$blackText;
     }
 }
 
@@ -279,7 +279,7 @@
 }
 
 .projects {
-    @include gridLayout(1rem, 3, 250px);
+    @include variables.gridLayout(1rem, 3, 250px);
     justify-content: center;
     .project {
         position: relative;
@@ -359,16 +359,16 @@
             }
             .experienceContent {
                 max-width: 400px;
-                background-color: $black;
+                background-color: variables.$black;
                 padding: 1rem;
                 outline: 1px solid rgba(#ffffff, 0.1);
-                @include shineBorder(rgba(#ffffff, 0.3), 1px, 1rem, 0.3);
+                @include variables.shineBorder(rgba(#ffffff, 0.3), 1px, 1rem, 0.3);
             }
             .experienceDate {
                 text-wrap: nowrap;
             }
         }
-        @media (max-width: $desktopBreakpoint) {
+        @media (max-width: variables.$desktopBreakpoint) {
             grid-template-columns: 1px 1fr;
             gap: 3rem 2rem;
             .experienceItem:nth-child(odd), .experienceItem:nth-child(even) {

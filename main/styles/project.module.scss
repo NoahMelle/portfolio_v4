@@ -1,14 +1,14 @@
-@import "./variables";
+@use "variables";
 
 .projectPage {
-    color: $blackText;
+    color: variables.$blackText;
     background-repeat: repeat-y;
     background-size: cover;
     background-position: center;
     width: 100%;
     min-height: 100vh;
     padding: clamp(1.5rem, 2.5vw, 2.5rem);
-    @media (min-width: $tabletBreakpoint) {
+    @media (min-width: variables.$tabletBreakpoint) {
         padding-left: 4rem;
         padding-right: 4rem;
     }
@@ -18,7 +18,7 @@
 .category {
     width: fit-content;
     padding: 0.3rem 1rem;
-    border: 2px solid rgba($color: $blackText, $alpha: 0.5);
+    border: 2px solid rgba($color: variables.$blackText, $alpha: 0.5);
     border-radius: 999px;
 }
 

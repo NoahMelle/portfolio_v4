@@ -110,3 +110,15 @@ export interface NotFoundType {
     heading: string;
     toHomepageButton: LinkType;
 }
+
+export interface MyInfoType {
+    dateOfBirth: Date;
+    startedProgramming: Date;
+    socialLinks: SocialLink[];
+}
+
+export interface FooterType {
+    cta: string;
+    buttons: LinkType[];
+    blurColor: { color: string };
+}
