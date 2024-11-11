@@ -719,6 +719,12 @@ export interface ApiProjectpageProjectpage extends Struct.SingleTypeSchema {
       'oneToMany',
       'api::projectpage.projectpage'
     >;
+    metadata: Schema.Attribute.Component<'seo.metadata', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     technologiesHeading: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{

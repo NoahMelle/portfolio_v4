@@ -15,43 +15,43 @@ export default function Testimonials({
 }) {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
-    // React.useLayoutEffect(() => {
-    //     gsap.registerPlugin(ScrollTrigger);
+    React.useLayoutEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
 
-    //     const sectionScroll = document.querySelector(".section-scroll");
+        const sectionScroll = document.querySelector(".section-scroll");
 
-    //     const scroller =
-    //         sectionScroll?.scrollHeight &&
-    //         sectionScroll.scrollHeight > document.body.scrollHeight
-    //             ? sectionScroll
-    //             : document.body;
+        const scroller =
+            sectionScroll?.scrollHeight &&
+            sectionScroll.scrollHeight > document.body.scrollHeight
+                ? sectionScroll
+                : document.body;
 
-    //     const animation = gsap.fromTo(
-    //         ".stagger",
-    //         {
-    //             y: 100,
-    //             opacity: 0,
-    //         },
-    //         {
-    //             y: 0,
-    //             duration: 0.5,
-    //             opacity: 1,
-    //             scrollTrigger: {
-    //                 trigger: ".testimonials",
-    //                 start: "top bottom",
-    //                 scroller: scroller,
-    //             },
-    //             stagger: 0.2,
-    //         }
-    //     );
+        const animation = gsap.fromTo(
+            ".stagger",
+            {
+                y: 100,
+                opacity: 0,
+            },
+            {
+                y: 0,
+                duration: 0.5,
+                opacity: 1,
+                scrollTrigger: {
+                    trigger: ".testimonials",
+                    start: "top bottom",
+                    scroller: scroller,
+                },
+                stagger: 0.2,
+            }
+        );
 
-    //     return () => {
-    //         if (animation.scrollTrigger) {
-    //             animation.scrollTrigger.kill();
-    //         }
-    //         animation.kill();
-    //     };
-    // }, []);
+        return () => {
+            if (animation.scrollTrigger) {
+                animation.scrollTrigger.kill();
+            }
+            animation.kill();
+        };
+    }, []);
 
     return (
         <div ref={containerRef}>

@@ -155,7 +155,7 @@ export async function getGlobalInfo() {
 }
 
 export async function getMetadata(locale: string, page: string) {
-    const pages = ["homepage"];
+    const pages = ["homepage", "projectpage"];
 
     if (!pages.includes(page)) {
         throw new Error("Invalid page name");
@@ -323,6 +323,10 @@ export async function getProjectPageData(locale: string, slug: string) {
                             dateHeading
                             technologiesHeading
                             categoriesHeading
+                            metadata {
+                                title
+                                description
+                            }
                         }
                     }
             `,
@@ -343,7 +347,8 @@ export async function getProjectPageData(locale: string, slug: string) {
         res.dateHeading,
         res.technologiesHeading,
         res.categoriesHeading,
-        project
+        project,
+        res.metadata
     );
 }
 

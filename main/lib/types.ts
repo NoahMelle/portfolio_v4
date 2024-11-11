@@ -104,6 +104,7 @@ export interface ProjectPageType {
     technologiesHeading: string;
     cateogriesHeading: string;
     project: ProjectType;
+    metadata: MetadataType;
 }
 
 export interface NotFoundType {
@@ -121,4 +122,9 @@ export interface FooterType {
     cta: string;
     buttons: LinkType[];
     blurColor: { color: string };
+}
+
+export interface MetadataType {
+    title: string;
+    description: string;
 }

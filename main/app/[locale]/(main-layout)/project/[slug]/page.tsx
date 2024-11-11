@@ -18,6 +18,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { notFound } from "next/navigation";
+import { ProjectPage } from "@/lib/models";
 
 export default async function Project(props: {
     params: Promise<{ slug: string }>;
@@ -169,4 +170,27 @@ export default async function Project(props: {
             </div>
         </>
     );
+}
+
+export async function generateMetadata(props: {
+    params: Promise<{ slug: string }>;
+}) {
+    const locale = await getLocale();
+    const projectPageData: ProjectPage | null = await getProjectPageData(
+        locale,
+        (
+            await props.params
+        ).slug
+    );
+
+    if (!projectPageData) {
+        return notFound();
+    }
+
+    const title = projectPageData.metadata.title.replace("{{ projectName }}", projectPageData.project.title)
+
+    return {
+        title,
+        description: projectPageData.metadata.description || "",
+    };
 }
