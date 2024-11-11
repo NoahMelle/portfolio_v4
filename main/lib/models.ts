@@ -10,6 +10,7 @@ import {
     ExperienceType,
     MyInfoType,
     FooterType,
+    MetadataType
 } from "./types";
 import { getAgeFromBday } from "./utils";
 import { getYearsDiff } from "./utils";
@@ -181,12 +182,14 @@ export class Project {
 export class ProjectPage {
     project: ProjectType;
     headings: { date: string; technologies: string; categories: string };
+    metadata: MetadataType;
 
     constructor(
         dateHeading: string,
         technologiesHeading: string,
         categoriesHeading: string,
-        project: ProjectType
+        project: ProjectType,
+        metadata: MetadataType
     ) {
         this.project = project;
         this.headings = {
@@ -194,6 +197,7 @@ export class ProjectPage {
             technologies: technologiesHeading,
             categories: categoriesHeading,
         };
+        this.metadata = metadata;
     }
 }
 
