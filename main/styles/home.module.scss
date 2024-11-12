@@ -108,6 +108,7 @@
     scroll-snap-align: start;
     background-position: center;
     padding: clamp(1rem, 5vw, 5rem);
+    container-type: inline-size;
     .sectionTop {
         display: flex;
         align-items: center;
@@ -157,6 +158,12 @@
             background-color: variables.$white;
             color: black;
         }
+    }
+}
+
+@container (min-height: 50vh) {
+    .sectionInner {
+        padding-bottom: 10rem;
     }
 }
 
