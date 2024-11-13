@@ -145,6 +145,7 @@ export class Project {
     title: string;
     description?: string;
     slug: string;
+    url?: string;
     screenshots: { url: string }[];
     skills: { name: string; confidenceLevel: number; icon?: { url: string } }[];
     tags: { name: string }[] = [];
@@ -168,6 +169,7 @@ export class Project {
                 url: constructImageUrl(skill.icon?.url),
             },
         }));
+        this.url = project.url;
         this.frontPhoto = {
             ...project.frontPhoto,
             url: constructImageUrl(project.frontPhoto.url),
@@ -183,13 +185,25 @@ export class ProjectPage {
     project: ProjectType;
     headings: { date: string; technologies: string; categories: string };
     metadata: MetadataType;
+    global: {
+        myInfo: {
+            socialLinks: SocialLink[];
+        };
+        footer: FooterType;
+    };
 
     constructor(
         dateHeading: string,
         technologiesHeading: string,
         categoriesHeading: string,
         project: ProjectType,
-        metadata: MetadataType
+        metadata: MetadataType,
+        globalData: {
+            myInfo: {
+                socialLinks: SocialLink[];
+            };
+            footer: FooterType;
+        }
     ) {
         this.project = project;
         this.headings = {
@@ -198,6 +212,12 @@ export class ProjectPage {
             categories: categoriesHeading,
         };
         this.metadata = metadata;
+        this.global = {
+            myInfo: {
+                socialLinks: processLinks(globalData.myInfo.socialLinks),
+            },
+            footer: globalData.footer,
+        }
     }
 }
 

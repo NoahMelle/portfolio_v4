@@ -88,7 +88,7 @@ export async function getHomepageData(locale: string) {
     ).data.data.homepage;
 
     const [globalInfo, skills, testimonials, projects] = await Promise.all([
-        getGlobalInfo(),
+        getGlobalInfo(locale),
         getAllSkills(),
         getTestimonials(),
         getProjects(locale),
@@ -115,7 +115,7 @@ export async function getHomepageData(locale: string) {
     return data;
 }
 
-export async function getGlobalInfo() {
+export async function getGlobalInfo(locale: string) {
     const res = await axios({
         ...apiConfig,
         data: {
@@ -148,6 +148,9 @@ export async function getGlobalInfo() {
                     }
                 }
             `,
+            variables: {
+                locale,
+            },
         },
     });
 
@@ -272,6 +275,7 @@ export async function getProject(slug: string, locale: string) {
                         }
                         title
                         createdAt
+                        url
                         description
                         backgroundColor {
                             color
@@ -338,6 +342,7 @@ export async function getProjectPageData(locale: string, slug: string) {
     ).data.data.projectpage;
 
     const project = await getProject(slug, locale);
+    const globalInfo = await getGlobalInfo(locale);
 
     if (!project) {
         return null;
@@ -348,7 +353,8 @@ export async function getProjectPageData(locale: string, slug: string) {
         res.technologiesHeading,
         res.categoriesHeading,
         project,
-        res.metadata
+        res.metadata,
+        globalInfo
     );
 }
 

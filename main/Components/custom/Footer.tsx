@@ -6,9 +6,11 @@ import Image from "next/image";
 export default function Footer({
     footerData,
     socialLinks,
+    blurColor,
 }: {
     footerData: FooterType;
     socialLinks: SocialLink[];
+    blurColor?: string;
 }) {
     return (
         <footer className={`${styles.footer} min-h-[400px]`}>
@@ -56,7 +58,8 @@ export default function Footer({
                 <div
                     className="w-full h-full rounded-full brightness-150 opacity-90"
                     style={{
-                        backgroundColor: footerData.blurColor.color,
+                        backgroundColor:
+                            blurColor ?? footerData.blurColor.color,
                     }}
                 ></div>
             </div>

@@ -8,11 +8,11 @@
     width: 100%;
     min-height: 100vh;
     padding: clamp(1.5rem, 2.5vw, 2.5rem);
+    padding-top: 80px;
     @media (min-width: variables.$tabletBreakpoint) {
         padding-left: 4rem;
         padding-right: 4rem;
     }
-    padding-top: 80px;
 }
 
 .category {

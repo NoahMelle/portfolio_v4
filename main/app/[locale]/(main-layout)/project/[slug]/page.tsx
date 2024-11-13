@@ -19,6 +19,9 @@ import {
 } from "@/components/ui/tooltip";
 import { notFound } from "next/navigation";
 import { ProjectPage } from "@/lib/models";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import Footer from "@/components/custom/Footer";
 
 export default async function Project(props: {
     params: Promise<{ slug: string }>;
@@ -35,7 +38,7 @@ export default async function Project(props: {
 
     return (
         <>
-            <div className={`${styles.projectPage}`}>
+            <div className={`${styles.projectPage} mb-12`}>
                 <div className="max-w-[1000px] mx-auto flex flex-col gap-10">
                     <div className="relative">
                         <Carousel>
@@ -76,9 +79,21 @@ export default async function Project(props: {
                     </div>
                     <div className="flex flex-col gap-12">
                         <div className="flex flex-col gap-4">
-                            <h1 className="text-4xl italic font-medium uppercase">
-                                {projectPageData.project.title}
-                            </h1>
+                            <div className="flex justify-between items-end">
+                                <h1 className="text-4xl font-medium uppercase">
+                                    {projectPageData.project.title}
+                                </h1>
+                                {projectPageData.project.url && (
+                                    <Link
+                                        href={projectPageData.project.url}
+                                        target="_blank"
+                                        className="flex gap-2 bg-black text-white rounded-full p-3 items-center"
+                                    >
+                                        <ArrowUpRight />
+                                        Visit Site
+                                    </Link>
+                                )}
+                            </div>
                             <hr className="h-[3px] bg-black" />
                             <div className="flex gap-2 flex-wrap">
                                 {projectPageData.project.tags &&
@@ -95,9 +110,9 @@ export default async function Project(props: {
                         <div className="flex gap-8 md:flex-row flex-col-reverse">
                             <div className="grid md:grid-cols-[min-content,_1fr] gap-8 min-w-fit md:w-auto w-full">
                                 <div className="md:contents flex flex-col gap-2">
-                                    <h3 className="font-semibold uppercase text-xl w-fit">
+                                    <h2 className="font-semibold uppercase text-xl w-fit">
                                         {projectPageData.headings.categories}
-                                    </h3>
+                                    </h2>
                                     <div className="flex gap-2 md:flex-col flex-wrap">
                                         <PopupStagger containerStyles="flex gap-2 md:flex-col flex-wrap">
                                             {projectPageData.project
@@ -118,9 +133,9 @@ export default async function Project(props: {
                                     </div>
                                 </div>
                                 <div className="md:contents flex flex-col gap-2">
-                                    <h3 className="font-semibold uppercase text-xl w-fit">
+                                    <h2 className="font-semibold uppercase text-xl w-fit">
                                         {projectPageData.headings.date}
-                                    </h3>
+                                    </h2>
                                     <div>
                                         <p className="text-xl">
                                             {projectPageData.project.createdAt.toDateString()}
@@ -133,15 +148,15 @@ export default async function Project(props: {
                             </div>
                         </div>
                         <div className="text-center flex flex-col items-center gap-4">
-                            <h3 className="font-semibold uppercase text-xl">
+                            <h2 className="font-semibold uppercase text-xl">
                                 {projectPageData.headings.technologies}
-                            </h3>
-                            <ul className="flex gap-7 flex-wrap justify-center">
+                            </h2>
+                            <div className="flex gap-7 flex-wrap justify-center">
                                 {projectPageData.project.skills.map((skill) => (
                                     <TooltipProvider key={skill.name}>
                                         <Tooltip>
                                             <TooltipTrigger>
-                                                <li key={skill.name}>
+                                                <div key={skill.name}>
                                                     {skill.icon && (
                                                         <Image
                                                             src={
@@ -153,7 +168,7 @@ export default async function Project(props: {
                                                             className="invert-[80%] select-none"
                                                         />
                                                     )}
-                                                </li>
+                                                </div>
                                             </TooltipTrigger>
                                             <TooltipContent>
                                                 <h3 className="text-xl">
@@ -163,11 +178,16 @@ export default async function Project(props: {
                                         </Tooltip>
                                     </TooltipProvider>
                                 ))}
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <Footer
+                footerData={projectPageData.global.footer}
+                socialLinks={projectPageData.global.myInfo.socialLinks}
+                blurColor={projectPageData.project.backgroundColor.color}
+            />
         </>
     );
 }
@@ -187,10 +207,18 @@ export async function generateMetadata(props: {
         return notFound();
     }
 
-    const title = projectPageData.metadata.title.replace("{{ projectName }}", projectPageData.project.title)
+    const title = projectPageData.metadata.title.replace(
+        "{{ projectName }}",
+        projectPageData.project.title
+    );
+
+    const description = projectPageData.metadata.description.replace(
+        "{{ projectName }}",
+        projectPageData.project.title
+    ) ?? "";
 
     return {
         title,
-        description: projectPageData.metadata.description || "",
+        description,
     };
 }

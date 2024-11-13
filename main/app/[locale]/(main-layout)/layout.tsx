@@ -16,7 +16,7 @@ export default async function layout({
                 >
                     <Image
                         src="/icons/arrow-left.svg"
-                        alt="Home"
+                        alt="Arrow Left"
                         width={16}
                         height={16}
                     />

@@ -12,35 +12,35 @@ export default function GSAPCursor() {
     const followerRef = useRef<HTMLDivElement>(null);
 
     // Cursor position variables
-    let posX = 0;
-    let posY = 0;
-    let mouseX = 0;
-    let mouseY = 0;
+    const posX = useRef(0);
+    const posY = useRef(0);
+    const mouseX = useRef(0);
+    const mouseY = useRef(0);
 
     const initializeCursor = React.useCallback(
         (cursor: HTMLDivElement, follower: HTMLDivElement) => {
             // Update mouse coordinates
             const mouseCoords = (e: MouseEvent) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
+                mouseX.current = e.clientX;
+                mouseY.current = e.clientY;
             };
 
             // Animate cursor position using GSAP
             const animateCursor = () => {
-                posX += (mouseX - posX) / LAG_FACTOR;
-                posY += (mouseY - posY) / LAG_FACTOR;
+                posX.current += (mouseX.current - posX.current) / LAG_FACTOR;
+                posY.current += (mouseY.current - posY.current) / LAG_FACTOR;
 
                 gsap.set(follower, {
                     css: {
-                        left: posX - 27,
-                        top: posY - 27,
+                        left: posX.current - 27,
+                        top: posY.current - 27,
                     },
                 });
 
                 gsap.set(cursor, {
                     css: {
-                        left: mouseX,
-                        top: mouseY,
+                        left: mouseX.current,
+                        top: mouseY.current,
                     },
                 });
             };

@@ -90,6 +90,7 @@ export interface ProjectType {
     title: string;
     description?: string;
     slug: string;
+    url?: string;
     screenshots: { url: string }[];
     frontPhoto: { url: string };
     skills: SkillType[];
