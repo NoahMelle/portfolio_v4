@@ -22,6 +22,7 @@ import { ProjectPage } from "@/lib/models";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import Footer from "@/components/custom/Footer";
+import Markdown from "react-markdown";
 
 export default async function Project(props: {
     params: Promise<{ slug: string }>;
@@ -137,14 +138,14 @@ export default async function Project(props: {
                                         {projectPageData.headings.date}
                                     </h2>
                                     <div>
-                                        <p className="text-xl">
+                                        <p>
                                             {projectPageData.project.createdAt.toDateString()}
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div className="w-full">
-                                <p>{projectPageData.project.description}</p>
+                                <Markdown className={styles.markdownDescription}>{projectPageData.project.description}</Markdown>
                             </div>
                         </div>
                         <div className="text-center flex flex-col items-center gap-4">

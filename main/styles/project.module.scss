@@ -39,3 +39,14 @@
     width: 100%;
     clip-path: circle(50% at 50% 50%);
 }
+
+.markdownDescription {
+    h3 {
+        font-size: 1.2rem;
+        margin-bottom: .2rem;
+        font-weight: 600;
+    }
+    ul {
+        list-style: inside;
+    }
+}

@@ -236,7 +236,7 @@ export async function getProjects(locale: string) {
             data: {
                 query: `
                 query($locale: I18NLocaleCode!) {
-                    projects(locale: $locale) {
+                    projects(locale: $locale, sort: "createdAt:desc") {
                         screenshots {
                             url
                         }
