@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "@/styles/home.module.scss";
 import Markdown from "react-markdown";
 import { TestimonialsSectionType } from "@/lib/types";
@@ -15,39 +15,42 @@ export default function Testimonials({
 }) {
     const containerRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            gsap.registerPlugin(ScrollTrigger);
+    React.useLayoutEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
 
-            const sectionScroll = document.querySelector(".section-scroll");
+        const sectionScroll = document.querySelector(".section-scroll");
 
-            const scroller =
-                sectionScroll?.scrollHeight && sectionScroll.scrollHeight > document.body.scrollHeight
-                    ? sectionScroll
-                    : document.body;
+        const scroller =
+            sectionScroll?.scrollHeight &&
+            sectionScroll.scrollHeight > document.body.scrollHeight
+                ? sectionScroll
+                : document.body;
 
-            const animation = gsap.fromTo(".stagger", {
+        const animation = gsap.fromTo(
+            ".stagger",
+            {
                 y: 100,
                 opacity: 0,
-            }, {
+            },
+            {
                 y: 0,
-                duration: .5,
+                duration: 0.5,
                 opacity: 1,
                 scrollTrigger: {
                     trigger: ".testimonials",
                     start: "top bottom",
                     scroller: scroller,
                 },
-                stagger: 0.2
-            });
+                stagger: 0.2,
+            }
+        );
 
-            return () => {
-                if (animation.scrollTrigger) {
-                    animation.scrollTrigger.kill();
-                }
-                animation.kill();
-            };
-        }
+        return () => {
+            if (animation.scrollTrigger) {
+                animation.scrollTrigger.kill();
+            }
+            animation.kill();
+        };
     }, []);
 
     return (
@@ -74,9 +77,9 @@ export default function Testimonials({
                                     />
                                 </div>
                                 <div className="flex flex-col justify-center">
-                                    <h4 className="leading-none">
+                                    <h3 className="leading-none">
                                         {testimonial.name}
-                                    </h4>
+                                    </h3>
                                     <p className="text-gray-400">
                                         {testimonial?.testimonialRole?.name}
                                     </p>

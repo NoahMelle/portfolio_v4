@@ -10,7 +10,8 @@
     user-select: none;
     pointer-events: none;
     z-index: 10000000;
-    transform: scale(1);
+    transform: none;
+    will-change: transform;
 
     &.active {
         opacity: 0.5;
@@ -39,6 +40,6 @@
     }
 }
 
-.hidden {
-    opacity: 0;
-}
+// .hidden {
+//     opacity: 0;
+// }

@@ -7,9 +7,23 @@ export interface ComponentsAboutMe extends Struct.ComponentSchema {
     displayName: 'About Me';
   };
   attributes: {
-    aboutMeTexts: Schema.Attribute.Component<'components.about-me-text', true>;
-    heading: Schema.Attribute.String;
     iconLinks: Schema.Attribute.Component<'utils.icon-link', true>;
+    image: Schema.Attribute.Media<'images'>;
+    quickInfo: Schema.Attribute.Component<'components.about-me-info', true>;
+    text: Schema.Attribute.RichText;
+  };
+}
+
+export interface ComponentsAboutMeInfo extends Struct.ComponentSchema {
+  collectionName: 'components_components_about_me_infos';
+  info: {
+    displayName: 'About Me Info';
+    icon: '';
+  };
+  attributes: {
+    alt: Schema.Attribute.String;
+    content: Schema.Attribute.String;
+    icon: Schema.Attribute.Media<'images'>;
   };
 }
 
@@ -53,6 +67,22 @@ export interface ComponentsExperienceText extends Struct.ComponentSchema {
   };
 }
 
+export interface ComponentsFooter extends Struct.ComponentSchema {
+  collectionName: 'components_components_footers';
+  info: {
+    description: '';
+    displayName: 'Footer';
+  };
+  attributes: {
+    blurColor: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::theme-color.theme-color'
+    >;
+    buttons: Schema.Attribute.Component<'utils.link', true>;
+    cta: Schema.Attribute.String;
+  };
+}
+
 export interface ComponentsHeading extends Struct.ComponentSchema {
   collectionName: 'components_components_headings';
   info: {
@@ -61,6 +91,7 @@ export interface ComponentsHeading extends Struct.ComponentSchema {
   };
   attributes: {
     ctaButton: Schema.Attribute.Component<'utils.link', false>;
+    image: Schema.Attribute.Media<'images'>;
     subheading: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };
@@ -196,6 +227,7 @@ export interface UtilsIconLink extends Struct.ComponentSchema {
 export interface UtilsLink extends Struct.ComponentSchema {
   collectionName: 'components_utils_links';
   info: {
+    description: '';
     displayName: 'Link';
   };
   attributes: {
@@ -219,9 +251,11 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'components.about-me': ComponentsAboutMe;
+      'components.about-me-info': ComponentsAboutMeInfo;
       'components.about-me-text': ComponentsAboutMeText;
       'components.experience': ComponentsExperience;
       'components.experience-text': ComponentsExperienceText;
+      'components.footer': ComponentsFooter;
       'components.heading': ComponentsHeading;
       'components.link-array': ComponentsLinkArray;
       'components.marquee': ComponentsMarquee;

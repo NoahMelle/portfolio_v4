@@ -1,5 +1,7 @@
 @use "sass:math";
+@use "sass:color";
 
+$xxlFont: clamp(2.5rem, 9vw, 9rem);
 $xlFont: clamp(1.5rem, 2.5vw, 2.5rem);
 $lgFont: clamp(1.2rem, 1vw, 1.5rem);
 $bigHeaderSize: clamp(2.5rem, 4vw, 4.5rem);
@@ -11,7 +13,7 @@ $desktopBreakpoint: 1024px;
 
 $white: #eef2f3;
 $black: #0a0a0a;
-$blackText: #56585c;
+$blackText: #1a1b1b;
 $primary: #3c5759;
 
 @mixin shineBorder($color, $size, $radius, $intensity: 1) {
@@ -27,7 +29,7 @@ $primary: #3c5759;
             transparent 0%,
             transparent 50%,
             rgba(white, $intensity) 50%,
-            rgba($color, $intensity / 2) 55%,
+            rgba($color, math.div($intensity, 2)) 55%,
             transparent 60%,
             transparent 100%
         );
@@ -68,7 +70,7 @@ $primary: #3c5759;
     backdrop-filter: blur(10px);
     border-radius: 1rem;
     padding: 1rem;
-    border: 1px solid lighten($color, 10%);
+    border: 1px solid color.adjust($color, $lightness: 10%);
 }
 
 @mixin responsiveGrid($min, $max) {

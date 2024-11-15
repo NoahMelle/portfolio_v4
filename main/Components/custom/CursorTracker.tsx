@@ -73,7 +73,8 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
                         break;
                     case "pong":
                         toast.success("Pong!", {
-                            description: "You are still connected to the server.",
+                            description:
+                                "You are still connected to the server.",
                             closeButton: true,
                         });
                 }
@@ -106,39 +107,45 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         };
     }, [pathname, wsUrl, connect]);
 
-    const handleMouseMove = React.useCallback((event: Event) => {
-        if (event instanceof MouseEvent) {
-            const bodyHeight = Math.max(
-                sectionContainerRef.current?.scrollHeight || 0
-            );
-
-            const bodyWidth = window.innerWidth;
-
-            const scrollY = Math.max(
-                sectionContainerRef.current?.scrollTop || 0,
-                document.documentElement.scrollTop,
-                window.scrollY
-            );
-            const x = (event.clientX / bodyWidth) * 100;
-            const y = ((event.clientY + scrollY) / bodyHeight) * 100;
-
-            setCursor({ x, y });
-        } else {
-            if (wsRef.current?.readyState === WebSocket.OPEN && isAllowed.current) {
-                wsRef.current?.send(
-                    JSON.stringify({
-                        type: "ping",
-                    })
+    const handleMouseMove = React.useCallback(
+        (event: Event) => {
+            if (event instanceof MouseEvent) {
+                const bodyHeight = Math.max(
+                    sectionContainerRef.current?.scrollHeight || 0
                 );
-                isAllowed.current = false;
-                setTimeout(() => {
-                    isAllowed.current = true;
-                }, 2000);
-            } else if (wsRef.current?.readyState === WebSocket.CLOSED) {
-                connect();
+
+                const bodyWidth = window.innerWidth;
+
+                const scrollY = Math.max(
+                    sectionContainerRef.current?.scrollTop || 0,
+                    document.documentElement.scrollTop,
+                    window.scrollY
+                );
+                const x = (event.clientX / bodyWidth) * 100;
+                const y = ((event.clientY + scrollY) / bodyHeight) * 100;
+
+                setCursor({ x, y });
+            } else {
+                if (
+                    wsRef.current?.readyState === WebSocket.OPEN &&
+                    isAllowed.current
+                ) {
+                    wsRef.current?.send(
+                        JSON.stringify({
+                            type: "ping",
+                        })
+                    );
+                    isAllowed.current = false;
+                    setTimeout(() => {
+                        isAllowed.current = true;
+                    }, 2000);
+                } else if (wsRef.current?.readyState === WebSocket.CLOSED) {
+                    connect();
+                }
             }
-        }
-    }, [wsRef, connect]);
+        },
+        [wsRef, connect]
+    );
 
     React.useEffect(() => {
         sectionContainerRef.current =

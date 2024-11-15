@@ -8,10 +8,10 @@ import Image from "next/image";
 import { SkillType } from "@/lib/types";
 import {
     Tooltip,
-    TooltipContent,
     TooltipProvider,
+    TooltipContent,
     TooltipTrigger,
-} from "@/Components/ui/tooltip";
+} from "../ui/tooltip";
 import LinkRenderer from "../reusable/LinkRenderer";
 
 export default function Skills({ skills }: { skills: SkillsSectionType }) {
@@ -60,26 +60,23 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                             <h3 className="text-xl font-semibold">
                                 {skills.techStack.heading}
                             </h3>
-                            <ul className="flex gap-4 flex-wrap">
+                            <div className="flex gap-4 flex-wrap">
                                 {skills.techStack.techStackSkills.map(
                                     (skill, i) => (
                                         <TooltipProvider key={i}>
                                             <Tooltip>
                                                 <TooltipTrigger>
-                                                    <li>
-                                                        {skill.icon && (
-                                                            <Image
-                                                                src={
-                                                                    skill?.icon
-                                                                        ?.url
-                                                                }
-                                                                alt={skill.name}
-                                                                width={40}
-                                                                height={40}
-                                                                className="invert-[80%] select-none"
-                                                            />
-                                                        )}
-                                                    </li>
+                                                    {skill.icon && (
+                                                        <Image
+                                                            src={
+                                                                skill?.icon?.url
+                                                            }
+                                                            alt={skill.name}
+                                                            width={40}
+                                                            height={40}
+                                                            className="invert-[80%] select-none"
+                                                        />
+                                                    )}
                                                 </TooltipTrigger>
                                                 <TooltipContent>
                                                     {skill.name}
@@ -88,7 +85,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                                         </TooltipProvider>
                                     )
                                 )}
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -138,13 +135,12 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                                 {Array.from({
                                     length: totalPages.current,
                                 }).map((e, i) => (
-                                    <button
-                                        className={`block h-[6px] basis-[6px] transition-all ${
+                                    <div
+                                        className={`h-[6px] basis-[6px] transition-all ${
                                             currentSkillPage === i ? "grow" : ""
                                         } ${styles.skillPageButton}`}
-                                        onClick={() => setCurrentSkillPage(i)}
                                         key={i}
-                                    ></button>
+                                    ></div>
                                 ))}
                             </div>
                             <button

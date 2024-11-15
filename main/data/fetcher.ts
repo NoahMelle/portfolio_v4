@@ -30,6 +30,9 @@ export async function getHomepageData(locale: string) {
                         hero {
                             title
                             subheading
+                            image {
+                                url
+                            }
                         }
                         marquee {
                             text {
@@ -37,13 +40,17 @@ export async function getHomepageData(locale: string) {
                             }
                         }
                         aboutMe {
-                            heading
-                            aboutMeTexts {
-                                text
-                                image {
+                            quickInfo {
+                                icon {
                                     url
                                 }
+                                content
+                                alt
                             }
+                            image {
+                                url
+                            }
+                            text
                         }
                         skills {
                             skillText
@@ -80,8 +87,8 @@ export async function getHomepageData(locale: string) {
         })
     ).data.data.homepage;
 
-    const [myInfo, skills, testimonials, projects] = await Promise.all([
-        getMyInfo(),
+    const [globalInfo, skills, testimonials, projects] = await Promise.all([
+        getGlobalInfo(locale),
         getAllSkills(),
         getTestimonials(),
         getProjects(locale),
@@ -91,10 +98,7 @@ export async function getHomepageData(locale: string) {
         res.jumpToList,
         res.hero,
         res.marquee,
-        myInfo.dateOfBirth,
-        myInfo.startedProgramming,
         res.aboutMe,
-        myInfo.socialLinks,
         {
             ...res.skills,
             allSkills: skills,
@@ -104,19 +108,20 @@ export async function getHomepageData(locale: string) {
             testimonials,
         },
         projects,
-        res.experience
+        res.experience,
+        globalInfo
     );
 
     return data;
 }
 
-export async function getMyInfo() {
+export async function getGlobalInfo(locale: string) {
     const res = await axios({
         ...apiConfig,
         data: {
             query: `
-                query {
-                    global {
+                query($locale: I18NLocaleCode) {
+                    global(locale: $locale) {
                         myInfo {
                             dateOfBirth
                             startedProgramming
@@ -129,17 +134,31 @@ export async function getMyInfo() {
                                 }
                             }
                         }
+                        footer {
+                            cta
+                            buttons {
+                                isExternal
+                                title
+                                url
+                            }
+                            blurColor {
+                                color
+                            }
+                        }
                     }
                 }
             `,
+            variables: {
+                locale,
+            },
         },
     });
 
-    return res.data.data.global.myInfo;
+    return res.data.data.global;
 }
 
 export async function getMetadata(locale: string, page: string) {
-    const pages = ["homepage"];
+    const pages = ["homepage", "projectpage"];
 
     if (!pages.includes(page)) {
         throw new Error("Invalid page name");
@@ -217,7 +236,7 @@ export async function getProjects(locale: string) {
             data: {
                 query: `
                 query($locale: I18NLocaleCode!) {
-                    projects(locale: $locale) {
+                    projects(locale: $locale, sort: "createdAt:desc") {
                         screenshots {
                             url
                         }
@@ -256,6 +275,7 @@ export async function getProject(slug: string, locale: string) {
                         }
                         title
                         createdAt
+                        url
                         description
                         backgroundColor {
                             color
@@ -307,6 +327,10 @@ export async function getProjectPageData(locale: string, slug: string) {
                             dateHeading
                             technologiesHeading
                             categoriesHeading
+                            metadata {
+                                title
+                                description
+                            }
                         }
                     }
             `,
@@ -318,12 +342,20 @@ export async function getProjectPageData(locale: string, slug: string) {
     ).data.data.projectpage;
 
     const project = await getProject(slug, locale);
+    const globalInfo = await getGlobalInfo(locale);
 
     if (!project) {
         return null;
     }
 
-    return new ProjectPage(res.backgroundImage, res.dateHeading, res.technologiesHeading, res.categoriesHeading, project);
+    return new ProjectPage(
+        res.dateHeading,
+        res.technologiesHeading,
+        res.categoriesHeading,
+        project,
+        res.metadata,
+        globalInfo
+    );
 }
 
 export async function getHomepageLinks(locale: string) {

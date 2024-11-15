@@ -12,6 +12,7 @@ export interface LinkType {
 export interface HeroType {
     title: string;
     subheading: string;
+    image: { url: string };
 }
 
 export interface MarqueeType {
@@ -19,14 +20,16 @@ export interface MarqueeType {
 }
 
 export interface AboutMeType {
-    heading: string;
-    aboutMeTexts: AboutMeTextType[];
+    quickInfo: quickInfoType[];
+    image: { url: string };
+    text: string;
     socialLinks: SocialLink[];
 }
 
-export interface AboutMeTextType {
-    text: string;
-    image: { url: string };
+export interface quickInfoType {
+    icon: { url: string };
+    content: string;
+    alt: string;
 }
 
 export interface SocialLink {
@@ -87,6 +90,7 @@ export interface ProjectType {
     title: string;
     description?: string;
     slug: string;
+    url?: string;
     screenshots: { url: string }[];
     frontPhoto: { url: string };
     skills: SkillType[];
@@ -97,14 +101,31 @@ export interface ProjectType {
 }
 
 export interface ProjectPageType {
-    backgroundImage: { url: string},
     dateHeading: string;
     technologiesHeading: string;
     cateogriesHeading: string;
     project: ProjectType;
+    metadata: MetadataType;
 }
 
 export interface NotFoundType {
     heading: string;
     toHomepageButton: LinkType;
+}
+
+export interface MyInfoType {
+    dateOfBirth: Date;
+    startedProgramming: Date;
+    socialLinks: SocialLink[];
+}
+
+export interface FooterType {
+    cta: string;
+    buttons: LinkType[];
+    blurColor: { color: string };
+}
+
+export interface MetadataType {
+    title: string;
+    description: string;
 }

@@ -9,12 +9,14 @@ export default async function layout({
 }) {
     return (
         <div>
-            {/* <Navbar links={links} /> */}
             <nav className="fixed top-4 left-4 z-10">
-                <Link href={"/"} className="flex gap-2 bg-[#FFFFFF] px-4 py-1 rounded-full shadow-[0_0_10px_rgba(0,0,0,.1)]">
+                <Link
+                    href={"/"}
+                    className="flex gap-2 bg-[#FFFFFF] px-4 py-1 rounded-full shadow-[0_0_10px_rgba(0,0,0,.1)]"
+                >
                     <Image
                         src="/icons/arrow-left.svg"
-                        alt="Home"
+                        alt="Arrow Left"
                         width={16}
                         height={16}
                     />
