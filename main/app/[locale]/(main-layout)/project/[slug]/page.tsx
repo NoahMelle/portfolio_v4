@@ -81,7 +81,7 @@ export default async function Project(props: {
                     <div className="flex flex-col gap-12">
                         <div className="flex flex-col gap-4">
                             <div className="flex justify-between items-end">
-                                <h1 className="text-4xl font-medium uppercase">
+                                <h1 className="text-4xl font-medium uppercase leading-[100%]">
                                     {projectPageData.project.title}
                                 </h1>
                                 {projectPageData.project.url && (
