@@ -24,7 +24,7 @@ Follow the steps below to set up and run the project locally.
 Ensure you have the following installed before proceeding:
 
 - **Node.js** (tested on version 20.x.x)
-- **npm** (or another package manager, this guide uses [npm](https://www.npmjs.com/))
+- **Bun** (or another package manager, this guide uses [Bun](https://bun.sh/))
 - **PostgreSQL** (for database management)
 - **Decryption Token** (required for data import, contact the project owner if needed)
 
@@ -45,7 +45,10 @@ git clone https://github.com/NoahMelle/portfolio_v4.git
 Navigate to the root directory of the project and install the required dependencies:
 
 ```bash
-npm install
+# install monorepo dependencies
+bun install
+# install directory-specific dependencies
+bun run install:all
 ```
 
 ### 3. Set Up the Strapi CMS
@@ -61,11 +64,11 @@ cp cms/.env.example cms/.env
 1. Copy the relative path of the latest data export, located in `cms/database/backup`. You can do this by right-clicking the latest export file in your code editor and selecting **Copy Relative Path**.
 2. Import the data using the following command, replacing `<export-file>` with the path you copied (⚠️ **without** the cms/ prefix):
 ```bash
-npx -w cms strapi import -f database/backup/<export-file>
+bunx -w cms strapi import -f database/backup/<export-file>
 ```
 Example:
 ```bash
-npx -w cms strapi import -f database/backup/export_20241008212340.tar.gz.enc
+bunx -w cms strapi import -f database/backup/export_20241008212340.tar.gz.enc
 ```
 
 3. When prompted, input the decryption token.
@@ -75,7 +78,7 @@ npx -w cms strapi import -f database/backup/export_20241008212340.tar.gz.enc
 In the project root directory, run the following command to start both the CMS and the frontend application:
 
 ```bash
-npm run dev:all
+bun run dev:all
 ```
 
 1. Open http://localhost:1337/admin to access the Strapi admin panel.

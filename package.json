@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "start:all": "concurrently \"cd cms && npm run start\" \"cd main && npm run start\" \"cd websocket && npm run dev\"",
-        "dev:all": "concurrently \"cd cms && npm run develop\" \"cd main && npm run dev\" \"cd websocket && npm run dev\"",
-        "install:all": "cd main && npm install --legacy-peer-deps && cd ../cms && npm install && cd ../websocket && npm install",
-        "build:all": "cd main && npm run build && cd ../cms && npm run build"
+        "start:all": "concurrently \"cd cms && bun run start\" \"cd main && bun run start\" \"cd websocket && bun run dev\"",
+        "dev:all": "concurrently \"cd cms && bun run develop\" \"cd main && bun run dev\" \"cd websocket && bun run dev\"",
+        "install:all": "cd main && bun install --legacy-peer-deps && cd ../cms && bun install && cd ../websocket && bun install",
+        "build:all": "cd main && bun run build && cd ../cms && bun run build"
     },
     "dependencies": {
         "concurrently": "^9.0.1"

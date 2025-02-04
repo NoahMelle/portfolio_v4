@@ -1,8 +1,28 @@
 import createNextIntlPlugin from "next-intl/plugin";
+import { constructWebsocketURL } from "./lib/envUtils";
 
 const withNextIntl = createNextIntlPlugin();
 
+const wsProtocol = process.env.WEBSOCKET_PROTOCOL || "ws";
+const wsHost = process.env.WEBSOCKET_HOST || "localhost";
+const wsPort = process.env.WEBSOCKET_PORT || "8080";
+
 const apiUrl = new URL(process.env.BASEURL_API || "http://localhost:1337");
+const websocketUrl = constructWebsocketURL();
+
+const cspHeader = `
+    default-src 'self';
+    script-src 'self' 'unsafe-eval' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' blob: data:;
+    font-src 'self';
+    connect-src 'self' ${websocketUrl};
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+    upgrade-insecure-requests;
+`
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -43,6 +63,10 @@ const nextConfig = {
                     {
                         key: "Permissions-Policy",
                         value: "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
+                    },
+                    {
+                        key: 'Content-Security-Policy',
+                        value: cspHeader.replace(/\n/g, ''),
                     }
                 ],
             },

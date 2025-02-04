@@ -10,14 +10,9 @@ import Projects from "@/components/custom/Projects";
 import Experience from "@/components/custom/Experience";
 import Hero from "@/components/custom/Hero";
 import Footer from "@/components/custom/Footer";
+import { constructWebsocketURL } from "@/lib/envUtils";
 
 export default async function Home() {
-    const isProduction = process.env.NODE_ENV === "production";
-
-    const wsProtocol = process.env.WEBSOCKET_PROTOCOL || "ws";
-    const wsHost = process.env.WEBSOCKET_HOST || "localhost";
-    const wsPort = process.env.WEBSOCKET_PORT || "8080";
-
     const locale = await getLocale();
 
     const homepageData = await getHomepageData(locale);
@@ -76,9 +71,7 @@ export default async function Home() {
                 <div className={styles.invisibleDiv} id="invisible-div"></div>
                 {sections}
                 <CursorTracker
-                    wsUrl={`${wsProtocol}://${wsHost}${
-                        isProduction ? "" : `:${wsPort}`
-                    }`}
+                    wsUrl={constructWebsocketURL()}
                 />
             </div>
         </div>
