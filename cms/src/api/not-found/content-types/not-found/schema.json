@@ -15,23 +15,25 @@
     }
   },
   "attributes": {
-    "heading": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "string"
-    },
     "toHomepageButton": {
       "type": "component",
       "repeatable": false,
+      "component": "utils.link",
+      "required": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      },
-      "component": "utils.link"
+      }
+    },
+    "heading": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

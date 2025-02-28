@@ -19,22 +19,24 @@
     "myInfo": {
       "type": "component",
       "repeatable": false,
+      "component": "components.my-info",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "component": "components.my-info"
+      "required": true
     },
     "footer": {
       "type": "component",
       "repeatable": false,
+      "component": "components.footer",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "component": "components.footer"
+      "required": true
     }
   }
 }

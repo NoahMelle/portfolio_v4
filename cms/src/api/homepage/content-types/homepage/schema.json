@@ -16,87 +16,71 @@
     }
   },
   "attributes": {
-    "jumpToList": {
+    "hero": {
       "type": "component",
       "repeatable": false,
-      "component": "components.link-array",
+      "component": "components.hero",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
+    },
+    "aboutMe": {
+      "type": "component",
+      "repeatable": false,
+      "component": "components.about-me",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
+    },
+    "skills": {
+      "type": "component",
+      "repeatable": false,
+      "component": "components.skills",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
+    },
+    "testimonials": {
+      "type": "component",
+      "repeatable": false,
+      "component": "components.testimonials",
+      "required": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
-    "hero": {
+    "experience": {
       "type": "component",
       "repeatable": false,
+      "component": "components.experience",
+      "required": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      },
-      "component": "components.heading"
-    },
-    "marquee": {
-      "displayName": "Marquee",
-      "type": "component",
-      "repeatable": false,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "components.marquee"
-    },
-    "aboutMe": {
-      "type": "component",
-      "repeatable": false,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "components.about-me"
-    },
-    "skills": {
-      "displayName": "Skills",
-      "type": "component",
-      "repeatable": false,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "components.skills"
-    },
-    "testimonials": {
-      "type": "component",
-      "repeatable": false,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "components.testimonials"
+      }
     },
     "metadata": {
       "type": "component",
       "repeatable": false,
+      "component": "seo.metadata",
+      "required": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      },
-      "component": "seo.metadata"
-    },
-    "experience": {
-      "type": "component",
-      "repeatable": false,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "component": "components.experience"
+      }
     }
   }
 }

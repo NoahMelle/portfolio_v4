@@ -3,12 +3,12 @@ import type { Schema, Struct } from '@strapi/strapi';
 export interface ComponentsAboutMe extends Struct.ComponentSchema {
   collectionName: 'components_components_about_mes';
   info: {
-    description: '';
     displayName: 'About Me';
   };
   attributes: {
     iconLinks: Schema.Attribute.Component<'utils.icon-link', true>;
-    image: Schema.Attribute.Media<'images'>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
     quickInfo: Schema.Attribute.Component<'components.about-me-info', true>;
     text: Schema.Attribute.RichText;
   };
@@ -18,24 +18,12 @@ export interface ComponentsAboutMeInfo extends Struct.ComponentSchema {
   collectionName: 'components_components_about_me_infos';
   info: {
     displayName: 'About Me Info';
-    icon: '';
   };
   attributes: {
     alt: Schema.Attribute.String;
-    content: Schema.Attribute.String;
-    icon: Schema.Attribute.Media<'images'>;
-  };
-}
-
-export interface ComponentsAboutMeText extends Struct.ComponentSchema {
-  collectionName: 'components_components_about_me_texts';
-  info: {
-    description: '';
-    displayName: 'About Me Text';
-  };
-  attributes: {
-    image: Schema.Attribute.Media<'images' | 'files'>;
-    text: Schema.Attribute.Text;
+    content: Schema.Attribute.String & Schema.Attribute.Required;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
   };
 }
 
@@ -43,24 +31,24 @@ export interface ComponentsExperience extends Struct.ComponentSchema {
   collectionName: 'components_components_experiences';
   info: {
     displayName: 'Experience';
-    icon: '';
   };
   attributes: {
     experienceTexts: Schema.Attribute.Component<
       'components.experience-text',
       true
     >;
-    heading: Schema.Attribute.String;
+    heading: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface ComponentsExperienceText extends Struct.ComponentSchema {
   collectionName: 'components_components_experience_texts';
   info: {
+    description: '';
     displayName: 'Experience Text';
   };
   attributes: {
-    content: Schema.Attribute.Text;
+    content: Schema.Attribute.Text & Schema.Attribute.Required;
     endingDate: Schema.Attribute.Date;
     heading: Schema.Attribute.String & Schema.Attribute.Required;
     startingDate: Schema.Attribute.Date;
@@ -70,7 +58,6 @@ export interface ComponentsExperienceText extends Struct.ComponentSchema {
 export interface ComponentsFooter extends Struct.ComponentSchema {
   collectionName: 'components_components_footers';
   info: {
-    description: '';
     displayName: 'Footer';
   };
   attributes: {
@@ -79,56 +66,35 @@ export interface ComponentsFooter extends Struct.ComponentSchema {
       'api::theme-color.theme-color'
     >;
     buttons: Schema.Attribute.Component<'utils.link', true>;
-    cta: Schema.Attribute.String;
+    cta: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ComponentsHeading extends Struct.ComponentSchema {
-  collectionName: 'components_components_headings';
+export interface ComponentsHero extends Struct.ComponentSchema {
+  collectionName: 'components_components_heroes';
   info: {
     description: '';
     displayName: 'Hero';
   };
   attributes: {
-    ctaButton: Schema.Attribute.Component<'utils.link', false>;
-    image: Schema.Attribute.Media<'images'>;
-    subheading: Schema.Attribute.Text;
-    title: Schema.Attribute.String;
-  };
-}
-
-export interface ComponentsLinkArray extends Struct.ComponentSchema {
-  collectionName: 'components_components_link_arrays';
-  info: {
-    description: '';
-    displayName: 'Link Array';
-  };
-  attributes: {
-    header: Schema.Attribute.String;
-    links: Schema.Attribute.Component<'utils.link', true>;
-  };
-}
-
-export interface ComponentsMarquee extends Struct.ComponentSchema {
-  collectionName: 'components_components_marquees';
-  info: {
-    displayName: 'Marquee';
-  };
-  attributes: {
-    text: Schema.Attribute.Component<'utils.string', true>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    subheading: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
 export interface ComponentsMyInfo extends Struct.ComponentSchema {
   collectionName: 'components_components_my_infos';
   info: {
-    description: '';
     displayName: 'My Info';
   };
   attributes: {
-    dateOfBirth: Schema.Attribute.Date;
+    dateOfBirth: Schema.Attribute.Date &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'2008-11-30'>;
     socialLinks: Schema.Attribute.Component<'utils.icon-link', true>;
-    startedProgramming: Schema.Attribute.Date;
+    startedProgramming: Schema.Attribute.Date & Schema.Attribute.Required;
   };
 }
 
@@ -139,8 +105,8 @@ export interface ComponentsSkills extends Struct.ComponentSchema {
     displayName: 'Skills';
   };
   attributes: {
-    skillsHeading: Schema.Attribute.String;
-    skillText: Schema.Attribute.RichText & Schema.Attribute.Required;
+    skillsHeading: Schema.Attribute.String & Schema.Attribute.Required;
+    skillText: Schema.Attribute.RichText;
     techStack: Schema.Attribute.Component<'components.tech-stack', false>;
   };
 }
@@ -148,8 +114,7 @@ export interface ComponentsSkills extends Struct.ComponentSchema {
 export interface ComponentsTechStack extends Struct.ComponentSchema {
   collectionName: 'components_components_tech_stacks';
   info: {
-    description: '';
-    displayName: 'techStack';
+    displayName: 'Tech Stack';
   };
   attributes: {
     heading: Schema.Attribute.String & Schema.Attribute.Required;
@@ -163,7 +128,7 @@ export interface ComponentsTestimonials extends Struct.ComponentSchema {
     displayName: 'Testimonials';
   };
   attributes: {
-    testimonialHeading: Schema.Attribute.String;
+    testimonialHeading: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -188,38 +153,22 @@ export interface SeoOpenGraphTags extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     title: Schema.Attribute.String;
-    type: Schema.Attribute.Enumeration<
-      [
-        'website',
-        'article',
-        'video.movie',
-        'video.episode',
-        'video.tv_show',
-        'video.other',
-        'music.song',
-        'music.album',
-        'music.playlist',
-        'music.radio_station',
-        'book',
-        'profile',
-        'product',
-      ]
-    >;
+    type: Schema.Attribute.Enumeration<['website', 'article', 'video.movie']>;
   };
 }
 
 export interface UtilsIconLink extends Struct.ComponentSchema {
   collectionName: 'components_utils_icon_links';
   info: {
-    description: '';
     displayName: 'Icon Link';
   };
   attributes: {
-    alt: Schema.Attribute.String & Schema.Attribute.Required;
-    icon: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    alt: Schema.Attribute.String;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.Required;
     url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -227,12 +176,11 @@ export interface UtilsIconLink extends Struct.ComponentSchema {
 export interface UtilsLink extends Struct.ComponentSchema {
   collectionName: 'components_utils_links';
   info: {
-    description: '';
     displayName: 'Link';
   };
   attributes: {
-    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    isExternal: Schema.Attribute.Boolean;
+    title: Schema.Attribute.String;
     url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -252,13 +200,10 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'components.about-me': ComponentsAboutMe;
       'components.about-me-info': ComponentsAboutMeInfo;
-      'components.about-me-text': ComponentsAboutMeText;
       'components.experience': ComponentsExperience;
       'components.experience-text': ComponentsExperienceText;
       'components.footer': ComponentsFooter;
-      'components.heading': ComponentsHeading;
-      'components.link-array': ComponentsLinkArray;
-      'components.marquee': ComponentsMarquee;
+      'components.hero': ComponentsHero;
       'components.my-info': ComponentsMyInfo;
       'components.skills': ComponentsSkills;
       'components.tech-stack': ComponentsTechStack;

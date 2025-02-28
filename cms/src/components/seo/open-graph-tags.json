@@ -13,7 +13,10 @@
     },
     "image": {
       "allowedTypes": [
-        "images"
+        "images",
+        "files",
+        "videos",
+        "audios"
       ],
       "type": "media",
       "multiple": false
@@ -23,17 +26,7 @@
       "enum": [
         "website",
         "article",
-        "video.movie",
-        "video.episode",
-        "video.tv_show",
-        "video.other",
-        "music.song",
-        "music.album",
-        "music.playlist",
-        "music.radio_station",
-        "book",
-        "profile",
-        "product"
+        "video.movie"
       ]
     }
   }

@@ -4,8 +4,7 @@
   "info": {
     "singularName": "skill",
     "pluralName": "skills",
-    "displayName": "Skill",
-    "description": ""
+    "displayName": "Skill"
   },
   "options": {
     "draftAndPublish": true
@@ -17,55 +16,38 @@
   },
   "attributes": {
     "name": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
       "type": "string",
       "required": true
     },
     "confidenceLevel": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
       "type": "integer",
       "required": true,
-      "max": 100,
-      "min": 1
+      "min": 0,
+      "max": 100
     },
     "comment": {
+      "type": "string",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      },
-      "type": "string"
-    },
-    "icon": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ],
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
       }
     },
+    "icon": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
     "pride": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
       "type": "integer",
-      "min": 0,
-      "max": 100
+      "required": true,
+      "max": 100,
+      "min": 0
     }
   }
 }

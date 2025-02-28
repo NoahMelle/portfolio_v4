@@ -3,123 +3,110 @@ import { HomepageProps, Project, ProjectPage } from "@/lib/models";
 import { NotFoundType } from "@/lib/types";
 
 const apiConfig = {
-    headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + process.env.STRAPI_TOKEN,
-    },
-    method: "POST",
-    url: process.env.BASEURL_API + "/graphql",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    Authorization: "Bearer " + process.env.STRAPI_TOKEN,
+  },
+  method: "POST",
+  url: process.env.BASEURL_API + "/graphql",
 };
 
 export async function getHomepageData(locale: string) {
-    const res = (
-        await axios({
-            ...apiConfig,
-            data: {
-                query: `
+  const res = (
+    await axios({
+      ...apiConfig,
+      data: {
+        query: `
                 query($locale: I18NLocaleCode!) {
-                    homepage(locale: $locale) {
-                        jumpToList {
-                            header
-                            links {
-                                title
-                                url
-                            }
-                        }
-                        hero {
-                            title
-                            subheading
-                            image {
-                                url
-                            }
-                        }
-                        marquee {
-                            text {
-                                value
-                            }
-                        }
-                        aboutMe {
-                            quickInfo {
-                                icon {
-                                    url
-                                }
-                                content
-                                alt
-                            }
-                            image {
-                                url
-                            }
-                            text
-                        }
-                        skills {
-                            skillText
-                            skillsHeading
-                            techStack {
-                                heading
-                                techStackSkills {
-                                    icon {
-                                        url
-                                    }
-                                    name
-                                }
-                            }
-                        }
-                        testimonials {
-                            testimonialHeading
-                        }
-                        experience {
-                            heading
-                            experienceTexts {
-                                heading
-                                content
-                                startingDate
-                                endingDate
-                            }
-                        }
-                    }
+    homepage(locale: $locale) {
+        hero {
+            title
+            subheading
+            image {
+                url
+            }
+        }
+        aboutMe {
+            quickInfo {
+                icon {
+                    url
                 }
+                content
+                alt
+            }
+            image {
+                url
+            }
+            text
+        }
+        skills {
+            skillText
+            skillsHeading
+            techStack {
+                heading
+                techStackSkills {
+                    icon {
+                        url
+                    }
+                    name
+                }
+            }
+        }
+        testimonials {
+            testimonialHeading
+        }
+        experience {
+            heading
+            experienceTexts {
+                heading
+                content
+                startingDate
+                endingDate
+            }
+        }
+    }
+}
+
             `,
-                variables: {
-                    locale,
-                },
-            },
-        })
-    ).data.data.homepage;
-
-    const [globalInfo, skills, testimonials, projects] = await Promise.all([
-        getGlobalInfo(locale),
-        getAllSkills(),
-        getTestimonials(),
-        getProjects(locale),
-    ]);
-
-    const data = new HomepageProps(
-        res.jumpToList,
-        res.hero,
-        res.marquee,
-        res.aboutMe,
-        {
-            ...res.skills,
-            allSkills: skills,
+        variables: {
+          locale,
         },
-        {
-            ...res.testimonials,
-            testimonials,
-        },
-        projects,
-        res.experience,
-        globalInfo
-    );
+      },
+    })
+  ).data.data.homepage;
 
-    return data;
+  const [globalInfo, skills, testimonials, projects] = await Promise.all([
+    getGlobalInfo(locale),
+    getAllSkills(),
+    getTestimonials(),
+    getProjects(locale),
+  ]);
+
+  const data = new HomepageProps(
+    res.hero,
+    res.aboutMe,
+    {
+      ...res.skills,
+      allSkills: skills,
+    },
+    {
+      ...res.testimonials,
+      testimonials,
+    },
+    projects,
+    res.experience,
+    globalInfo
+  );
+
+  return data;
 }
 
 export async function getGlobalInfo(locale: string) {
-    const res = await axios({
-        ...apiConfig,
-        data: {
-            query: `
+  const res = await axios({
+    ...apiConfig,
+    data: {
+      query: `
                 query($locale: I18NLocaleCode) {
                     global(locale: $locale) {
                         myInfo {
@@ -148,26 +135,26 @@ export async function getGlobalInfo(locale: string) {
                     }
                 }
             `,
-            variables: {
-                locale,
-            },
-        },
-    });
+      variables: {
+        locale,
+      },
+    },
+  });
 
-    return res.data.data.global;
+  return res.data.data.global;
 }
 
 export async function getMetadata(locale: string, page: string) {
-    const pages = ["homepage", "projectpage"];
+  const pages = ["homepage", "projectpage"];
 
-    if (!pages.includes(page)) {
-        throw new Error("Invalid page name");
-    }
+  if (!pages.includes(page)) {
+    throw new Error("Invalid page name");
+  }
 
-    const res = await axios({
-        ...apiConfig,
-        data: {
-            query: `
+  const res = await axios({
+    ...apiConfig,
+    data: {
+      query: `
                 query($locale: I18NLocaleCode!) {
                     ${page}(locale: $locale) {
                         metadata {
@@ -177,21 +164,21 @@ export async function getMetadata(locale: string, page: string) {
                     }
                 }
             `,
-            variables: {
-                locale,
-                page,
-            },
-        },
-    });
+      variables: {
+        locale,
+        page,
+      },
+    },
+  });
 
-    return res.data.data[page].metadata;
+  return res.data.data[page].metadata;
 }
 
 export async function getAllSkills() {
-    const res = await axios({
-        ...apiConfig,
-        data: {
-            query: `
+  const res = await axios({
+    ...apiConfig,
+    data: {
+      query: `
                 query Skills($locale: I18NLocaleCode) {
                     skills(locale: $locale, pagination: { limit: 100 }, sort: "pride:desc") {
                         name,
@@ -199,17 +186,17 @@ export async function getAllSkills() {
                     }
                 }
             `,
-        },
-    });
+    },
+  });
 
-    return res.data.data.skills;
+  return res.data.data.skills;
 }
 
 export async function getTestimonials() {
-    const res = await axios({
-        ...apiConfig,
-        data: {
-            query: `
+  const res = await axios({
+    ...apiConfig,
+    data: {
+      query: `
                 query {
                     testimonials {
                         content
@@ -223,18 +210,18 @@ export async function getTestimonials() {
                     }
                 }
             `,
-        },
-    });
+    },
+  });
 
-    return res.data.data.testimonials;
+  return res.data.data.testimonials;
 }
 
 export async function getProjects(locale: string) {
-    return (
-        await axios({
-            ...apiConfig,
-            data: {
-                query: `
+  return (
+    await axios({
+      ...apiConfig,
+      data: {
+        query: `
                 query($locale: I18NLocaleCode!) {
                     projects(locale: $locale, sort: "createdAt:desc") {
                         screenshots {
@@ -255,19 +242,19 @@ export async function getProjects(locale: string) {
                     }
                 }
             `,
-                variables: {
-                    locale,
-                },
-            },
-        })
-    ).data.data.projects;
+        variables: {
+          locale,
+        },
+      },
+    })
+  ).data.data.projects;
 }
 
 export async function getProject(slug: string, locale: string) {
-    const res = await axios({
-        ...apiConfig,
-        data: {
-            query: `
+  const res = await axios({
+    ...apiConfig,
+    data: {
+      query: `
                 query($slug: String!, $locale: I18NLocaleCode) {
                     projects(filters: { slug: {eq:$slug} }, locale: $locale) {
                         screenshots {
@@ -299,31 +286,28 @@ export async function getProject(slug: string, locale: string) {
                     }
                 }
             `,
-            variables: {
-                slug,
-                locale,
-            },
-        },
-    });
+      variables: {
+        slug,
+        locale,
+      },
+    },
+  });
 
-    if (!res.data.data.projects.length) {
-        return null;
-    }
+  if (!res.data.data.projects.length) {
+    return null;
+  }
 
-    return new Project(res.data.data.projects[0]);
+  return new Project(res.data.data.projects[0]);
 }
 
 export async function getProjectPageData(locale: string, slug: string) {
-    const res = (
-        await axios({
-            ...apiConfig,
-            data: {
-                query: `
+  const res = (
+    await axios({
+      ...apiConfig,
+      data: {
+        query: `
                     query($locale: I18NLocaleCode) {
                         projectpage(locale: $locale) {
-                            backgroundImage {
-                                url
-                            }
                             dateHeading
                             technologiesHeading
                             categoriesHeading
@@ -334,35 +318,35 @@ export async function getProjectPageData(locale: string, slug: string) {
                         }
                     }
             `,
-                variables: {
-                    locale,
-                },
-            },
-        })
-    ).data.data.projectpage;
+        variables: {
+          locale,
+        },
+      },
+    })
+  ).data.data.projectpage;
 
-    const project = await getProject(slug, locale);
-    const globalInfo = await getGlobalInfo(locale);
+  const project = await getProject(slug, locale);
+  const globalInfo = await getGlobalInfo(locale);
 
-    if (!project) {
-        return null;
-    }
+  if (!project) {
+    return null;
+  }
 
-    return new ProjectPage(
-        res.dateHeading,
-        res.technologiesHeading,
-        res.categoriesHeading,
-        project,
-        res.metadata,
-        globalInfo
-    );
+  return new ProjectPage(
+    res.dateHeading,
+    res.technologiesHeading,
+    res.categoriesHeading,
+    project,
+    res.metadata,
+    globalInfo
+  );
 }
 
 export async function getHomepageLinks(locale: string) {
-    const res = await axios({
-        ...apiConfig,
-        data: {
-            query: `
+  const res = await axios({
+    ...apiConfig,
+    data: {
+      query: `
                 query($locale: I18NLocaleCode!) {
                     homepage(locale: $locale) {
                         jumpToList {
@@ -374,20 +358,20 @@ export async function getHomepageLinks(locale: string) {
                     }
                 }
             `,
-            variables: {
-                locale,
-            },
-        },
-    });
+      variables: {
+        locale,
+      },
+    },
+  });
 
-    return res.data.data.homepage.jumpToList.links;
+  return res.data.data.homepage.jumpToList.links;
 }
 
 export async function getNotFoundData(locale: string): Promise<NotFoundType> {
-    const res = await axios({
-        ...apiConfig,
-        data: {
-            query: `
+  const res = await axios({
+    ...apiConfig,
+    data: {
+      query: `
                 query($locale: I18NLocaleCode!) {
                     notFound(locale: $locale) {
                         heading
@@ -398,11 +382,11 @@ export async function getNotFoundData(locale: string): Promise<NotFoundType> {
                     }
                 }
             `,
-            variables: {
-                locale,
-            },
-        },
-    });
+      variables: {
+        locale,
+      },
+    },
+  });
 
-    return res.data.data.notFound;
+  return res.data.data.notFound;
 }

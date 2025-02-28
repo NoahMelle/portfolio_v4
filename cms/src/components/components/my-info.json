@@ -1,16 +1,18 @@
 {
   "collectionName": "components_components_my_infos",
   "info": {
-    "displayName": "My Info",
-    "description": ""
+    "displayName": "My Info"
   },
   "options": {},
   "attributes": {
     "dateOfBirth": {
-      "type": "date"
+      "type": "date",
+      "required": true,
+      "default": "2008-11-30"
     },
     "startedProgramming": {
-      "type": "date"
+      "type": "date",
+      "required": true
     },
     "socialLinks": {
       "type": "component",
