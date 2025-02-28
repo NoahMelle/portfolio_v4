@@ -15,8 +15,6 @@ export default function Testimonials({
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  console.log(testimonials.testimonials[0]);
-
   React.useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
