@@ -1,7 +1,5 @@
 import {
-  JumpToListType,
   HeroType,
-  MarqueeType,
   AboutMeType,
   SocialLink,
   SkillsSectionType,

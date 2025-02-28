@@ -9,6 +9,7 @@ import GSAPCursor from "@/components/reusable/GSAPCursor";
 const authorFont = localFont({ src: "../fonts/satoshi.ttf" });
 
 export const metadata: Metadata = {
+    metadataBase: process.env.NODE_ENV === "production" ? new URL("https://noeycodes.com") : undefined,
     title: "Noey's Portfolio",
     description: "...",
 };
