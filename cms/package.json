@@ -1,5 +1,5 @@
 {
-  "name": "my-project",
+  "name": "cms",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -11,18 +11,15 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.8.1",
-    "@strapi/plugin-color-picker": "^5.1.0",
-    "@strapi/plugin-graphql": "5.8.1",
-    "@strapi/plugin-users-permissions": "5.8.1",
-    "@strapi/strapi": "5.8.1",
-    "nanoid": "^3.3.8",
-    "pg": "^8.8.0",
+    "@strapi/plugin-cloud": "5.10.4",
+    "@strapi/plugin-graphql": "^5.10.4",
+    "@strapi/plugin-users-permissions": "5.10.4",
+    "@strapi/strapi": "5.10.4",
+    "mysql2": "3.9.8",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0",
-    "vite": "^5.4.12"
+    "styled-components": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -31,10 +28,10 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=18.0.0 <=20.x.x",
+    "node": ">=18.0.0 <=22.x.x",
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "0be059e8-ec92-4d6a-9212-2ed39d85ae97"
+    "uuid": "948305e0-c8f9-4842-80af-7d93ea706e03"
   }
 }

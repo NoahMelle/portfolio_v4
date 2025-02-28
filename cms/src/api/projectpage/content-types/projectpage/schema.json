@@ -4,8 +4,7 @@
   "info": {
     "singularName": "projectpage",
     "pluralName": "projectpages",
-    "displayName": "Projectpage",
-    "description": ""
+    "displayName": "Projectpage"
   },
   "options": {
     "draftAndPublish": true
@@ -16,52 +15,36 @@
     }
   },
   "attributes": {
-    "backgroundImage": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files"
-      ],
+    "categoriesHeading": {
+      "type": "string",
+      "required": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       }
     },
-    "categoriesHeading": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "string"
-    },
     "dateHeading": {
+      "type": "string",
+      "required": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      },
-      "type": "string"
+      }
     },
     "technologiesHeading": {
+      "type": "string",
+      "required": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      },
-      "type": "string"
+      }
     },
     "metadata": {
       "type": "component",
       "repeatable": false,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
       "component": "seo.metadata"
     }
   }

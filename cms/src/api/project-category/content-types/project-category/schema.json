@@ -4,7 +4,8 @@
   "info": {
     "singularName": "project-category",
     "pluralName": "project-categories",
-    "displayName": "Project Category"
+    "displayName": "Project Category",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,13 +14,8 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
-    },
-    "projects": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::project.project",
-      "inversedBy": "categories"
+      "required": true,
+      "pluginOptions": {}
     }
   }
 }

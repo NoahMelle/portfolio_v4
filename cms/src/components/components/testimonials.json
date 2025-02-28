@@ -6,7 +6,8 @@
   "options": {},
   "attributes": {
     "testimonialHeading": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }

@@ -1,22 +1,19 @@
 {
   "collectionName": "components_utils_links",
   "info": {
-    "displayName": "Link",
-    "description": ""
+    "displayName": "Link"
   },
   "options": {},
   "attributes": {
     "title": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "url": {
       "type": "string",
       "required": true
     },
     "isExternal": {
-      "type": "boolean",
-      "default": false
+      "type": "boolean"
     }
   }
 }

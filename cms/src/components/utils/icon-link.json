@@ -1,8 +1,7 @@
 {
   "collectionName": "components_utils_icon_links",
   "info": {
-    "displayName": "Icon Link",
-    "description": ""
+    "displayName": "Icon Link"
   },
   "options": {},
   "attributes": {
@@ -12,19 +11,21 @@
     },
     "isExternal": {
       "type": "boolean",
-      "default": true
+      "required": true
     },
     "icon": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
       "type": "media",
       "multiple": false,
-      "required": true,
-      "allowedTypes": [
-        "images"
-      ]
+      "required": true
     },
     "alt": {
-      "type": "string",
-      "required": true
+      "type": "string"
     }
   }
 }

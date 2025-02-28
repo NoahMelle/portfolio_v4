@@ -1,32 +1,33 @@
 {
   "collectionName": "components_components_about_mes",
   "info": {
-    "displayName": "About Me",
-    "description": ""
+    "displayName": "About Me"
   },
   "options": {},
   "attributes": {
+    "text": {
+      "type": "richtext"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "quickInfo": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.about-me-info"
+    },
     "iconLinks": {
       "type": "component",
       "repeatable": true,
       "component": "utils.icon-link"
-    },
-    "image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "text": {
-      "type": "richtext"
-    },
-    "quickInfo": {
-      "displayName": "About Me Info",
-      "type": "component",
-      "repeatable": true,
-      "component": "components.about-me-info"
     }
   }
 }

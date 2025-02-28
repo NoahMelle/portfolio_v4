@@ -6,17 +6,17 @@
   },
   "options": {},
   "attributes": {
-    "skillText": {
-      "type": "richtext",
+    "skillsHeading": {
+      "type": "string",
       "required": true
+    },
+    "skillText": {
+      "type": "richtext"
     },
     "techStack": {
       "type": "component",
       "repeatable": false,
       "component": "components.tech-stack"
-    },
-    "skillsHeading": {
-      "type": "string"
     }
   }
 }

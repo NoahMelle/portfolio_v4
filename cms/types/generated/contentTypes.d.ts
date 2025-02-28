@@ -390,6 +390,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     footer: Schema.Attribute.Component<'components.footer', false> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -398,6 +399,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::global.global'>;
     myInfo: Schema.Attribute.Component<'components.my-info', false> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -428,6 +430,7 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
   };
   attributes: {
     aboutMe: Schema.Attribute.Component<'components.about-me', false> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -437,18 +440,14 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     experience: Schema.Attribute.Component<'components.experience', false> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }>;
-    hero: Schema.Attribute.Component<'components.heading', false> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    jumpToList: Schema.Attribute.Component<'components.link-array', false> &
+    hero: Schema.Attribute.Component<'components.hero', false> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -459,13 +458,8 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
       'oneToMany',
       'api::homepage.homepage'
     >;
-    marquee: Schema.Attribute.Component<'components.marquee', false> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
     metadata: Schema.Attribute.Component<'seo.metadata', false> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -473,12 +467,14 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
       }>;
     publishedAt: Schema.Attribute.DateTime;
     skills: Schema.Attribute.Component<'components.skills', false> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }>;
     testimonials: Schema.Attribute.Component<'components.testimonials', false> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -510,6 +506,7 @@ export interface ApiNotFoundNotFound extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     heading: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -522,6 +519,7 @@ export interface ApiNotFoundNotFound extends Struct.SingleTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     toHomepageButton: Schema.Attribute.Component<'utils.link', false> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -537,6 +535,7 @@ export interface ApiProjectCategoryProjectCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'project_categories';
   info: {
+    description: '';
     displayName: 'Project Category';
     pluralName: 'project-categories';
     singularName: 'project-category';
@@ -555,7 +554,6 @@ export interface ApiProjectCategoryProjectCategory
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    projects: Schema.Attribute.Relation<'manyToMany', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -584,7 +582,6 @@ export interface ApiProjectTagProjectTag extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    projects: Schema.Attribute.Relation<'manyToMany', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -614,7 +611,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'api::theme-color.theme-color'
     >;
     categories: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::project-category.project-category'
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -626,35 +623,26 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    frontPhoto: Schema.Attribute.Media<'images'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
+    frontPhoto: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::project.project'
     >;
     publishedAt: Schema.Attribute.DateTime;
-    screenshots: Schema.Attribute.Media<'images', true> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    screenshots: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     skills: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
     slug: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Schema.Attribute.Unique;
     tags: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::project-tag.project-tag'
     >;
     title: Schema.Attribute.String &
@@ -670,7 +658,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     url: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: true;
+          localized: false;
         };
       }>;
   };
@@ -679,7 +667,6 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
 export interface ApiProjectpageProjectpage extends Struct.SingleTypeSchema {
   collectionName: 'projectpages';
   info: {
-    description: '';
     displayName: 'Projectpage';
     pluralName: 'projectpages';
     singularName: 'projectpage';
@@ -693,13 +680,8 @@ export interface ApiProjectpageProjectpage extends Struct.SingleTypeSchema {
     };
   };
   attributes: {
-    backgroundImage: Schema.Attribute.Media<'images' | 'files'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
     categoriesHeading: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -709,6 +691,7 @@ export interface ApiProjectpageProjectpage extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     dateHeading: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -719,14 +702,10 @@ export interface ApiProjectpageProjectpage extends Struct.SingleTypeSchema {
       'oneToMany',
       'api::projectpage.projectpage'
     >;
-    metadata: Schema.Attribute.Component<'seo.metadata', false> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    metadata: Schema.Attribute.Component<'seo.metadata', false>;
     publishedAt: Schema.Attribute.DateTime;
     technologiesHeading: Schema.Attribute.String &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -741,7 +720,6 @@ export interface ApiProjectpageProjectpage extends Struct.SingleTypeSchema {
 export interface ApiSkillSkill extends Struct.CollectionTypeSchema {
   collectionName: 'skills';
   info: {
-    description: '';
     displayName: 'Skill';
     pluralName: 'skills';
     singularName: 'skill';
@@ -763,42 +741,22 @@ export interface ApiSkillSkill extends Struct.CollectionTypeSchema {
       }>;
     confidenceLevel: Schema.Attribute.Integer &
       Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }> &
       Schema.Attribute.SetMinMax<
         {
           max: 100;
-          min: 1;
+          min: 0;
         },
         number
       >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    icon: Schema.Attribute.Media<'images'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::skill.skill'>;
-    name: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
     pride: Schema.Attribute.Integer &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }> &
+      Schema.Attribute.Required &
       Schema.Attribute.SetMinMax<
         {
           max: 100;
@@ -873,7 +831,8 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    content: Schema.Attribute.RichText &
+    content: Schema.Attribute.Text &
+      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -882,12 +841,8 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    image: Schema.Attribute.Media<'images'> &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -897,7 +852,7 @@ export interface ApiTestimonialTestimonial extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
-          localized: false;
+          localized: true;
         };
       }>;
     publishedAt: Schema.Attribute.DateTime;
@@ -922,8 +877,7 @@ export interface ApiThemeColorThemeColor extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    color: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
+    color: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

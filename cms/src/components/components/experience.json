@@ -1,13 +1,13 @@
 {
   "collectionName": "components_components_experiences",
   "info": {
-    "displayName": "Experience",
-    "icon": ""
+    "displayName": "Experience"
   },
   "options": {},
   "attributes": {
     "heading": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "experienceTexts": {
       "type": "component",

@@ -1,13 +1,13 @@
 {
   "collectionName": "components_components_footers",
   "info": {
-    "displayName": "Footer",
-    "description": ""
+    "displayName": "Footer"
   },
   "options": {},
   "attributes": {
     "cta": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "buttons": {
       "type": "component",

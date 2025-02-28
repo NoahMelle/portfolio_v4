@@ -1,20 +1,24 @@
 {
   "collectionName": "components_components_about_me_infos",
   "info": {
-    "displayName": "About Me Info",
-    "icon": ""
+    "displayName": "About Me Info"
   },
   "options": {},
   "attributes": {
     "icon": {
       "allowedTypes": [
-        "images"
+        "images",
+        "files",
+        "videos",
+        "audios"
       ],
       "type": "media",
-      "multiple": false
+      "multiple": false,
+      "required": true
     },
     "content": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "alt": {
       "type": "string"
