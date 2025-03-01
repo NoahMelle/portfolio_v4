@@ -13,8 +13,8 @@ export default {
         "4xl": "clamp(2.5rem, 9vw, 9rem)",
       },
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "#eef2f3",
+        foreground: "#1a1b1b",
         white: "#eef2f3",
         card: {
           DEFAULT: "hsl(var(--card))",
