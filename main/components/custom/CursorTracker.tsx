@@ -119,8 +119,6 @@ export default function CursorTracker({ wsUrl }: { wsUrl: string }) {
         const x = (event.clientX / bodyWidth) * 100;
         const y = ((event.clientY + scrollY) / bodyHeight) * 100;
 
-        console.table({ x, y });
-
         setCursor({ x, y });
       } else {
         if (wsRef.current?.readyState === WebSocket.OPEN && isAllowed.current) {
