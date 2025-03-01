@@ -4,57 +4,15 @@ import React, { useRef } from "react";
 import styles from "@/styles/home.module.scss";
 import Markdown from "react-markdown";
 import { TestimonialsSectionType } from "@/lib/types";
-import gsap from "gsap";
 import Image from "next/image";
-import ScrollTrigger from "gsap/ScrollTrigger";
 
 export default function Testimonials({
   testimonials,
 }: {
   testimonials: TestimonialsSectionType;
 }) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  React.useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const sectionScroll = document.querySelector(".section-scroll");
-
-    const scroller =
-      sectionScroll?.scrollHeight &&
-      sectionScroll.scrollHeight > document.body.scrollHeight
-        ? sectionScroll
-        : document.body;
-
-    const animation = gsap.fromTo(
-      ".stagger",
-      {
-        y: 100,
-        opacity: 0,
-      },
-      {
-        y: 0,
-        duration: 0.5,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: ".testimonials",
-          start: "top bottom",
-          scroller: scroller,
-        },
-        stagger: 0.2,
-      }
-    );
-
-    return () => {
-      if (animation.scrollTrigger) {
-        animation.scrollTrigger.kill();
-      }
-      animation.kill();
-    };
-  }, []);
-
   return (
-    <div ref={containerRef}>
+    <div>
       <h2 className={styles.sectionHeading}>
         {testimonials.testimonialHeading}
       </h2>

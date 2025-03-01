@@ -3,7 +3,6 @@ import { getProjectPageData } from "@/data/fetcher";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
 import styles from "@/styles/project.module.scss";
-import PopupStagger from "@/components/reusable/PopupStagger";
 import {
   Carousel,
   CarouselContent,
@@ -112,14 +111,12 @@ export default async function Project(props: {
                     {projectPageData.headings.categories}
                   </h2>
                   <div className="flex gap-2 md:flex-col flex-wrap">
-                    <PopupStagger containerStyles="flex gap-2 md:flex-col flex-wrap">
-                      {projectPageData.project.categories &&
-                        projectPageData.project.categories.map((category) => (
-                          <p className={styles.category} key={category.name}>
-                            {category.name}
-                          </p>
-                        ))}
-                    </PopupStagger>
+                    {projectPageData.project.categories &&
+                      projectPageData.project.categories.map((category) => (
+                        <p className={styles.category} key={category.name}>
+                          {category.name}
+                        </p>
+                      ))}
                   </div>
                 </div>
                 <div className="md:contents flex flex-col gap-2">

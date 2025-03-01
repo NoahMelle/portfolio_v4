@@ -55,10 +55,6 @@
     line-height: 90%;
     text-align: center;
     position: relative;
-    span {
-      z-index: 1;
-      position: relative;
-    }
     &::after {
       position: absolute;
       content: attr(data-content);
@@ -98,6 +94,13 @@
   }
 }
 
+.hideScrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
+}
+
 .section {
   min-height: 100vh;
   position: relative;
@@ -105,7 +108,6 @@
   background-color: variables.$black;
   color: white;
   padding-bottom: 3rem;
-  scroll-snap-align: start;
   background-position: center;
   padding: clamp(1rem, 5vw, 5rem);
   .sectionTop {
@@ -225,18 +227,7 @@
 }
 
 .sectionContainer {
-  height: 100dvh;
   overflow-y: scroll;
-}
-
-@media (min-width: variables.$tabletBreakpoint) {
-  .sectionContainer {
-    scroll-snap-type: y mandatory;
-  }
-  .invisibleDiv {
-    margin-top: 0;
-    scroll-snap-align: start;
-  }
 }
 
 .invisibleDiv {
@@ -344,7 +335,6 @@
       justify-content: flex-end;
       align-items: center;
       gap: 1rem;
-      opacity: 0;
       @for $i from 1 through 20 {
         &:nth-child(#{$i}) {
           grid-row: $i;

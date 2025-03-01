@@ -94,11 +94,12 @@ export default async function Home() {
           <Projects projects={homepageData.projects} />
         </Section>
 
-        <div className="snap-start">
+        <div>
           <Section
             isLast={true}
             index={5}
             link={{ title: homepageData.experience.heading, url: "experience" }}
+            className={styles.noAlign}
           >
             <Experience experience={homepageData.experience} />
           </Section>
