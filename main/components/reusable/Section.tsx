@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "@/styles/home.module.scss";
 
 export default function Section({
   children,
@@ -16,7 +15,7 @@ export default function Section({
 }) {
   return (
     <div
-      className={`md:p-12 p-8 overflow-x-hidden min-h-screen relative [&:nth-child(odd)]:bg-background [&:nth-child(odd)]:text-foreground bg-black text-white pb-12 ${className}`}
+      className={`md:p-12 p-8 overflow-x-hidden min-h-screen relative [&:nth-child(odd)]:bg-background [&:nth-child(odd)]:text-foreground bg-[#0F1017] text-white pb-12 ${className}`}
       id={link.url.replace("#", "")}
       style={{
         scrollSnapAlign: isLast ? "none" : "start",

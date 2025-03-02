@@ -1,6 +1,5 @@
 import { getHomepageData, getMetadata } from "@/data/fetcher";
 import { getLocale } from "next-intl/server";
-import styles from "@/styles/home.module.scss";
 import Section from "@/components/reusable/Section";
 import AboutMe from "@/components/custom/AboutMe";
 import Skills from "@/components/custom/Skills";

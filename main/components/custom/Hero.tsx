@@ -1,10 +1,9 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HeroType } from "@/lib/types";
-import styles from "@/styles/home.module.scss";
 import Image from "next/image";
-import { motion, Variants } from "motion/react";
+import { motion, useScroll, Variants } from "motion/react";
 import WavyText from "../reusable/WavyText";
 
 const imageVariants: Variants = {
@@ -46,6 +45,57 @@ const circleVariants: Variants = {
 };
 
 export default function Hero({ heroData }: { heroData: HeroType }) {
+  const [mousePos, setMousePos] = useState<
+    { x: number; y: number } | undefined
+  >(undefined);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [hasMouseLeftHero, setHasMouseLeftHero] = useState();
+
+  const handleMouseMove = (e: MouseEvent) => {
+    const newX = e.clientX + window.scrollX;
+    const newY = e.clientY + window.scrollY;
+
+    setMousePos({
+      x: newX,
+      y: newY,
+    });
+  };
+
+  useEffect(() => {
+    if (!heroRef.current) return;
+
+    heroRef.current.addEventListener("mouseenter", addMouseEventListener);
+    heroRef.current.addEventListener("mouseleave", removeMouseEventListener);
+
+    if (heroRef.current.matches(":hover")) addMouseEventListener();
+
+    return () => {
+      if (!heroRef.current) return;
+
+      removeMouseEventListener();
+
+      heroRef.current.removeEventListener("mouseenter", addMouseEventListener);
+      heroRef.current.removeEventListener(
+        "mouseleave",
+        removeMouseEventListener
+      );
+    };
+  }, []);
+
+  useEffect(() => {}, []);
+
+  function removeMouseEventListener() {
+    if (!heroRef.current) return;
+    heroRef.current.removeEventListener("mousemove", handleMouseMove);
+
+    setMousePos(undefined);
+  }
+
+  function addMouseEventListener() {
+    if (!heroRef.current) return;
+    heroRef.current.addEventListener("mousemove", handleMouseMove);
+  }
+
   return (
     <>
       <motion.header
@@ -53,36 +103,55 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
         initial="offscreen"
         whileInView="onscreen"
         viewport={{ amount: 0.6 }}
+        ref={heroRef}
       >
+        {mousePos && (
+          <motion.div
+            className="absolute z-10 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            animate={{ left: mousePos.x, top: mousePos.y }}
+            transition={{
+              type: "tween",
+              duration: 0.2,
+            }}
+          >
+            <Image
+              src={"/img/halftone-744404.svg"}
+              alt="Halftone dot"
+              width={200}
+              height={200}
+            />
+          </motion.div>
+        )}
         <motion.div
           variants={imageVariants}
-          className="rounded-full max-w-[90%] left-12 top-12 md:absolute grayscale aspect-square"
+          className="rounded-full max-w-[90%] left-12 top-12 md:absolute aspect-square"
         >
           <Image
             src={heroData.image.url}
             alt="Hero image"
             height={400}
             width={400}
-            className="rounded-full"
+            className="rounded-full grayscale hover:grayscale-0 transition-all duration-500"
+            draggable={false}
           />
         </motion.div>
-        <div className="absolute flex-col items-end bottom-12 right-12 hidden md:flex">
+        <div className="absolute flex-col items-end bottom-12 right-12 hidden md:flex pointer-events-none">
           <motion.div
             variants={circleVariants}
-            className="aspect-square rounded-full border-2 border-black w-[100px] hero-circle"
+            className="aspect-square rounded-full border-2 border-foreground w-[100px] hero-circle"
           ></motion.div>
           <motion.div
-            className="aspect-square rounded-full border-2 border-black w-[350px] hero-circle"
+            className="aspect-square rounded-full border-2 border-foreground w-[350px] hero-circle"
             variants={circleVariants}
           ></motion.div>
         </div>
-        <div className="flex flex-col items-center justify-center gap-4">
+        <div className="flex flex-col items-center justify-center gap-4 pointer-events-none">
           <WavyText
             text={heroData.title}
-            className="text-4xl uppercase text-center font-bold z-10 leading-[95%] text-glow relative"
+            className="text-5xl uppercase text-center font-bold z-10 leading-[95%] text-glow relative max-w-[1000px]"
             data-content={heroData.title}
           />
-          <h2 className="font-medium leading-snug text-xl text-center max-w-[400px]">
+          <h2 className="font-medium leading-snug text-xl text-center max-w-[400px] relative z-10">
             {heroData.subheading}
           </h2>
         </div>

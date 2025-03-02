@@ -45,7 +45,7 @@ export default async function Project(props: {
               <CarouselContent>
                 {projectPageData.project.screenshots.map((image) => (
                   <CarouselItem key={image.url}>
-                    <div className="aspect-video border-2 border-black/5 rounded-lg">
+                    <div className="aspect-video border-2 border-foreground/5 rounded-lg">
                       <Image
                         src={image.url}
                         alt="Project Screenshot"
@@ -86,7 +86,7 @@ export default async function Project(props: {
                   <Link
                     href={projectPageData.project.url}
                     target="_blank"
-                    className="flex gap-2 bg-black text-white rounded-full p-3 items-center"
+                    className="flex gap-2 bg-foreground text-white rounded-full p-3 items-center"
                   >
                     <ArrowUpRight />
                     Visit Site

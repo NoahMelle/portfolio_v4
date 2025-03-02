@@ -10,12 +10,27 @@ export default {
   theme: {
     extend: {
       fontSize: {
-        "4xl": "clamp(2.5rem, 9vw, 9rem)",
+        "5xl": "clamp(2.5rem, 9vw, 9rem)",
+        "4xl": "clamp(3rem, 5vw, 4rem)",
       },
       colors: {
         background: "#eef2f3",
-        foreground: "#1a1b1b",
+        foreground: "#0F1017",
         white: "#eef2f3",
+        "navy-blue": {
+          DEFAULT: "#000080",
+          50: "#0000CC",
+          100: "#0000BD",
+          200: "#00009F",
+          300: "#000080",
+          400: "#000071",
+          500: "#000061",
+          600: "#000052",
+          700: "#000043",
+          800: "#000034",
+          900: "#000024",
+          950: "#00001D",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

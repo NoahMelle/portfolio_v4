@@ -3,7 +3,6 @@
 import React from "react";
 import { SkillsSectionType } from "@/lib/types";
 import ReactMarkdown from "react-markdown";
-import styles from "@/styles/home.module.scss";
 import Image from "next/image";
 import { SkillType } from "@/lib/types";
 import {
@@ -58,11 +57,19 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
       <div className={`flex flex-col md:flex-row gap-8 md:gap-16`}>
         <div className="basis-full">
           <div className="max-w-[600px] flex flex-col gap-8 md:gap-16">
-            <div className="text-lg">
+            <motion.div
+              className="text-lg"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ amount: 0.2 }}
+              transition={{
+                duration: 0.4,
+              }}
+            >
               <ReactMarkdown components={{ a: LinkRenderer }}>
                 {skills.skillText}
               </ReactMarkdown>
-            </div>
+            </motion.div>
             <div className={`flex flex-col gap-4`}>
               <h3 className="text-xl font-semibold">
                 {skills.techStack.heading}
@@ -117,9 +124,9 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                   <div className="flex justify-end">
                     <div>{skill?.name ?? ""}</div>
                   </div>
-                  <div className={`h-7 border-[1px] border-foreground`}>
+                  <div className={`h-7 border-[1px] border-navy-blue-800`}>
                     <motion.div
-                      className="h-full bg-foreground"
+                      className="h-full bg-navy-blue-800"
                       variants={{
                         hidden: { width: 0 },
                         visible: { width: `${skill?.confidenceLevel ?? 0}%` },
@@ -155,7 +162,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                   <div
                     className={`h-[6px] basis-[6px] transition-all ${
                       currentSkillPage === i ? "grow" : ""
-                    } bg-foreground`}
+                    } bg-navy-blue-800`}
                     key={i}
                   ></div>
                 ))}

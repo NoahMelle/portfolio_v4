@@ -2,7 +2,6 @@
 
 import React, { useRef } from "react";
 import { ExperienceType } from "@/lib/types";
-import styles from "@/styles/home.module.scss";
 import { motion, useScroll, Variants } from "motion/react";
 
 export default function Experience({

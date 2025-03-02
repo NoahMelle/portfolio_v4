@@ -12,7 +12,7 @@ export default function Testimonials({
 }) {
   return (
     <div>
-      <div className="grid gap-4 lg:grid-cols-4 md:grid-cols-2 grid-cols-1">
+      <div className="grid gap-4 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1">
         {testimonials.testimonials.map((testimonial, i) => (
           <div
             key={i}

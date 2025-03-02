@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { AboutMeType } from "@/lib/types";
-import styles from "@/styles/home.module.scss";
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { motion, Variants } from "motion/react";
@@ -87,7 +86,7 @@ export default function AboutMe({ aboutMe }: { aboutMe: AboutMeType }) {
               width={0}
               height={0}
               alt="Profile Picture"
-              className="w-full h-full object-cover grayscale aspect-[3/1] lg:aspect-auto"
+              className="w-full h-full object-cover grayscale aspect-[3/1] lg:aspect-auto hover:grayscale-0 transition-all duration-500"
               sizes="100vw"
             />
           </div>
