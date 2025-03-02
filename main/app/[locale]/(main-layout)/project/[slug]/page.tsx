@@ -3,7 +3,6 @@ import { getProjectPageData } from "@/data/fetcher";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
 import styles from "@/styles/project.module.scss";
-import PopupStagger from "@/components/reusable/PopupStagger";
 import {
   Carousel,
   CarouselContent,
@@ -39,14 +38,14 @@ export default async function Project(props: {
 
   return (
     <>
-      <div className={`${styles.projectPage} mb-12`}>
+      <div className="mb-12 text-foreground w-full min-h-screen p-8 pt-20">
         <div className="max-w-[1000px] mx-auto flex flex-col gap-10">
           <div className="relative">
             <Carousel>
               <CarouselContent>
                 {projectPageData.project.screenshots.map((image) => (
                   <CarouselItem key={image.url}>
-                    <div className="aspect-video border-2 border-black/5 rounded-lg">
+                    <div className="aspect-video border-2 border-foreground/5 rounded-lg">
                       <Image
                         src={image.url}
                         alt="Project Screenshot"
@@ -65,9 +64,11 @@ export default async function Project(props: {
                 <CarouselNext />
               </div>
             </Carousel>
-            <div className={styles.blur}>
+            <div
+              className={`blur-[100px] brightness-200 absolute opacity-70 h-full w-full left-0 top-0 scale-90 -z-10`}
+            >
               <div
-                className={styles.blob}
+                className="h-full w-full"
                 style={{
                   backgroundColor:
                     projectPageData.project.backgroundColor.color,
@@ -78,14 +79,14 @@ export default async function Project(props: {
           <div className="flex flex-col gap-12">
             <div className="flex flex-col gap-4">
               <div className="flex justify-between items-end">
-                <h1 className="text-4xl font-medium uppercase leading-[100%]">
+                <h1 className="text-3xl font-medium uppercase leading-[100%]">
                   {projectPageData.project.title}
                 </h1>
                 {projectPageData.project.url && (
                   <Link
                     href={projectPageData.project.url}
                     target="_blank"
-                    className="flex gap-2 bg-black text-white rounded-full p-3 items-center"
+                    className="flex gap-2 bg-foreground text-white rounded-full p-3 items-center"
                   >
                     <ArrowUpRight />
                     Visit Site
@@ -112,14 +113,15 @@ export default async function Project(props: {
                     {projectPageData.headings.categories}
                   </h2>
                   <div className="flex gap-2 md:flex-col flex-wrap">
-                    <PopupStagger containerStyles="flex gap-2 md:flex-col flex-wrap">
-                      {projectPageData.project.categories &&
-                        projectPageData.project.categories.map((category) => (
-                          <p className={styles.category} key={category.name}>
-                            {category.name}
-                          </p>
-                        ))}
-                    </PopupStagger>
+                    {projectPageData.project.categories &&
+                      projectPageData.project.categories.map((category) => (
+                        <p
+                          className="w-fit py-1 px-4 border-foreground/50 border-2 rounded-full"
+                          key={category.name}
+                        >
+                          {category.name}
+                        </p>
+                      ))}
                   </div>
                 </div>
                 <div className="md:contents flex flex-col gap-2">

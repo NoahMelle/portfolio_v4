@@ -1,141 +1,91 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { ExperienceType } from "@/lib/types";
-import styles from "@/styles/home.module.scss";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { motion, useScroll, Variants } from "motion/react";
 
 export default function Experience({
-    experience,
+  experience,
 }: {
-    experience: ExperienceType;
+  experience: ExperienceType;
 }) {
-    const containerRef = React.useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    React.useLayoutEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"],
+  });
 
-        const sectionScroll = document.querySelector(".section-scroll");
-        const STAGGER = 0.5;
+  const rightExperienceItemVariants: Variants = {
+    onscreen: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 15,
+        bounce: 0.4,
+      },
+    },
+    offscreen: {
+      x: "100%",
+      opacity: 0,
+    },
+  };
 
-        const scroller =
-            sectionScroll?.scrollHeight &&
-            sectionScroll.scrollHeight > document.body.scrollHeight
-                ? sectionScroll
-                : document.body;
+  const leftExperienceItemVariants: Variants = {
+    ...rightExperienceItemVariants,
+    offscreen: {
+      ...rightExperienceItemVariants.offscreen,
+      x: "-100%",
+    },
+  };
 
-        // Batch animation for stagger-left elements
-        ScrollTrigger.batch(".stagger-left", {
-            onEnter: (batch) => {
-                gsap.fromTo(
-                    batch,
-                    { x: 50, opacity: 0 },
-                    {
-                        x: 0,
-                        opacity: 1,
-                        duration: STAGGER,
-                        stagger: 0.2,
-                        ease: "power1.inOut",
-                    }
-                );
-            },
-            onLeaveBack: (batch) => {
-                gsap.to(batch, {
-                    x: 50,
-                    opacity: 0,
-                    duration: STAGGER,
-                    stagger: 0.2,
-                    ease: "power1.out",
-                });
-            },
-            start: "top center",
-            scroller: scroller,
-        });
-
-        // Batch animation for stagger-right elements
-        ScrollTrigger.batch(".stagger-right", {
-            onEnter: (batch) => {
-                gsap.fromTo(
-                    batch,
-                    { x: -50, opacity: 0 },
-                    {
-                        x: 0,
-                        opacity: 1,
-                        duration: STAGGER,
-                        stagger: 0.2,
-                        ease: "power1.out",
-                    }
-                );
-            },
-            onLeaveBack: (batch) => {
-                gsap.to(batch, {
-                    x: -50,
-                    opacity: 0,
-                    duration: STAGGER,
-                    stagger: 0.2,
-                    ease: "power1.out",
-                });
-            },
-            start: "top center",
-            scroller: scroller,
-        });
-
-        const revealSeparator = gsap.fromTo(
-            ".separator",
-            {
-                scaleY: 0, // Start with scaleY 0 (invisible)
-            },
-            {
-                scaleY: 1, // End with scaleY 1 (fully revealed)
-                transformOrigin: "top", // Make the scale happen from the top
-                ease: "linear", 
-                scrollTrigger: {
-                    trigger: ".experiences", // The element to trigger the animation
-                    start: "top center", // When the top of the trigger element hits the top of the viewport
-                    end: "bottom center",
-                    scroller: scroller,
-                    scrub: 1, // Delay the animation by 0.5 seconds to sync with scroll
-                },
-            }
-        );
-
-        return () => {
-            ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-            revealSeparator.kill();
-        };
-    }, []);
-
-    return (
-        <div className={`${styles.experience}`} ref={containerRef}>
-            <div
-                className={`${styles.experienceTimeline} experiences`}
-                style={{
-                    gridTemplateRows: `repeat(${experience.experienceTexts.length}, auto)`,
-                }}
+  return (
+    <div className={`py-24`}>
+      <div
+        className={`grid grid-cols-[1px_1fr] md:grid-cols-[1fr_1px_1fr] gap-8 w-fit items-center mx-auto experiences`}
+        style={{
+          gridTemplateRows: `repeat(${experience.experienceTexts.length}, auto)`,
+        }}
+        ref={containerRef}
+      >
+        {experience.experienceTexts.map((experienceText, index) => (
+          <motion.div
+            whileInView="onscreen"
+            initial="offscreen"
+            viewport={{ once: true, margin: "0px 0px -50% 0px", amount: 0 }}
+            className={`col-[2] row-auto md:col-[1] md:[&:nth-child(odd)]:col-[3]`}
+            key={index}
+            style={{ gridRow: index + 1 }}
+          >
+            <motion.div
+              variants={
+                index % 2 == 0
+                  ? rightExperienceItemVariants
+                  : leftExperienceItemVariants
+              }
+              className={`flex flex-col items-start md:flex-row flex-end md:items-center gap-4 [&:nth-child(odd)] ${
+                index % 2 == 0 ? "md:flex-row-reverse" : ""
+              }`}
             >
-                {experience.experienceTexts.map((experienceText, index) => (
-                    <div
-                        className={`${styles.experienceItem} experience-item ${
-                            index % 2 === 0 ? "stagger-left" : "stagger-right"
-                        }`}
-                        key={index}
-                    >
-                        <p className={styles.experienceDate}>
-                            {experienceText.startingDate.getFullYear()} -{" "}
-                            {experienceText.endingDate?.getFullYear() ??
-                                "Present"}
-                        </p>
-                        <div className={styles.experienceContent}>
-                            <h3 className="text-xl">
-                                {experienceText.heading}
-                            </h3>
-                            <p>{experienceText.content}</p>
-                        </div>
-                    </div>
-                ))}
-                <div className={`${styles.separator} separator`}></div>
-            </div>
-        </div>
-    );
+              <p className="text-nowrap">
+                {experienceText.startingDate.getFullYear()} -{" "}
+                {experienceText.endingDate?.getFullYear() ?? "Present"}
+              </p>
+              <div className="max-w-[400px] p-4 outline-1 outline outline-white/20 rounded-xl">
+                <h3 className="text-xl">{experienceText.heading}</h3>
+                <p>{experienceText.content}</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        ))}
+        <motion.div
+          className={`col-[1] md:col-[2] row-span-full bg-white/25 origin-top h-full shadow-[0_0_14px_1px_rgba(255,255,255,0.3)] w-[1px]`}
+          style={{
+            scaleY: scrollYProgress,
+          }}
+        ></motion.div>
+      </div>
+    </div>
+  );
 }

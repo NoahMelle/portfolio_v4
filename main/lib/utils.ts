@@ -1,8 +1,8 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function getYearsDiff(date1: Date, date2: Date): number {
@@ -13,4 +13,19 @@ export function getYearsDiff(date1: Date, date2: Date): number {
 
 export function getAgeFromBday(dateOfBirth: Date): number {
   return getYearsDiff(new Date(), dateOfBirth);
+}
+
+// Cross-browser helper function for getting the height of the body
+export function getBodyHeight() {
+  const body = document.body;
+  const html = document.documentElement;
+  const bodyH = Math.max(
+    body.scrollHeight,
+    body.offsetHeight,
+    body.getBoundingClientRect().height,
+    html.clientHeight,
+    html.scrollHeight,
+    html.offsetHeight
+  );
+  return bodyH;
 }

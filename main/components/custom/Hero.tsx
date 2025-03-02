@@ -1,132 +1,161 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HeroType } from "@/lib/types";
-import styles from "@/styles/home.module.scss";
 import Image from "next/image";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Loading from "@/app/[locale]/loading";
+import { motion, useScroll, Variants } from "motion/react";
+import WavyText from "../reusable/WavyText";
+
+const imageVariants: Variants = {
+  offscreen: {
+    x: "-200%",
+    rotate: 30,
+    transition: {
+      duration: 1.5,
+      ease: "easeInOut",
+    },
+  },
+  onscreen: {
+    x: 0,
+    rotate: -10,
+    transition: {
+      type: "spring",
+      bounce: 0.4,
+      duration: 0.8,
+    },
+  },
+};
+
+const circleVariants: Variants = {
+  offscreen: {
+    x: "200%",
+    transition: {
+      duration: 1.5,
+      ease: "easeInOut",
+    },
+  },
+  onscreen: {
+    x: 0,
+    transition: {
+      type: "spring",
+      bounce: 0.4,
+      duration: 0.8,
+    },
+  },
+};
 
 export default function Hero({ heroData }: { heroData: HeroType }) {
-  const containerRef = React.useRef(null);
-  const [loading, setLoading] = React.useState(true);
+  const [mousePos, setMousePos] = useState<
+    { x: number; y: number } | undefined
+  >(undefined);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [hasMouseLeftHero, setHasMouseLeftHero] = useState();
 
-  React.useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    let imageOpacityAnimation: gsap.core.Tween | undefined;
+  const handleMouseMove = (e: MouseEvent) => {
+    const newX = e.clientX + window.scrollX;
+    const newY = e.clientY + window.scrollY;
 
-    const textAnimation = gsap.to(".word", {
-      duration: 0.5,
-      y: "0%",
-      stagger: 0.05,
+    setMousePos({
+      x: newX,
+      y: newY,
     });
-    const imageAnimation = gsap.timeline();
+  };
 
-    const sectionScroll = document.querySelector(".section-scroll");
+  useEffect(() => {
+    if (!heroRef.current) return;
 
-    const scroller =
-      sectionScroll?.scrollHeight &&
-      sectionScroll.scrollHeight > document.body.scrollHeight
-        ? sectionScroll
-        : document.body;
+    heroRef.current.addEventListener("mouseenter", addMouseEventListener);
+    heroRef.current.addEventListener("mouseleave", removeMouseEventListener);
 
-    imageAnimation
-      .from(".rotating-image", {
-        clipPath: "circle(0%)",
-        opacity: 1,
-        transformOrigin: "center",
-      })
-      .to(".rotating-image", {
-        clipPath: "circle(100%)",
-        duration: 1,
-        ease: "power4.inOut",
-      })
-      .to(".rotating-image", {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          scroller: scroller,
-          scrub: true,
-        },
-        opacity: 0,
-        duration: 2,
-        x: "-100%",
-        ease: "power4.inOut",
-      });
-
-    const circleAnimation = gsap.timeline();
-
-    circleAnimation
-      .from(".hero-circle", {
-        clipPath: "circle(0% at 50% 50%)",
-        opacity: 1,
-      })
-      .to(".hero-circle", {
-        clipPath: "circle(100% at 50% 50%)",
-        duration: 1,
-        ease: "power2.inOut",
-      })
-      .to(".hero-circle", {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          scroller: scroller,
-          scrub: true,
-        },
-        x: "150%",
-        duration: 1,
-        ease: "power4.inOut",
-        stagger: 0.1,
-      });
-
-    setLoading(false);
+    if (heroRef.current.matches(":hover")) addMouseEventListener();
 
     return () => {
-      textAnimation?.kill();
-      imageAnimation?.kill();
-      imageOpacityAnimation?.kill();
+      if (!heroRef.current) return;
+
+      removeMouseEventListener();
+
+      heroRef.current.removeEventListener("mouseenter", addMouseEventListener);
+      heroRef.current.removeEventListener(
+        "mouseleave",
+        removeMouseEventListener
+      );
     };
   }, []);
 
+  useEffect(() => {}, []);
+
+  function removeMouseEventListener() {
+    if (!heroRef.current) return;
+    heroRef.current.removeEventListener("mousemove", handleMouseMove);
+
+    setMousePos(undefined);
+  }
+
+  function addMouseEventListener() {
+    if (!heroRef.current) return;
+    heroRef.current.addEventListener("mousemove", handleMouseMove);
+  }
+
   return (
     <>
-      {loading && <Loading />}
-      <header className={`${styles.hero}`} ref={containerRef}>
-        <Image
-          src={heroData.image.url}
-          alt="Hero image"
-          height={400}
-          width={400}
-          className={`${styles.heroImage} rotating-image`}
-        />
-        <div className={styles.heroCircleContainer}>
-          <div className={`${styles.heroCircle} w-[100px] hero-circle`}></div>
-          <div className={`${styles.heroCircle} w-[350px] hero-circle`}></div>
+      <motion.header
+        className={`overflow-x-auto h-screen bg-background text-foreground flex relative flex-col justify-center items-center gap-4 p-4`}
+        initial="offscreen"
+        whileInView="onscreen"
+        viewport={{ amount: 0.6 }}
+        ref={heroRef}
+      >
+        {mousePos && (
+          <motion.div
+            className="absolute z-10 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            animate={{ left: mousePos.x, top: mousePos.y }}
+            transition={{
+              type: "tween",
+              duration: 0.2,
+            }}
+          >
+            <Image
+              src={"/img/halftone-744404.svg"}
+              alt="Halftone dot"
+              width={200}
+              height={200}
+            />
+          </motion.div>
+        )}
+        <motion.div
+          variants={imageVariants}
+          className="rounded-full max-w-[70%] -left-1/4 md:left-12 top-12 absolute aspect-square"
+        >
+          <Image
+            src={heroData.image.url}
+            alt="Hero image"
+            height={400}
+            width={400}
+            className="rounded-full grayscale hover:grayscale-0 transition-all duration-500"
+            draggable={false}
+          />
+        </motion.div>
+        <div className="absolute flex-col items-end bottom-12 -right-[13%] max-w-[70%] md:right-12 flex pointer-events-none">
+          <motion.div
+            variants={circleVariants}
+            className="aspect-square rounded-full border-2 border-foreground w-[100px]"
+          ></motion.div>
+          <motion.div
+            className="aspect-square rounded-full border-2 border-foreground w-[350px] max-w-full"
+            variants={circleVariants}
+          ></motion.div>
         </div>
-        <div className="flex flex-col items-center justify-center gap-4">
-          <h1 className={styles.heroTitle} data-content={heroData.title}>
-            {heroData.title.split(" ").map((word, index) => (
-              <React.Fragment key={index}>
-                <span className="inline-block text-nowrap overflow-hidden">
-                  {word.split("").map((letter, index) => (
-                    <span
-                      className="word transform translate-y-[100%] inline-block"
-                      key={index * 1000}
-                    >
-                      {letter}
-                    </span>
-                  ))}
-                </span>
-                <span>
-                  {index < heroData.title.split(" ").length - 1 && " "}
-                </span>
-              </React.Fragment>
-            ))}
-          </h1>
-          <h2 className={styles.heroSubheading}>{heroData.subheading}</h2>
+        <div className="flex flex-col items-center justify-center gap-4 pointer-events-none">
+          <WavyText
+            text={heroData.title}
+            className="text-5xl uppercase text-center font-bold z-10 leading-[95%] text-glow relative max-w-[1000px]"
+            data-content={heroData.title}
+          />
+          <h2 className="font-medium leading-snug text-xl text-center max-w-[400px] relative z-10">
+            {heroData.subheading}
+          </h2>
         </div>
-      </header>
+      </motion.header>
     </>
   );
 }
