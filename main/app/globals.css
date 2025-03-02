@@ -39,6 +39,16 @@ body {
   text-shadow: 0 0 40px white;
   color: transparent;
   z-index: 0;
+  animation: fadeOpacity 2s ease;
+}
+
+@keyframes fadeOpacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @layer base {
@@ -104,4 +114,14 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.reset-markdown h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+}
+
+.reset-markdown ul {
+  list-style: inside;
 }

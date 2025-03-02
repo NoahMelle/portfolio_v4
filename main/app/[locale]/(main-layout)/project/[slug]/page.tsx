@@ -2,7 +2,6 @@ import React from "react";
 import { getProjectPageData } from "@/data/fetcher";
 import Image from "next/image";
 import { getLocale } from "next-intl/server";
-import styles from "@/styles/project.module.scss";
 import {
   Carousel,
   CarouselContent,
@@ -134,7 +133,7 @@ export default async function Project(props: {
                 </div>
               </div>
               <div className="w-full">
-                <Markdown className={styles.markdownDescription}>
+                <Markdown className="reset-markdown">
                   {projectPageData.project.description}
                 </Markdown>
               </div>

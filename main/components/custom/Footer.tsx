@@ -1,6 +1,5 @@
 import React from "react";
 import { FooterType, SocialLink } from "@/lib/types";
-import styles from "@/styles/footer.module.scss";
 import Image from "next/image";
 
 export default function Footer({
@@ -26,7 +25,7 @@ export default function Footer({
               href={button.url}
               target={button.isExternal ? "_blank" : "_self"}
               rel="noopener noreferrer"
-              className={`${styles.button} font-bold text-center border-2 rounded-full border-foreground py-6 flex-1`}
+              className={`font-bold text-center border-2 rounded-full border-foreground py-6 flex-1`}
             >
               {button.title}
             </a>
@@ -39,7 +38,7 @@ export default function Footer({
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${styles.socialLink} flex items-center gap-4`}
+              className="flex items-center gap-4"
             >
               <Image
                 src={link.icon.url}
