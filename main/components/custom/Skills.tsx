@@ -124,9 +124,9 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                   <div className="flex justify-end">
                     <div>{skill?.name ?? ""}</div>
                   </div>
-                  <div className={`h-7 border-[1px] border-navy-blue-800`}>
+                  <div className={`h-7 border-[1px] border-foreground`}>
                     <motion.div
-                      className="h-full bg-navy-blue-800"
+                      className="h-full bg-foreground"
                       variants={{
                         hidden: { width: 0 },
                         visible: { width: `${skill?.confidenceLevel ?? 0}%` },
@@ -162,7 +162,7 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
                   <div
                     className={`h-[6px] basis-[6px] transition-all ${
                       currentSkillPage === i ? "grow" : ""
-                    } bg-navy-blue-800`}
+                    } bg-foreground`}
                     key={i}
                   ></div>
                 ))}

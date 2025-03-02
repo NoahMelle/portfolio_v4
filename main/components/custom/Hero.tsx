@@ -124,7 +124,7 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
         )}
         <motion.div
           variants={imageVariants}
-          className="rounded-full max-w-[90%] left-12 top-12 md:absolute aspect-square"
+          className="rounded-full max-w-[70%] -left-1/4 md:left-12 top-12 absolute aspect-square"
         >
           <Image
             src={heroData.image.url}
@@ -135,13 +135,13 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
             draggable={false}
           />
         </motion.div>
-        <div className="absolute flex-col items-end bottom-12 right-12 hidden md:flex pointer-events-none">
+        <div className="absolute flex-col items-end bottom-12 -right-[13%] max-w-[70%] md:right-12 flex pointer-events-none">
           <motion.div
             variants={circleVariants}
-            className="aspect-square rounded-full border-2 border-foreground w-[100px] hero-circle"
+            className="aspect-square rounded-full border-2 border-foreground w-[100px]"
           ></motion.div>
           <motion.div
-            className="aspect-square rounded-full border-2 border-foreground w-[350px] hero-circle"
+            className="aspect-square rounded-full border-2 border-foreground w-[350px] max-w-full"
             variants={circleVariants}
           ></motion.div>
         </div>
