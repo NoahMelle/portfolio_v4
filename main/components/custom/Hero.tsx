@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { HeroType } from "@/lib/types";
 import Image from "next/image";
-import { motion, useScroll, Variants } from "motion/react";
+import { motion, Variants } from "motion/react";
 import WavyText from "../reusable/WavyText";
 
 const imageVariants: Variants = {
@@ -49,7 +49,6 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
     { x: number; y: number } | undefined
   >(undefined);
   const heroRef = useRef<HTMLDivElement>(null);
-  const [hasMouseLeftHero, setHasMouseLeftHero] = useState();
 
   const handleMouseMove = (e: MouseEvent) => {
     const newX = e.clientX + window.scrollX;
@@ -62,39 +61,40 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
   };
 
   useEffect(() => {
-    if (!heroRef.current) return;
+    const heroEl = heroRef.current
 
-    heroRef.current.addEventListener("mouseenter", addMouseEventListener);
-    heroRef.current.addEventListener("mouseleave", removeMouseEventListener);
+    if (!heroEl) return;
 
-    if (heroRef.current.matches(":hover")) addMouseEventListener();
+    heroEl.addEventListener("mouseenter", addMouseEventListener);
+    heroEl.addEventListener("mouseleave", removeMouseEventListener);
+
+    if (heroEl.matches(":hover")) addMouseEventListener();
+
+    function removeMouseEventListener() {
+      if (!heroEl) return;
+
+      heroEl.removeEventListener("mousemove", handleMouseMove);
+  
+      setMousePos(undefined);
+    }
+  
+    function addMouseEventListener() {
+      if (!heroEl) return;
+      heroEl.addEventListener("mousemove", handleMouseMove);
+    }
 
     return () => {
-      if (!heroRef.current) return;
+      if (!heroEl) return;
 
       removeMouseEventListener();
 
-      heroRef.current.removeEventListener("mouseenter", addMouseEventListener);
-      heroRef.current.removeEventListener(
+      heroEl.removeEventListener("mouseenter", addMouseEventListener);
+      heroEl.removeEventListener(
         "mouseleave",
         removeMouseEventListener
       );
     };
   }, []);
-
-  useEffect(() => {}, []);
-
-  function removeMouseEventListener() {
-    if (!heroRef.current) return;
-    heroRef.current.removeEventListener("mousemove", handleMouseMove);
-
-    setMousePos(undefined);
-  }
-
-  function addMouseEventListener() {
-    if (!heroRef.current) return;
-    heroRef.current.addEventListener("mousemove", handleMouseMove);
-  }
 
   return (
     <>

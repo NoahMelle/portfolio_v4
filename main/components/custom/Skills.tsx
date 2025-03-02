@@ -12,7 +12,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import LinkRenderer from "../reusable/LinkRenderer";
-import { motion, Variants } from "motion/react";
+import { motion } from "motion/react";
 
 export default function Skills({ skills }: { skills: SkillsSectionType }) {
   const [currentSkillPage, setCurrentSkillPage] = React.useState(0);
@@ -49,8 +49,6 @@ export default function Skills({ skills }: { skills: SkillsSectionType }) {
 
     setShowingSkills(newSkills);
   }, [currentSkillPage, skills.allSkills]);
-
-  const progressBarVariants: Variants = {};
 
   return (
     <div>

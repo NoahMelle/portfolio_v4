@@ -1,5 +1,5 @@
 import React from "react";
-import { HTMLMotionProps, motion, MotionProps } from "framer-motion";
+import { HTMLMotionProps, motion } from "framer-motion";
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   return <span className="inline-flex">{children}</span>;
