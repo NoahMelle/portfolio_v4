@@ -112,7 +112,7 @@ export default function Hero({ heroData }: { heroData: HeroType }) {
       >
         <motion.div
           className={`absolute z-10 -translate-x-1/2 w-[200px] h-[200px] -translate-y-1/2 pointer-events-none transition-opacity duration-300 ${
-            mousePos.hidden ? "opacity-0" : "opacity-100"
+            mousePos.hidden ? "opacity-100" : "opacity-100"
           }`}
           animate={{ left: mousePos.x, top: mousePos.y }}
           transition={{
