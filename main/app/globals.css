@@ -123,6 +123,6 @@ body {
 }
 
 .reset-markdown ul,
-li {
-  list-style: inside;
+.reset-markdown ol {
+  list-style: inside auto;
 }
