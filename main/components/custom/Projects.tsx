@@ -36,7 +36,7 @@ export default function Projects({ projects }: { projects: ProjectType[] }) {
             alt={project.title}
             width={500}
             height={500}
-            className="absolute brightness-90 group-hover:scale-110 top-0 left-0 select-none w-full h-full object-cover z-0 transition-transform duration-500"
+            className="absolute brightness-90 drop-shadow-2xl group-hover:scale-110 top-0 left-0 select-none w-full h-full object-cover z-0 transition-transform duration-500"
             draggable={false}
           />
         </Link>
