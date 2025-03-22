@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import "../globals.css";
 import localFont from "next/font/local";
+import { ReactLenis } from "lenis/react";
 import { Toaster } from "@/components/ui/sonner";
 
 const authorFont = localFont({ src: "../fonts/satoshi.ttf" });
@@ -30,7 +31,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body className={authorFont.className}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <ReactLenis root>{children}</ReactLenis>
         </NextIntlClientProvider>
         <Toaster />
       </body>

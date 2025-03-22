@@ -95,6 +95,15 @@ export class HomepageProps {
           },
         })),
       },
+      allSkills: skills.allSkills.map((skill) => ({
+        ...skill,
+        icon: skill.icon
+          ? {
+              ...skill.icon,
+              url: constructImageUrl(skill.icon?.url),
+            }
+          : undefined,
+      })),
     };
     this.projects = projects.map((project) => new Project(project));
     this.experience = {

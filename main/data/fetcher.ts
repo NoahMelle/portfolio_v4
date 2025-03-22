@@ -182,7 +182,10 @@ export async function getAllSkills() {
                 query Skills($locale: I18NLocaleCode) {
                     skills(locale: $locale, pagination: { limit: 100 }, sort: "pride:desc") {
                         name,
-                        confidenceLevel
+                        confidenceLevel,
+                        icon {
+                          url
+                        }
                     }
                 }
             `,

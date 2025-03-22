@@ -144,7 +144,7 @@ export default async function Project(props: {
               </h2>
               <div className="flex gap-7 flex-wrap justify-center">
                 {projectPageData.project.skills.map((skill) => (
-                  <TooltipProvider key={skill.name}>
+                  <TooltipProvider key={skill.name} delayDuration={0}>
                     <Tooltip>
                       <TooltipTrigger>
                         <div key={skill.name}>

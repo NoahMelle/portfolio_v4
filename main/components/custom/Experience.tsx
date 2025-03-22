@@ -53,7 +53,7 @@ export default function Experience({
           <motion.div
             whileInView="onscreen"
             initial="offscreen"
-            viewport={{ once: true, margin: "0px 0px -50% 0px", amount: 0 }}
+            viewport={{ once: true, margin: "0px 0px -20% 0px", amount: 0 }}
             className={`col-[2] row-auto md:col-[1] md:[&:nth-child(odd)]:col-[3]`}
             key={index}
             style={{ gridRow: index + 1 }}
