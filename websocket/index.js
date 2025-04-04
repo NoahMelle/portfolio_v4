@@ -162,7 +162,7 @@ function broadcastMessage(message, sender) {
     });
 }
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 7000;
 server.listen(PORT, () => {
     console.log(`Server started on port ${server.address().port}`);
 });
