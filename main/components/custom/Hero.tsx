@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { HeroType } from "@/lib/types";
 import Image from "next/image";
 import { motion, Variants } from "motion/react";
@@ -45,85 +45,13 @@ const circleVariants: Variants = {
 };
 
 export default function Hero({ heroData }: { heroData: HeroType }) {
-  const [mousePos, setMousePos] = useState<{
-    x: number;
-    y: number;
-    hidden: boolean;
-  }>({ x: 0, y: 0, hidden: true });
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: MouseEvent) => {
-    const newX = e.clientX + window.scrollX;
-    const newY = e.clientY + window.scrollY;
-
-    setMousePos({
-      x: newX,
-      y: newY,
-      hidden: false,
-    });
-  };
-
-  useEffect(() => {
-    const heroEl = heroRef.current;
-
-    if (!heroEl) return;
-
-    heroEl.addEventListener("mouseenter", addMouseEventListener);
-    heroEl.addEventListener("mouseleave", removeMouseEventListener);
-
-    if (heroEl.matches(":hover")) addMouseEventListener();
-
-    function removeMouseEventListener() {
-      if (!heroEl) return;
-
-      heroEl.removeEventListener("mousemove", handleMouseMove);
-
-      setMousePos((prev) => ({
-        ...prev,
-        hidden: true,
-      }));
-    }
-
-    function addMouseEventListener() {
-      if (!heroEl) return;
-      heroEl.addEventListener("mousemove", handleMouseMove);
-    }
-
-    return () => {
-      if (!heroEl) return;
-
-      removeMouseEventListener();
-
-      heroEl.removeEventListener("mouseenter", addMouseEventListener);
-      heroEl.removeEventListener("mouseleave", removeMouseEventListener);
-    };
-  }, []);
-
   return (
     <motion.header
       className={`overflow-x-hidden h-screen bg-background text-foreground flex relative flex-col justify-center items-center gap-4 p-4`}
       initial="offscreen"
       whileInView="onscreen"
       viewport={{ amount: 0.6 }}
-      ref={heroRef}
     >
-      <motion.div
-        className={`absolute z-10 -translate-x-1/2 w-[200px] h-[200px] -translate-y-1/2 pointer-events-none transition-opacity duration-300 ${
-          mousePos.hidden ? "opacity-100" : "opacity-100"
-        }`}
-        animate={{ left: mousePos.x, top: mousePos.y }}
-        transition={{
-          type: "tween",
-          duration: 0.2,
-        }}
-      >
-        <Image
-          src={"/img/halftone-744404.svg"}
-          alt="Halftone dot"
-          width={200}
-          height={200}
-        />
-      </motion.div>
       <motion.div
         variants={imageVariants}
         className="rounded-full max-w-[70%] -left-1/4 md:left-12 top-12 absolute aspect-square"

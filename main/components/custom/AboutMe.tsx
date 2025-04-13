@@ -86,7 +86,7 @@ export default function AboutMe({ aboutMe }: { aboutMe: AboutMeType }) {
               width={0}
               height={0}
               alt="Profile Picture"
-              className="w-full h-full object-cover grayscale aspect-[3/1] lg:aspect-auto hover:grayscale-0 transition-all duration-500"
+              className="w-full h-full object-[center_15%] object-cover bg-top grayscale aspect-[3/1] lg:aspect-auto hover:grayscale-0 transition-all duration-500"
               sizes="100vw"
             />
           </div>
